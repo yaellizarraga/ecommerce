@@ -1,2 +1,13 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+:root {
+    //Tema
+    --color-primary: #1a5276; 
+    --color-secondary: #000000;
+    --color-tertiary: #000000; 
+
+    //variables
+    --color-white: white;
+    
+    //Footer
+    --footer-color-text: var(--color-white); 
+    --footer-color-icon: var(--color-white); 
+  }

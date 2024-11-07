@@ -1,0 +1,30 @@
+ion-toolbar{
+  --background: var(--color-primary);
+  --min-height: 356px;
+  width: 100%;
+}
+ion-list{
+  background: var(--color-primary);
+}
+ion-item{
+  --background: var(--color-primary);
+}
+ion-label{
+  color: var(--footer-color-text) !important;
+  text-align: center;
+}
+ion-icon{
+  color: var(--footer-color-icon);
+}
+
+.social-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 20px;
+}
+
+ion-icon {
+  font-size: 24px;
+}
