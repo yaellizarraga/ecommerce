@@ -1,0 +1,14 @@
+<ion-item *ngFor="let item of items(); let i = index" lines="none">
+  <ion-grid>
+    <ion-row [ngClass]="i % 2 === 0 ? 'row' : 'row-reverse'">
+      <ion-col sizeXs="12" sizeSm="6" class="ion-text-center">
+        <img [src]="item.imgUrl" [alt]="item.title" class="product-image">
+      </ion-col>
+
+      <ion-col sizeXs="12" sizeSm="6" class="ion-text-center">
+        <h2 class="title">{{ item.title }}</h2>
+        <p [innerHTML]="item.description"></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>

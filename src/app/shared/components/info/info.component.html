@@ -1,0 +1,10 @@
+<ion-item *ngFor="let item of items(); let i = index" lines="none">
+  <ion-grid>
+    <ion-row>
+      <ion-col sizeXs="12" class="ion-text-center">
+        <h2 class="title">{{ item.title }}</h2>
+        <p [innerHTML]="item.description"></p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-item>

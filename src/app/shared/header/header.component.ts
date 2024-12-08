@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
 import { MenuComponent } from '../menu/menu.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,7 @@ import { MenuComponent } from '../menu/menu.component';
   imports: [
     IonicModule, 
     CommonModule,
+    RouterModule,
     MenuComponent
   ],
   templateUrl: './header.component.html',

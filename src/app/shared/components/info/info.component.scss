@@ -1,0 +1,28 @@
+.product-image {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 8px;
+}
+
+ion-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+}
+
+.row{
+  display: flex;
+  flex-direction: row;
+}
+.row-reverse{
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.title{
+  color: var(--color-primary);
+  font-weight: bold;
+}

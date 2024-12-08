@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { IonicModule } from "@ionic/angular";
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-menu',
@@ -8,8 +10,17 @@ import { IonicModule } from "@ionic/angular";
   imports: [
     IonicModule,
     CommonModule,
+    RouterModule,
   ],
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
 })
-export class MenuComponent { }
+export class MenuComponent { 
+
+  constructor(private menuCtrl: MenuController) {}
+
+  closeMenu() {
+    this.menuCtrl.close('mainMenu');
+  }
+
+}

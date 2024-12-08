@@ -6,6 +6,15 @@
 
     //variables
     --color-white: white;
+    --color-red: #e53935;
+    
+    //banner title
+    --banner-color-text: var(--color-white);
+    --banner-backgroud-color: var(--color-primary);
+
+    //products
+    --price-color: var(--color-red);
+    --discount-color: var(--color-red);
     
     //Footer
     --footer-color-text: var(--color-white); 
