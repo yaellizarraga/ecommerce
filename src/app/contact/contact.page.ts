@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { HeaderComponent } from "../shared/header/header.component";
 import { FooterComponent } from "../shared/footer/footer.component";
 import { BannerTitleComponent } from '../shared/components/banner-title/banner-title.component';
 import { Info } from '../shared/interfaces/info.interface';
 import { InfoComponent } from '../shared/components/info/info.component';
+import { ContactFormComponent } from './components/contact-form/contact-form.component';
 
 @Component({
   selector: 'app-contact',
@@ -13,10 +13,10 @@ import { InfoComponent } from '../shared/components/info/info.component';
   standalone: true,
   imports: [
     IonicModule,
-    HeaderComponent,
     FooterComponent,
     BannerTitleComponent,
     InfoComponent,
+    ContactFormComponent,
   ],
 })
 export class ContactPage {

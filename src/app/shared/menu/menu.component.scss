@@ -2,15 +2,7 @@
   display: block;
 }
 
-ion-button {
-  color: #000; // Color por defecto
-  transition: color 0.3s ease, background 0.3s ease;
-
-  &:hover {
-    color: var(--color-primary); // Cambia el texto al color primario al pasar el mouse
-  }
-
-  &.active {
-    color: var(--color-primary); // Cambia el texto al color primario cuando está activo
-  }
+ion-item.active {
+  --color: var(--menu-color-text-active);
+  --background: var(--menu-background-color-text-active);
 }

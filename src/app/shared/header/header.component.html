@@ -1,17 +1,17 @@
 <app-menu></app-menu>
 
-<ion-header collapse="fade">
+<ion-header collapse="fade" mode="md">
     <ion-toolbar>
       <ion-title>Header</ion-title>
 
-      
       <ion-buttons slot="end" class="me-5">
-        <ion-button routerLink="/home" routerLinkActive="active" class="capitalize d-none d-lg-block">Inicio</ion-button>
-        <ion-button routerLink="/specialties" routerLinkActive="active" class="capitalize d-none d-lg-block">Especialidades</ion-button>
-        <ion-button routerLink="/all-products" routerLinkActive="active" class="capitalize d-none d-lg-block">Todos los productos</ion-button>
-        <ion-button routerLink="/about-us" routerLinkActive="active" class="capitalize d-none d-lg-block">Acerca de nosotros</ion-button>
-        <ion-button routerLink="/contact" routerLinkActive="active" class="capitalize d-none d-lg-block">Contacto</ion-button>
-        <ion-menu-button class="d-block d-lg-none" menu="mainMenu"></ion-menu-button>
+        <ion-button routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Inicio</ion-button>
+        <ion-button routerLink="/all-products" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Todos los productos</ion-button>
+        <ion-button routerLink="/about-us" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Acerca de nosotros</ion-button>
+        <ion-button routerLink="/contact" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Contacto</ion-button>
+      </ion-buttons>
+      <ion-buttons slot="end" class="me-4 d-block d-lg-none">
+        <ion-menu-button menu="mainMenu"></ion-menu-button>
       </ion-buttons>
 
     </ion-toolbar>

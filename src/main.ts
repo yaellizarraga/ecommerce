@@ -5,6 +5,10 @@ import { IonicModule } from '@ionic/angular';
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 import { importProvidersFrom } from '@angular/core';
+import { register as registerSwiperElements } from 'swiper/element/bundle';
+
+
+registerSwiperElements();
 
 bootstrapApplication(AppComponent, {
   providers: [

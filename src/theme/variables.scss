@@ -1,13 +1,19 @@
 :root {
     //Tema
     --color-primary: #1a5276; 
-    --color-secondary: #000000;
+    --color-secondary: #3d8bbb;
     --color-tertiary: #000000; 
 
-    //variables
+    //variables globales
     --color-white: white;
+    --color-black: black;
     --color-red: #e53935;
-    
+
+    //menu-Mobile
+    --menu-color-text-active: var(--color-white);
+    --menu-background-color-text-active: var(--color-primary);
+    --menu-color-text: var(--color-black);
+
     //banner title
     --banner-color-text: var(--color-white);
     --banner-backgroud-color: var(--color-primary);
@@ -20,3 +26,6 @@
     --footer-color-text: var(--color-white); 
     --footer-color-icon: var(--color-white); 
   }
+
+
+  

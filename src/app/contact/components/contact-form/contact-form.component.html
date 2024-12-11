@@ -1,0 +1,61 @@
+<div class="container-form">
+
+  <form [formGroup]="emailForm" (ngSubmit)="sendEmail()">
+    <ion-list>
+      <!-- Campo Nombre -->
+      <ion-item>
+        <ion-input labelPlacement="floating" formControlName="nombre" maxlength="150">
+          <div slot="label">Nombre</div>
+        </ion-input>
+      </ion-item>
+      <div
+        *ngIf="emailForm.get('nombre')?.invalid && (emailForm.get('nombre')?.touched || emailForm.get('nombre')?.dirty)">
+        <ion-text color="danger">El nombre es obligatorio</ion-text>
+      </div>
+
+      <!-- Campo Email -->
+      <ion-item>
+        <ion-input labelPlacement="floating" formControlName="email" type="email" value="ejemplo@ejemplo.com" maxlength="150">
+          <div slot="label">Email</div>
+        </ion-input>
+      </ion-item>
+      <div
+        *ngIf="emailForm.get('email')?.invalid && (emailForm.get('email')?.touched || emailForm.get('email')?.dirty)">
+        <ion-text color="danger">El email es obligatorio y debe ser válido</ion-text>
+      </div>
+
+      <!-- Campo Teléfono -->
+      <ion-item>
+        <ion-input labelPlacement="floating" formControlName="telefono" type="tel" maxlength="10">
+          <div slot="label">Teléfono</div>
+        </ion-input>
+      </ion-item>
+      <div
+        *ngIf="emailForm.get('telefono')?.invalid && (emailForm.get('telefono')?.touched || emailForm.get('telefono')?.dirty)">
+        <ion-text color="danger">El teléfono es obligatorio</ion-text>
+      </div>
+
+      <!-- Campo WhatsApp -->
+      <ion-item>
+        <ion-label>¿Tiene WhatsApp?</ion-label>
+        <ion-toggle formControlName="tieneWhatsapp"></ion-toggle>
+      </ion-item>
+
+      <!-- Campo Interés -->
+      <ion-item>
+        <ion-textarea labelPlacement="floating" formControlName="interes">
+          <div slot="label">Interés</div>
+        </ion-textarea>
+      </ion-item>
+      <div
+        *ngIf="emailForm.get('interes')?.invalid && (emailForm.get('interes')?.touched || emailForm.get('interes')?.dirty)" maxlength="500">
+        <ion-text color="danger">El campo de interés es obligatorio si es necesario.</ion-text>
+      </div>
+    </ion-list>
+
+    <ion-button class="ion-button" expand="block" type="submit" [disabled]="!emailForm.valid">
+      Cotizar
+    </ion-button>
+  </form>
+
+</div>

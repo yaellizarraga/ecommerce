@@ -1,10 +1,16 @@
-<ion-card>
+<ion-card (click)="openModalDetails(item().id)">
   <img class="product-img" [src]="item().imgUrl" [alt]="item().productName" />
-  <div class="discount-banner">
-    {{ item().discount }}% OFF
-  </div>
+  @if (item().discount.length > 0) {
+    <div class="discount-banner">
+      {{ item().discount }}% OFF
+    </div>
+  }
   <ion-card-header>
-    <ion-card-title>{{ item().productName }}</ion-card-title>
+    <ion-card-title>
+      <h5>
+        {{ item().productName }}
+      </h5>
+    </ion-card-title>
   </ion-card-header>
   <ion-card-content>
     <div class="product-price">
