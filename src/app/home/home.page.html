@@ -1,11 +1,22 @@
 
 <ion-content id="main-content">
   <app-shared-banner-title title="Inicio"/>
+  <app-shared-info [items]="data"/>
   <div class="container">
+    
+  <!-- Contenido que será en componentes -->
+    <app-shared-info [items]="data2"/>
 
- <!-- Contenido que será en componentes -->
- 
- <!-- Contenido que será en componentes -->
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" size-lg="4" *ngFor="let item of data3; let i = index">
+        
+          <app-shared-category-card [item]="item"/>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  <!-- Contenido que será en componentes -->
 
   </div>
   <app-footer></app-footer>

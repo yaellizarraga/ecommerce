@@ -26,3 +26,18 @@ ion-col {
   color: var(--color-primary);
   font-weight: bold;
 }
+.custom-margin-title{
+  margin-top: 32px;
+}
+.custom-margin-description{
+  margin-bottom: 32px;
+}
+
+@media (max-width: 767px) {
+  .custom-margin-title{
+    margin-top: 24px;
+  }
+  .custom-margin-description{
+    margin-bottom: 24px;
+  }
+}

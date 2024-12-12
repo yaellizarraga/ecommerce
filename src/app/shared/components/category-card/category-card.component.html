@@ -1,0 +1,6 @@
+<ion-card (click)="openModalDetails(item().id)" class="card-container">
+  <img class="product-img" [src]="item().imgUrl" [alt]="item().productName" />
+  <div class="overlay">
+    <h5 class="product-name">{{ item().productName }}</h5>
+  </div>
+</ion-card>

@@ -1,9 +1,27 @@
-<ion-item *ngFor="let item of items(); let i = index" lines="none">
+<ion-item 
+  *ngFor="let item of items(); let i = index" 
+  [ngStyle]="{ '--background': item.colorBackground || 'transparent' }"
+  lines="none">
   <ion-grid>
     <ion-row>
       <ion-col sizeXs="12" class="ion-text-center">
-        <h2 class="title">{{ item.title }}</h2>
-        <p [innerHTML]="item.description"></p>
+      @if(item.title.length > 0){
+        <h2 class="title" 
+        [ngStyle]="{ 'color': item.colorText }"
+        [ngClass]="{
+          'custom-margin-title': item.colorBackground || item.description === undefined,
+          'custom-margin-description': item.description.length <= 0
+        }"
+        [innerHTML]="item.title">
+    </h2>
+      }
+      @if(item.description.length > 0){
+        <p 
+        [ngStyle]="{ 'color': item.colorText }"
+        [ngClass]="{ 'custom-margin-description': item.colorBackground }"
+        [innerHTML]="item.description"></p>
+      }  
+
       </ion-col>
     </ion-row>
   </ion-grid>

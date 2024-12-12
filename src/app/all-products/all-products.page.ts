@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { HeaderComponent } from "../shared/header/header.component";
 import { FooterComponent } from "../shared/footer/footer.component";
 import { BannerTitleComponent } from '../shared/components/banner-title/banner-title.component';
 import { product } from './interfaces/product.interfaces';
@@ -15,7 +14,6 @@ import { ProductCardComponent } from '../shared/components/product-card/product-
   imports: [
     IonicModule,
     CommonModule,
-    HeaderComponent,
     FooterComponent,
     BannerTitleComponent,
     ProductCardComponent
