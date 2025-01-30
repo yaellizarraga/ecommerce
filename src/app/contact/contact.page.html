@@ -9,7 +9,8 @@
     <app-shared-info [items]="data"/>
 
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3665.0152987862352!2d-106.45201932533415!3d23.278893806715573!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8698ab5b70e83d05%3A0x78bd709f87fff48a!2zR2FsZXLDrWFzIE1hemF0bMOhbg!5e0!3m2!1ses-419!2smx!4v1733650965742!5m2!1ses-419!2smx"
+    *ngIf="mapSrc"
+      [src]="mapSrc"
       width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
       referrerpolicy="no-referrer-when-downgrade">
     </iframe>

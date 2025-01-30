@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from "../shared/header/header.component";
 import { FooterComponent } from "../shared/footer/footer.component";
@@ -8,6 +8,7 @@ import { Info } from '../shared/interfaces/info.interface';
 import { CategoryCard } from '../shared/interfaces/category-card.interfaces';
 import { CategoryCardComponent } from '../shared/components/category-card/category-card.component';
 import { CommonModule } from '@angular/common';
+import { HomeService } from './services/home.service';
 
 @Component({
   selector: 'app-home',
@@ -23,26 +24,48 @@ import { CommonModule } from '@angular/common';
     CategoryCardComponent,
   ],
 })
-export class HomePage {
-  constructor() {}
+export class HomePage implements OnInit {
+  
 
-  data : Info[] = [
-    {
-      title:'<h1><strong>Venta de equipos e insumos médicos para el cuidado de la salud</strong></h1>',
-      description:'',
-    },
-    {
-      title:'<h2><strong>Empresa dedicada al equipamiento médico</strong></h2>',
-      description:`Somos una empresa dedicada a vender una extensa variedad de productos y 
-      equipos para el cuidado de la salud. Nos preocupamos por satisfacer las necesidades 
-      del cliente al distribuir mediante un extraordinario servicio de alta calidad y 
-      productos del ramo médico de manera eficiente. Conoce nuestro lápiz para electrocirugía 
-      desechable, así como nuestros equipos e insumos médicos`,
-      colorBackground: 'var(--color-primary)',
-      colorText:'var(--color-white)',
-    },
+  Data = <any>([]); 
+  data : Info[] = [];
 
-  ];
+
+  constructor(
+    private homeService: HomeService,
+  ) {}
+
+  ngOnInit(): void {
+
+    this.loadData();
+  }
+
+  loadData() {
+    this.homeService.getAll().subscribe({
+      next: (res: any) => {
+        this.Data = res.data[0];
+
+        this.data = [
+          {
+            title: this.Data?.eslogan || 'Eslogan',
+            description:'',
+          },
+          {
+            title:this.Data?.info_title || 'Info Titulo',
+            description:this.Data?.info_description || 'Info Descrición',
+            colorBackground: 'var(--color-primary)',
+            colorText:'var(--color-white)',
+          },
+      
+        ];
+
+      },
+      error: (error) => {
+        console.error('Error fetching home:', error);
+      }
+    });
+  }
+
 
   data2 : Info[] = [
     {

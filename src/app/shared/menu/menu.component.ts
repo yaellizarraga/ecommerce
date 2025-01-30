@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule } from "@ionic/angular";
 import { MenuController } from '@ionic/angular';
@@ -16,6 +16,8 @@ import { MenuController } from '@ionic/angular';
   styleUrl: './menu.component.scss',
 })
 export class MenuComponent { 
+
+  linkLogo = input<string>();
 
   constructor(private menuCtrl: MenuController) {}
 

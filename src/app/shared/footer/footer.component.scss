@@ -18,6 +18,10 @@ ion-icon{
   color: var(--footer-color-icon);
 }
 
+.aviso{
+  text-decoration: none;
+  color: var(--footer-color-text) !important;
+}
 .social-icons {
   display: flex;
   align-items: center;
