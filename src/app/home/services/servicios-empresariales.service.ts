@@ -6,8 +6,8 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class AllProductsService {
-  private urlBackend: string = environment.apiUrl + '/products';
+export class ServiciosEmpresarialesService {
+  private urlBackend: string = environment.apiUrl + '/promotions';
   private http = inject(HttpClient);
 
   constructor() {}
@@ -16,8 +16,8 @@ export class AllProductsService {
     return this.http.post<any>(this.urlBackend, form);
   }
 
-  getAll(page: number = 1): Observable<any> {
-    return this.http.get<any>(`${this.urlBackend}?page=${page}`);
+  getAll(): Observable<any> {
+    return this.http.get<any>(this.urlBackend);
   }
 
   getById(id: number): Observable<any> {

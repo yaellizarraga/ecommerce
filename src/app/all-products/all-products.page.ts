@@ -6,6 +6,7 @@ import { product } from './interfaces/product.interfaces';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { AllProductsService } from './services/all-products.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-all-products',
@@ -21,40 +22,51 @@ import { AllProductsService } from './services/all-products.service';
   ],
 })
 
-export class AllProductsPage implements OnInit{
+export class AllProductsPage implements OnInit {
+  data: product[] = [];
+  displayedData: product[] = [];
+  itemsPerPage = 20;
+  currentPage = 1;
+  isLastPage = false;
 
-  Data = <any>([]); 
-  data : product[] = [];
+  constructor(private AllProductsService: AllProductsService) {}
 
-  
-    constructor(
-      private AllProductsService: AllProductsService,
-    ) {}
-      
-    ngOnInit(): void {
-  
-      this.loadData();
+  ngOnInit(): void {
+    this.loadData();
+  }
+
+  loadData(event?: any) {
+    if (this.isLastPage) {
+      if (event) event.target.complete();
+      return;
     }
 
-    loadData() {
-      this.AllProductsService.getAll().subscribe({
-        next: (res: any) => {
-          this.Data = res.data;
+    this.AllProductsService.getAll(this.currentPage).subscribe({
+      next: (res: any) => {
+        const newProducts = res.data.map((product: any) => ({
+          id: product.id,
+          productName: product.nombre.trim(),
+          imgUrl: environment.UrlImages + product.imagen,
+          price: parseFloat(product.precio).toFixed(2),
+          discount: product.discount,
+        }));
 
-          this.data = this.Data.map((product: any) => ({
-            id: product.id, 
-            productName: product.nombre.trim(), 
-            imgUrl: product.imagen, 
-            price: parseFloat(product.precio).toFixed(2), 
-            discount: product.discount, 
-          }));
+        console.log(newProducts);
+        this.displayedData = [...this.displayedData, ...newProducts];
 
-        },
-        error: (error) => {
-          console.error('Error fetching All Products:', error);
+        if (newProducts.length < this.itemsPerPage) {
+          this.isLastPage = true;
+        } else {
+          this.currentPage++;
         }
-      });
-    }
 
-  
+        if (event) event.target.complete();
+      },
+      error: (error) => {
+        console.error('Error fetching All Products:', error);
+        if (event) event.target.complete();
+      }
+    });
+  }
 }
+

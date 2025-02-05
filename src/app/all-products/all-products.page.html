@@ -1,21 +1,21 @@
- 
-
 <ion-content id="main-content">
   <app-shared-banner-title title="Todos los Productos"/>
 
   <div class="container">
-    <!-- Contenido que será en componentes -->
     <ion-grid>
       <ion-row>
-        <ion-col size="12" size-md="4" size-lg="3" *ngFor="let item of data; let i = index">
-        
+        <ion-col size="12" size-md="4" size-lg="3" *ngFor="let item of displayedData">
           <app-shared-product-card [item]="item"/>
-
         </ion-col>
       </ion-row>
     </ion-grid>
-    
-    <!-- Contenido que será en componentes -->
+
+    <!-- Infinite Scroll -->
+    <ion-infinite-scroll (ionInfinite)="loadData($event)" [disabled]="isLastPage">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más productos...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
   </div>
 
   <app-footer></app-footer>

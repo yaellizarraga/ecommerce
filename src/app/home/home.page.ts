@@ -9,6 +9,7 @@ import { CategoryCard } from '../shared/interfaces/category-card.interfaces';
 import { CategoryCardComponent } from '../shared/components/category-card/category-card.component';
 import { CommonModule } from '@angular/common';
 import { HomeService } from './services/home.service';
+import { ServiciosEmpresarialesService } from './services/servicios-empresariales.service';
 
 @Component({
   selector: 'app-home',
@@ -28,16 +29,20 @@ export class HomePage implements OnInit {
   
 
   Data = <any>([]); 
+  Servicios = <any>([]); 
   data : Info[] = [];
+  data3 : CategoryCard[] = [];
 
 
   constructor(
     private homeService: HomeService,
+    private ServiciosEmpresarialesService: ServiciosEmpresarialesService,
   ) {}
 
   ngOnInit(): void {
 
     this.loadData();
+    this.loadServiciosEmpresariales();
   }
 
   loadData() {
@@ -66,6 +71,28 @@ export class HomePage implements OnInit {
     });
   }
 
+  loadServiciosEmpresariales() {
+    this.ServiciosEmpresarialesService.getAll().subscribe({
+      next: (res: any) => {
+        this.Servicios = res.data;
+
+        console.log(this.Servicios);
+
+        this.Servicios.forEach((servicio: any) => {
+          this.data3.push({
+            id: servicio.id,
+            productName: servicio.card_title,
+            imgUrl: servicio.card_link_image,
+          });
+        });
+
+      },
+      error: (error) => {
+        console.error('Error fetching home:', error);
+      }
+    });
+  }
+
 
   data2 : Info[] = [
     {
@@ -75,36 +102,5 @@ export class HomePage implements OnInit {
     },
   ];
 
-  data3 : CategoryCard[] = [
-    {
-      id: 1,
-      productName: 'Casa',
-      imgUrl: 'assets/images/product-1.jpg',
-    },
-    {
-      id: 2,
-      productName: 'Oficina',
-      imgUrl: 'assets/images/product-2.jpg',
-    },
-    {
-      id: 3,
-      productName: 'Departamento',
-      imgUrl: 'assets/images/product-3.jpg',
-    },
-    {
-      id: 1,
-      productName: 'Salon de eventos',
-      imgUrl: 'assets/images/product-4.jpg',
-    },
-    {
-      id: 2,
-      productName: 'Cabaña',
-      imgUrl: 'assets/images/product-5.jpg',
-    },
-    {
-      id: 3,
-      productName: 'Hotel',
-      imgUrl: 'assets/images/product-7.jpg',
-    },
-  ]
+  
 }
