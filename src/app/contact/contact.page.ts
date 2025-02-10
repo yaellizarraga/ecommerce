@@ -27,7 +27,7 @@ export class ContactPage implements OnInit{
 
   Data = <any>([]); 
   data : Info[] = [];
-
+  backgroudUrl : string = 'https://picsum.photos/id/200/1080/300';
   mapSrc: SafeResourceUrl | undefined;
 
   constructor(
@@ -44,7 +44,10 @@ export class ContactPage implements OnInit{
       this.ContactService.getAll().subscribe({
         next: (res: any) => {
           this.Data = res.data[0];
-  
+
+          if(this.Data?.link_banner){
+            this.backgroudUrl = this.Data?.link_banner;
+          }
           const number = this.Data?.contact_phone ? this.formatPhoneNumber(this.Data?.contact_phone) : '';
           
           const iframeString = this.Data?.contact_map_iframe; 

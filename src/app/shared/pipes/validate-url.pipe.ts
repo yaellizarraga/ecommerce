@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class ValidUrlPipe implements PipeTransform {
 
-    transform(value: string | null | undefined, defaultImage: string = 'assets/default-image.png'): string {
+    transform(value: string | null | undefined, defaultImage: string = ''): string {
         if (!value) {
           return defaultImage;
         }

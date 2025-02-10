@@ -32,6 +32,7 @@ export class HomePage implements OnInit {
   Servicios = <any>([]); 
   data : Info[] = [];
   data3 : CategoryCard[] = [];
+  backgroudUrl : string = 'https://picsum.photos/id/100/1080/300';
 
 
   constructor(
@@ -50,6 +51,10 @@ export class HomePage implements OnInit {
       next: (res: any) => {
         this.Data = res.data[0];
 
+        if(this.Data?.link_banner){
+          this.backgroudUrl = this.Data?.link_banner;
+        }
+
         this.data = [
           {
             title: this.Data?.eslogan || 'Eslogan',
@@ -63,6 +68,7 @@ export class HomePage implements OnInit {
           },
       
         ];
+
 
       },
       error: (error) => {

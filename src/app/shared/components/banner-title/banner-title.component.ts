@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
+import { ValidUrlPipe } from '../../pipes/validate-url.pipe';
 
 @Component({
   selector: 'app-shared-banner-title',
@@ -10,12 +11,13 @@ import { IonicModule } from '@ionic/angular';
   imports: [
     IonicModule,
     CommonModule,
+    ValidUrlPipe,
   ],
 })
 export class BannerTitleComponent {
   
   title = input('Titulo por default');
-  backgroundUrl = input('https://www.sinembargo.mx/wp-content/uploads/2018/04/renta.jpg');
+  backgroundUrl = input('');
 
   constructor() {}
 

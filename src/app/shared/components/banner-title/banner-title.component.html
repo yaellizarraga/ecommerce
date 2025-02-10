@@ -1,4 +1,4 @@
-<div class="banner" [ngStyle]="{'background-image': 'url(' + backgroundUrl() + ')'}">
+<div class="banner" [ngStyle]="{'background-image': 'url(' + (backgroundUrl() | validUrl: backgroundUrl()) + ')'}">
   <div class="overlay"></div>
   <h1>{{ title() }}</h1>
 </div>

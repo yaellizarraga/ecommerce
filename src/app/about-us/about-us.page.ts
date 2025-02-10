@@ -22,6 +22,7 @@ export class AboutUsPage implements OnInit {
 
   Data = <any>([]); 
   data : InfoTwoColumns[] = [];
+  backgroudUrl : string = 'https://picsum.photos/id/300/1080/300';
 
   constructor(
       private AboutUsService: AboutUsService,
@@ -36,7 +37,11 @@ export class AboutUsPage implements OnInit {
     this.AboutUsService.getAll().subscribe({
       next: (res: any) => {
         this.Data = res.data[0];
-
+        
+        if(this.Data?.link_banner){
+          this.backgroudUrl = this.Data?.link_banner;
+        }
+        
         this.data = [
           {
           title:  this.Data?.mision_title || 'Titulo Misión',
