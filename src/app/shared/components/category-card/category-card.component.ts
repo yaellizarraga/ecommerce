@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { CategoryCard } from '../../interfaces/category-card.interfaces';
+import { ValidUrlPipe } from '../../pipes/validate-url.pipe';
 
 @Component({
   selector: 'app-shared-category-card',
@@ -11,6 +12,7 @@ import { CategoryCard } from '../../interfaces/category-card.interfaces';
   imports: [
     IonicModule,
     CommonModule,
+    ValidUrlPipe
   ],
 })
 export class CategoryCardComponent {

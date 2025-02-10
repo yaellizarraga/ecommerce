@@ -45,11 +45,20 @@ export class ContactPage implements OnInit{
         next: (res: any) => {
           this.Data = res.data[0];
   
-          
           const number = this.Data?.contact_phone ? this.formatPhoneNumber(this.Data?.contact_phone) : '';
-
+          
           const iframeString = this.Data?.contact_map_iframe; 
-          const extractedSrc = this.extractSrcFromIframe(iframeString);
+
+          // Validar si es un enlace HTTP o HTTPS antes de procesarlo
+          let extractedSrc: string | null = null;
+          try {
+            const url = new URL(iframeString);
+            if (url.protocol === "http:" || url.protocol === "https:") {
+              extractedSrc = this.extractSrcFromIframe(iframeString);
+            }
+          } catch (error) {
+            console.warn('Iframe inválido:', iframeString);
+          }
       
           if (extractedSrc) {
             this.mapSrc = this.sanitizer.bypassSecurityTrustResourceUrl(extractedSrc);

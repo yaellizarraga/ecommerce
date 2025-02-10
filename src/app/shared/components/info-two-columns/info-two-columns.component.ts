@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { InfoTwoColumns } from '../../interfaces/info-two-columns.interface';
+import { ValidUrlPipe } from '../../pipes/validate-url.pipe';
 
 @Component({
   selector: 'app-shared-info-two-columns',
@@ -11,6 +12,7 @@ import { InfoTwoColumns } from '../../interfaces/info-two-columns.interface';
   imports: [
     IonicModule,
     CommonModule,
+    ValidUrlPipe,
   ],
 })
 export class InfoTwoColumnsComponent {

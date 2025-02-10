@@ -3,19 +3,19 @@
         <ion-list lines="none">
             <ion-item>
                 <div class="social-icons">
-                    <a [href]="Data.link_facebook" target="_blank"><ion-icon src="assets/icons/logo-facebook.svg"></ion-icon></a>
-                    <a [href]="Data.link_instagram" target="_blank"><ion-icon src="assets/icons/logo-instagram.svg"></ion-icon></a>
-                    <a [href]="Data.link_youtube" target="_blank"><ion-icon src="assets/icons/logo-youtube.svg"></ion-icon></a>
+                    <a [href]="Data?.link_facebook" target="_blank"><ion-icon src="assets/icons/logo-facebook.svg"></ion-icon></a>
+                    <a [href]="Data?.link_instagram" target="_blank"><ion-icon src="assets/icons/logo-instagram.svg"></ion-icon></a>
+                    <a [href]="Data?.link_youtube" target="_blank"><ion-icon src="assets/icons/logo-youtube.svg"></ion-icon></a>
                 </div>
             </ion-item>
             <ion-item>
                 <ion-label>Copyright © 2024 E-COMMERCE- Todos los derechos reservados.</ion-label>
             </ion-item>
             <ion-item>
-                <ion-label><a class="aviso" [href]="Data.link_youtube" target="_blank">Aviso de Privacidad</a></ion-label>
+                <ion-label><a class="aviso" [href]="Data?.link_youtube" target="_blank">Aviso de Privacidad</a></ion-label>
             </ion-item>
             <ion-item>
-                <ion-label>{{Data.name_footer}}</ion-label> 
+                <ion-label>{{Data?.name_footer}}</ion-label> 
             </ion-item>
         </ion-list>
     </ion-toolbar>

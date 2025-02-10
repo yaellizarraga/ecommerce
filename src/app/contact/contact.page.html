@@ -1,5 +1,3 @@
- 
-
 <ion-content id="main-content">
   <app-shared-banner-title title="Contactanos" />
   <div class="container">
@@ -14,6 +12,7 @@
       width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
       referrerpolicy="no-referrer-when-downgrade">
     </iframe>
+    <p class="text-center" *ngIf="!mapSrc"> Mapa</p>
     <!-- Contenido que será en componentes -->
 
   </div>

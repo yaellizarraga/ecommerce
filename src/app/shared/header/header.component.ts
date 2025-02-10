@@ -4,6 +4,7 @@ import { IonicModule } from "@ionic/angular";
 import { MenuComponent } from '../menu/menu.component';
 import { RouterModule } from '@angular/router';
 import { HeaderService } from './services/header.service';
+import { ValidUrlPipe } from '../pipes/validate-url.pipe';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,8 @@ import { HeaderService } from './services/header.service';
     IonicModule, 
     CommonModule,
     RouterModule,
-    MenuComponent
+    MenuComponent,
+    ValidUrlPipe,
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',

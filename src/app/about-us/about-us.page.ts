@@ -39,19 +39,19 @@ export class AboutUsPage implements OnInit {
 
         this.data = [
           {
-          title:  this.Data?.mision_title || 'Titulo Mision',
-          description: this.Data?.mision_description || 'Descripçion Mision',
-          imgUrl: this.Data?.mision_link_image || 'Link imagen Mision',
+          title:  this.Data?.mision_title || 'Titulo Misión',
+          description: this.Data?.mision_description || 'Descripción Mision',
+          imgUrl: this.Data?.mision_link_image || 'https://picsum.photos/id/1/500/500',
           },
           {
           title: this.Data?.vision_title || 'Titulo Visión',
-          description: this.Data?.vision_description || 'Descripçion Visión',
-          imgUrl: this.Data?.vision_link_image || 'Link imagen Visión',
+          description: this.Data?.vision_description || 'Descripción Visión',
+          imgUrl: this.Data?.vision_link_image || 'https://picsum.photos/id/2/500/500',
           },
           {
           title: this.Data?.values_title || 'Titulo Valores',
-          description: this.Data?.values_description || 'Descripçion Valores',
-          imgUrl: this.Data?.values_link_image || 'Link imagen Valores',
+          description: this.Data?.values_description || 'Descripción Valores',
+          imgUrl: this.Data?.values_link_image || 'https://picsum.photos/id/3/500/500',
           },
         ];
 
