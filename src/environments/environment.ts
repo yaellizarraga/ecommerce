@@ -5,4 +5,3 @@ export const environment = {
   UrlImages: 'https://espacios218.zamtostech.com/',
 };
 
-//https://espacios218.zamtostech.com/

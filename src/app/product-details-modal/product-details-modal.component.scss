@@ -21,6 +21,11 @@ swiper-container{
   min-width: 388px;
   min-height: 388px;
 }
+.logo{
+  width: 100px;
+  margin-left: 20px;
+}
+
 @media screen and (max-width: 767px) {
   swiper-container {
     width: 100%;

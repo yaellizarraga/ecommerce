@@ -19,9 +19,9 @@ ion-text{
 }
 ion-toggle{
   --track-background: #ddd;
-  --track-background-checked: var(--color-secondary);
+  --track-background-checked: var(--color-primary);
 
-  --handle-background: var(--color-red);
+  // --handle-background: var(--color-red);
   --handle-background-checked: var(--color-primary);
 }
 .sc-ion-input-md-h {

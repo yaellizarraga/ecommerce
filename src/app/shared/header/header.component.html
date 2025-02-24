@@ -2,7 +2,9 @@
 
 <ion-header collapse="fade" mode="md">
     <ion-toolbar>
-      <ion-img class="logo" [src]="Data?.link_logo | validUrl:'https://picsum.photos/id/250/200/100'"></ion-img>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <ion-img class="logo" [src]="Data?.link_logo | validUrl:'https://picsum.photos/id/250/200/100'"></ion-img>
+      </a>
 
       <ion-buttons slot="end" class="me-5">
         <ion-button routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Inicio</ion-button>

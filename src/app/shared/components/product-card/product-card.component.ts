@@ -17,14 +17,17 @@ import { ProductDetailsModalComponent } from 'src/app/product-details-modal/prod
 export class ProductCardComponent {
   
   item = input.required<product>();
+  linkLogo = input.required<string>();
 
   constructor(private modalcontroller: ModalController) {}
 
-  async openModalDetails(id:number){
+  async openModalDetails(item: any){
+
     const modal = await this.modalcontroller.create({
       component: ProductDetailsModalComponent,
       componentProps: {
-        id: id,
+        product: item,
+        linkLogo: this.linkLogo,
       },
       cssClass:'custom-modal-class'
     });
@@ -32,7 +35,6 @@ export class ProductCardComponent {
     await modal.present();
 
     const { data } = await modal.onWillDismiss();
-    console.log( data );
   }
 
 

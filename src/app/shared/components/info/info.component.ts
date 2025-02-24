@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Info } from '../../interfaces/info.interface';
 
@@ -18,9 +18,7 @@ export class InfoComponent {
   items = input.required<Info[]>();
 
   constructor() {
-    effect(() => {
-      console.log( this.items());
-    });
+    
   }
 
 }

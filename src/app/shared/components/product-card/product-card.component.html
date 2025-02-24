@@ -1,4 +1,4 @@
-<ion-card (click)="openModalDetails(item().id)">
+<ion-card (click)="openModalDetails(item())">
   <img class="product-img" [src]="item().imgUrl" [alt]="item().productName" />
   @if (item().discount.length > 0) {
     <div class="discount-banner">

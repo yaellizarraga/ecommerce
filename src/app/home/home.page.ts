@@ -82,7 +82,6 @@ export class HomePage implements OnInit {
       next: (res: any) => {
         this.Servicios = res.data;
 
-        console.log(this.Servicios);
 
         this.Servicios.forEach((servicio: any) => {
           this.data3.push({

@@ -1,8 +1,12 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Logo</ion-title>
+    <a (click)="closeModal()" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+      <ion-img class="logo" [src]="linkLogo() | validUrl:'https://picsum.photos/id/250/200/100'"></ion-img>
+    </a>
     <ion-buttons slot="end">
-      <ion-button class="return" (click)="closeModal()">Cerrar</ion-button>
+      <ion-button (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -11,7 +15,7 @@
     <ion-row>
       <ion-col size="12" size-lg="6">
         <swiper-container #swiperContainer init="false" >
-          @for (item of product.images; track $index) {
+          @for (item of product?.images; track $index) {
           <swiper-slide>
             <img [src]="item" [alt]="item" />
           </swiper-slide>
@@ -20,28 +24,23 @@
         </swiper-container>
       </ion-col>
       <ion-col size="12" size-lg="6">
-        <ion-card>
-          <ion-card-header>
-            <ion-card-title>
-              <ion-item lines="none">
-                <h1>{{ product.name }}</h1>
-              </ion-item>
-              <ion-item lines="none">
-                <h2 class="price">${{ product.price }}</h2>
-              </ion-item>
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-item lines="none">
-              <p [innerHTML]="product.description"></p>
-            </ion-item>
-            <ion-item lines="none">
-              <div class="container-buttons">
-                <ion-button class="cotizar">Cotizar</ion-button>
-              </div>
-            </ion-item>
-          </ion-card-content>
-        </ion-card>
+        <ion-list>
+          <ion-item lines="none">
+            <h1>{{ product?.productName }}</h1>
+          </ion-item>
+          <ion-item lines="none">
+            <h2 class="price">${{ product?.price }}</h2>
+          </ion-item>
+          <ion-item lines="none">
+            <p [innerHTML]="product?.description"></p>
+          </ion-item>
+          <ion-item lines="none">
+            <div class="container-buttons">
+              <ion-button class="cotizar">Cotizar</ion-button>
+            </div>
+          </ion-item>
+        </ion-list>
+
       </ion-col>
     </ion-row>
   </ion-grid>

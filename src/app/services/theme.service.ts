@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AllProductsService {
-  private urlBackend: string = environment.apiUrl + '/all-products';
+export class ThemeService {
+  private urlBackend: string = environment.apiUrl + '/theme';
   private http = inject(HttpClient);
 
   constructor() {}

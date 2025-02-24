@@ -33,7 +33,6 @@ export class CategoryCardComponent {
     // await modal.present();
 
     // const { data } = await modal.onWillDismiss();
-    // console.log( data );
   }
 
 

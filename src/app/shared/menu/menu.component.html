@@ -1,7 +1,9 @@
 <ion-menu side="end" menuId="mainMenu" contentId="main-content">
   <ion-header>
     <ion-toolbar>
-      <ion-img class="logo" [src]="linkLogo()"></ion-img>
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+        <ion-img class="logo" [src]="linkLogo()"></ion-img>
+      </a>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">

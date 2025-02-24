@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, input, OnInit,AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, AfterViewInit, ViewChild, ElementRef, Input, input } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { product } from 'src/app/all-products/interfaces/product.interfaces';
+import { ValidUrlPipe } from '../shared/pipes/validate-url.pipe';
+import { addIcons } from 'ionicons';
+import { close } from 'ionicons/icons';
 
 @Component({
   selector: 'app-product-details-modal',
@@ -11,61 +15,21 @@ import { product } from 'src/app/all-products/interfaces/product.interfaces';
   imports: [
     IonicModule,
     CommonModule,
+    RouterModule,
+    ValidUrlPipe,
   ],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductDetailsModalComponent implements AfterViewInit {
   
-  product = {
-    name: 'Oficina Profesional',
-    price: 1500,
-    discountPrice: 1200,
-    description: `<section>
-  <h1>Características de una Oficina Profesional</h1>
-  <p>
-    Una oficina profesional es un espacio diseñado para el desempeño eficiente de actividades laborales, administrativas o empresariales. Combina funcionalidad y estética para proyectar una imagen profesional, garantizando comodidad y productividad.
-  </p>
-    <br>
-  <h2>Características principales:</h2>
-   <br>
-  <ul>
-    <li>
-      <strong>Distribución funcional:</strong>
-      <ul>
-        <li>Recepción o sala de espera.</li>
-        <li>Espacios individuales (cubículos o escritorios).</li>
-        <li>Áreas comunes para reuniones o trabajo colaborativo.</li>
-        <li>Sala de juntas con equipos tecnológicos para presentaciones.</li>
-        <li>Zona de descanso o cafetería.</li>
-      </ul>
-    </li>
-    <li>
-     <br>
-      <strong>Equipamiento tecnológico:</strong>
-      <ul>
-        <li>Computadoras y accesorios.</li>
-        <li>Impresoras y proyectores.</li>
-        <li>Sistemas de videoconferencia.</li>
-        <li>Conexión Wi-Fi de alta velocidad.</li>
-      </ul>
-    </li>
-   
-</section>
-`,
-    images: [
-      'assets/images/product-10.jpg',
-      'assets/images/product-10.jpg',
-      'assets/images/product-10.jpg',
-      'assets/images/product-10.jpg',
-      'assets/images/product-10.jpg',
-      'assets/images/product-10.jpg',
-      'assets/images/product-10.jpg',
-    ],
-  };
+  @Input() product?: product;
+  linkLogo = input.required<string>();
 
   @ViewChild('swiperContainer', { static: false }) swiperContainer!: ElementRef;
 
-  constructor(private modalController: ModalController) {}
+  constructor(private modalController: ModalController) {
+    addIcons({ close });
+  }
 
   closeModal() {
     this.modalController.dismiss();

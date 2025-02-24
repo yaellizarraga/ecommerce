@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
-import { HeaderComponent } from './shared/header/header.component';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +9,34 @@ import { HeaderComponent } from './shared/header/header.component';
   imports: [
     IonApp, 
     IonRouterOutlet,
-    HeaderComponent,
   ],
 })
-export class AppComponent {
-  constructor() {}
+export class AppComponent implements OnInit {
+  
+  constructor(
+      private Theme: ThemeService,
+    ) {}
+  
+    ngOnInit(): void {
+      this.loadTheme();
+    }
+  
+    loadTheme() {
+      this.Theme.getAll().subscribe({
+        next: (res: any) => {
+          if (res.data.length > 0) {
+            const theme = res.data[0];
+  
+            // Establecer las variables CSS dinámicamente
+            document.documentElement.style.setProperty('--color-primary', theme.primary_color || '#1a5276');
+            document.documentElement.style.setProperty('--color-secondary', theme.secondary_color || '#3d8bbb');
+            document.documentElement.style.setProperty('--font-family', theme.font_family || 'Arial, sans-serif');
+          }
+        },
+        error: (error) => {
+          console.error('Error fetching Header:', error);
+        }
+      });
+    }
+
 }
