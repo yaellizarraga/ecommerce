@@ -45,8 +45,8 @@ export class ContactPage implements OnInit{
         next: (res: any) => {
           this.Data = res.data[0];
 
-          if(this.Data?.link_banner){
-            this.backgroudUrl = this.Data?.link_banner;
+          if(this.Data?.preview){
+            this.backgroudUrl = this.Data?.preview;
           }
           const number = this.Data?.contact_phone ? this.formatPhoneNumber(this.Data?.contact_phone) : '';
           

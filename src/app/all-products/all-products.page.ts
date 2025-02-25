@@ -60,7 +60,7 @@ export class AllProductsPage implements OnInit {
   loadBanner() {
     this.AllProductsService.getAll().subscribe({
       next: (res: any) => {
-        this.backgroudUrl = (res.data.length > 0) ? res.data[0].link_banner :'';
+        this.backgroudUrl = (res.data.length > 0) ? res.data[0].preview :'';
 
       },
       error: (error) => {
