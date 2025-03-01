@@ -39,24 +39,24 @@ export class AboutUsPage implements OnInit {
         this.Data = res.data[0];
         
         if(this.Data?.link_banner){
-          this.backgroudUrl = this.Data?.link_banner;
+          this.backgroudUrl = this.Data?.preview;
         }
         
         this.data = [
           {
           title:  this.Data?.mision_title || 'Titulo Misión',
           description: this.Data?.mision_description || 'Descripción Mision',
-          imgUrl: this.Data?.mision_link_image || 'https://picsum.photos/id/1/500/500',
+          imgUrl: this.Data?.preview_misionLinkImage || 'https://picsum.photos/id/1/500/500',
           },
           {
           title: this.Data?.vision_title || 'Titulo Visión',
           description: this.Data?.vision_description || 'Descripción Visión',
-          imgUrl: this.Data?.vision_link_image || 'https://picsum.photos/id/2/500/500',
+          imgUrl: this.Data?.preview_visionLinkImage || 'https://picsum.photos/id/2/500/500',
           },
           {
           title: this.Data?.values_title || 'Titulo Valores',
           description: this.Data?.values_description || 'Descripción Valores',
-          imgUrl: this.Data?.values_link_image || 'https://picsum.photos/id/3/500/500',
+          imgUrl: this.Data?.preview_valuesLinkImage || 'https://picsum.photos/id/3/500/500',
           },
         ];
 
