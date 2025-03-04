@@ -1,7 +1,7 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://api-ecommerce.zamtostech.com/api',
+  apiUrl: 'https://api.legazpi.zamtostech.com/api',
   // apiUrl: 'http://localhost/api-ecommerce/public/api',
-  UrlImages: 'https://espacios218.zamtostech.com/',
+  UrlImages: 'https://legazpi.zamtostech.com/',
 };
 

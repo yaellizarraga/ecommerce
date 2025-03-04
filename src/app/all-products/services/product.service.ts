@@ -16,8 +16,8 @@ export class ProductService {
     return this.http.post<any>(this.urlBackend, form);
   }
 
-  getAll(page: number = 1): Observable<any> {
-    return this.http.get<any>(`${this.urlBackend}?page=${page}`);
+  getAll(params: string): Observable<any> {
+    return this.http.get<any>(`${this.urlBackend}${params}`);
   }
 
   getById(id: number): Observable<any> {

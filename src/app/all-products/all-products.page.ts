@@ -9,6 +9,7 @@ import { ProductService } from './services/product.service';
 import { environment } from '../../environments/environment';
 import { HeaderService } from '../shared/header/services/header.service';
 import { AllProductsService } from './services/all-products.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-all-products',
@@ -32,6 +33,9 @@ export class AllProductsPage implements OnInit {
   itemsPerPage = 20;
   currentPage = 1;
   isLastPage = false;
+  search: string = '';
+  previousSearch: string = '';
+  filters = '';
 
   constructor(
     private ProductService: ProductService,
@@ -43,6 +47,14 @@ export class AllProductsPage implements OnInit {
     this.loadData();
     this.loadHeader();
     this.loadBanner();
+  }
+
+  filtrarLista(event: any) {
+    const busqueda = event.target.value.toLowerCase(); // Obtiene el valor y lo convierte a minúsculas
+    this.search = busqueda;
+    this.currentPage = 1;
+    this.isLastPage = false; 
+    this.loadData();
   }
 
   loadHeader() {
@@ -75,7 +87,22 @@ export class AllProductsPage implements OnInit {
       return;
     }
 
-    this.ProductService.getAll(this.currentPage).subscribe({
+    const isNewSearch = this.previousSearch !== this.search.trim();
+    if (isNewSearch) {
+      this.displayedData = []; // Reinicia la lista solo si es una nueva búsqueda
+      this.currentPage = 1; // Reinicia la paginación
+      this.isLastPage = false; // Asegura que pueda seguir paginando
+    }
+
+    if (this.search.trim() !== '') {
+      this.filters = `?page=${this.currentPage}&search=${this.search}`;
+    } else {
+      this.filters = `?page=${this.currentPage}`;
+    }
+    
+
+    this.ProductService.getAll(this.filters).pipe(
+      take(1)).subscribe({
       next: (res: any) => {
         const newProducts = res.data.map((product: any) => ({
           id: product.id,
@@ -94,6 +121,8 @@ export class AllProductsPage implements OnInit {
         } else {
           this.currentPage++;
         }
+
+        this.previousSearch = this.search.trim();
 
         if (event) event.target.complete();
       },

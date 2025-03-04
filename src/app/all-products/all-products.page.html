@@ -1,14 +1,29 @@
 <ion-content id="main-content">
   <app-shared-banner-title [backgroundUrl]="backgroudUrl" title="Todos los Productos"/>
-
+ 
   <div class="container">
     <ion-grid>
+      <ion-row class="ion-align-items-center container-searchbar">
+        <ion-col size="12" size-md="12" size-lg="9" class="ion-text-start">
+          <ion-searchbar [debounce]="1000" mode="md" placeholder="Buscar" (ionInput)="filtrarLista($event)"></ion-searchbar>
+        </ion-col>
+      </ion-row>
+    
       <ion-row>
-        <ion-col size="12" size-md="4" size-lg="3" *ngFor="let item of displayedData">
-          <app-shared-product-card [item]="item" [linkLogo]="link_logo"/>
+        <!-- Filtro en la izquierda -->
+        <!-- <ion-col size="12" size-md="12" size-lg="3">
+          <div style="border: 1px solid blue; width: 100%; height: 100%;">
+            Filtro por categoría
+          </div>
+        </ion-col> -->
+    
+        <!-- Productos -->
+        <ion-col size="12" size-md="12" size-lg="3" *ngFor="let item of displayedData">
+          <app-shared-product-card [item]="item" [linkLogo]="link_logo"></app-shared-product-card>
         </ion-col>
       </ion-row>
     </ion-grid>
+    
 
     <!-- Infinite Scroll -->
     <ion-infinite-scroll (ionInfinite)="loadData($event)" [disabled]="isLastPage">
