@@ -51,20 +51,16 @@ export class ContactPage implements OnInit{
           const number = this.Data?.contact_phone ? this.formatPhoneNumber(this.Data?.contact_phone) : '';
           
           const iframeString = this.Data?.contact_map_iframe; 
-
-          // Validar si es un enlace HTTP o HTTPS antes de procesarlo
-          let extractedSrc: string | null = null;
-          try {
-            const url = new URL(iframeString);
-            if (url.protocol === "http:" || url.protocol === "https:") {
-              extractedSrc = this.extractSrcFromIframe(iframeString);
+          if (iframeString) {
+            const extractedSrc = this.extractSrcFromIframe(iframeString);
+    
+            if (extractedSrc) {
+              this.mapSrc = this.sanitizer.bypassSecurityTrustResourceUrl(extractedSrc);
+            } else {
+              console.warn('No se encontró un src válido en el iframe.');
             }
-          } catch (error) {
-            console.warn('Iframe inválido:', iframeString);
-          }
-      
-          if (extractedSrc) {
-            this.mapSrc = this.sanitizer.bypassSecurityTrustResourceUrl(extractedSrc);
+          } else {
+            console.warn('No se proporcionó un iframe.');
           }
 
           this.data = [
@@ -98,9 +94,15 @@ export class ContactPage implements OnInit{
     return cleaned;
   }
 
-  extractSrcFromIframe(iframeString: string): string {
+  extractSrcFromIframe(iframeString: string): string | null {
+    if (!iframeString.includes('<iframe')) {
+      console.warn('El string proporcionado no contiene un iframe:', iframeString);
+      return null;
+    }
+  
     const match = iframeString.match(/src="([^"]+)"/);
-    return match ? match[1] : '';
+    return match ? match[1] : null;
   }
+  
   
 }

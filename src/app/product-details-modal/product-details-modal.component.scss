@@ -24,6 +24,13 @@ swiper-container{
 .logo{
   width: 100px;
   margin-left: 20px;
+  cursor: pointer;
+}
+.ion-icon{
+  font-size: 30px;
+  color: var(--color-primary);
+  margin-right: 20px;
+  cursor: pointer;
 }
 
 @media screen and (max-width: 767px) {
@@ -63,4 +70,13 @@ img{
 
 ion-button{
   --background: var(--color-primary);
+}
+
+ion-item{
+  display: flex;
+  align-items: baseline;
+}
+
+.mr{
+  margin-right: 10px;
 }

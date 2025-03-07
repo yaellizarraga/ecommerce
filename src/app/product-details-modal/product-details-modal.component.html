@@ -1,12 +1,14 @@
 <ion-header>
   <ion-toolbar>
-    <a (click)="closeModal()" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-      <ion-img class="logo" [src]="linkLogo() | validUrl:'https://picsum.photos/id/250/200/100'"></ion-img>
-    </a>
+      <ion-img (click)="closeModal()" 
+        routerLink="/" 
+        routerLinkActive="active" 
+        [routerLinkActiveOptions]="{ exact: true }" 
+        class="logo" 
+        [src]="linkLogo() | validUrl:'https://picsum.photos/id/250/200/100'">
+      </ion-img>
     <ion-buttons slot="end">
-      <ion-button (click)="closeModal()">
-        <ion-icon name="close"></ion-icon>
-      </ion-button>
+        <ion-icon (click)="closeModal()" class="ion-icon" name="close"></ion-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -32,11 +34,14 @@
             <h2 class="price">${{ product?.price }}</h2>
           </ion-item>
           <ion-item lines="none">
-            <p [innerHTML]="product?.description"></p>
+            <h5 class="mr">Descripción: </h5><p [innerHTML]="product?.description"></p>
+          </ion-item>
+          <ion-item lines="none">
+            <h5 class="mr">Detalles: </h5><p [innerHTML]="product?.detalles"></p>
           </ion-item>
           <ion-item lines="none">
             <div class="container-buttons">
-              <ion-button class="cotizar">Cotizar</ion-button>
+              <ion-button class="cotizar">Agregar al carrito</ion-button>
             </div>
           </ion-item>
         </ion-list>

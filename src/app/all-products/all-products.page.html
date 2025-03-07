@@ -1,36 +1,54 @@
 <ion-content id="main-content">
   <app-shared-banner-title [backgroundUrl]="backgroudUrl" title="Todos los Productos"/>
  
+ 
+
   <div class="container">
-    <ion-grid>
-      <ion-row class="ion-align-items-center container-searchbar">
-        <ion-col size="12" size-md="12" size-lg="9" class="ion-text-start">
-          <ion-searchbar [debounce]="1000" mode="md" placeholder="Buscar" (ionInput)="filtrarLista($event)"></ion-searchbar>
-        </ion-col>
-      </ion-row>
-    
-      <ion-row>
-        <!-- Filtro en la izquierda -->
-        <!-- <ion-col size="12" size-md="12" size-lg="3">
-          <div style="border: 1px solid blue; width: 100%; height: 100%;">
-            Filtro por categoría
-          </div>
-        </ion-col> -->
-    
-        <!-- Productos -->
-        <ion-col size="12" size-md="12" size-lg="3" *ngFor="let item of displayedData">
-          <app-shared-product-card [item]="item" [linkLogo]="link_logo"></app-shared-product-card>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+
+    <!-- Filtros -->
+    <app-filters-panel></app-filters-panel>
+  
+
+  <ion-card class="ion-card-principal">
+    <ion-card-content>
+      
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12" size-md="12" size-lg="12" class="ion-text-start d-flex">
+            <ion-button class="d-block d-sm-block d-lg-none button-filters" (click)="openModalFiltersMobile()"><ion-icon name="filter-circle-outline"></ion-icon>Filtros</ion-button>
+            <ion-searchbar [debounce]="1000" mode="md" placeholder="Buscar" (ionInput)="filtrarLista($event)"></ion-searchbar>
+          </ion-col>
+          <ion-col *ngIf="loading" size="12" class="ion-spiner-container">
+              <ion-spinner width="100px" name="circles"></ion-spinner>
+              Cargando productos...
+          </ion-col>
+          
+          <ion-col *ngIf="sinData" size="12" class="ion-spiner-container">
+              ¡No Se encontraron productos!
+          </ion-col>
+        </ion-row>
+      
+        <ion-row>
+          <!-- Productos -->
+          <ion-col size="12" size-md="12" size-lg="4" *ngFor="let item of displayedData">
+            <app-shared-product-card [item]="item" [linkLogo]="link_logo"></app-shared-product-card>
+          </ion-col>
+        </ion-row>
+  
+        <!-- Infinite Scroll -->
+        <ion-infinite-scroll *ngIf="!loading" (ionInfinite)="loadData($event)" [disabled]="isLastPage">
+          <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más productos...">
+          </ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+  
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+   
     
 
-    <!-- Infinite Scroll -->
-    <ion-infinite-scroll (ionInfinite)="loadData($event)" [disabled]="isLastPage">
-      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más productos...">
-      </ion-infinite-scroll-content>
-    </ion-infinite-scroll>
-
+    
   </div>
 
   <app-footer></app-footer>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { FooterComponent } from "../shared/footer/footer.component";
 import { BannerTitleComponent } from '../shared/components/banner-title/banner-title.component';
 import { product } from './interfaces/product.interfaces';
@@ -11,6 +11,11 @@ import { HeaderService } from '../shared/header/services/header.service';
 import { AllProductsService } from './services/all-products.service';
 import { take } from 'rxjs';
 
+import { addIcons } from 'ionicons';
+import { close, closeCircle, pin, filterCircleOutline } from 'ionicons/icons';
+import { FiltersPanelComponent } from './components/filters-panel/filters-panel.component';
+import { FiltersPanelMobileComponent } from './components/filters-panel-mobile/filters-panel-mobile.component';
+
 @Component({
   selector: 'app-all-products',
   templateUrl: 'all-products.page.html',
@@ -21,7 +26,9 @@ import { take } from 'rxjs';
     CommonModule,
     FooterComponent,
     BannerTitleComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    FiltersPanelComponent,
+    FiltersPanelMobileComponent,
   ],
 })
 
@@ -36,12 +43,17 @@ export class AllProductsPage implements OnInit {
   search: string = '';
   previousSearch: string = '';
   filters = '';
+  loading = true;
+  sinData = false;
 
   constructor(
     private ProductService: ProductService,
     private AllProductsService: AllProductsService,
     private HeaderService: HeaderService,
-  ) {}
+    private modalcontroller: ModalController,
+  ) {
+    addIcons({ close, closeCircle, pin, filterCircleOutline });
+  }
 
   ngOnInit(): void {
     this.loadData();
@@ -51,6 +63,8 @@ export class AllProductsPage implements OnInit {
 
   filtrarLista(event: any) {
     const busqueda = event.target.value.toLowerCase(); // Obtiene el valor y lo convierte a minúsculas
+    this.loading = true;
+    this.sinData = false;
     this.search = busqueda;
     this.currentPage = 1;
     this.isLastPage = false; 
@@ -104,6 +118,8 @@ export class AllProductsPage implements OnInit {
     this.ProductService.getAll(this.filters).pipe(
       take(1)).subscribe({
       next: (res: any) => {
+        this.loading = false;
+
         const newProducts = res.data.map((product: any) => ({
           id: product.id,
           productName: product.nombre.trim(),
@@ -112,9 +128,13 @@ export class AllProductsPage implements OnInit {
           images: product.imagenes.map((img: string) => environment.UrlImages + img),
           price: parseFloat(product.precio).toFixed(2),
           discount: product.discount,
+          detalles: product.Detalles_Producto,
         }));
 
         this.displayedData = [...this.displayedData, ...newProducts];
+        if(res.data.length <= 0){
+          this.sinData = true;
+        }
 
         if (newProducts.length < this.itemsPerPage) {
           this.isLastPage = true;
@@ -132,5 +152,19 @@ export class AllProductsPage implements OnInit {
       }
     });
   }
+
+  
+    async openModalFiltersMobile(){
+  
+      const modal = await this.modalcontroller.create({
+        component: FiltersPanelMobileComponent,
+        cssClass:'custom-modal-class'
+      });
+  
+      await modal.present();
+  
+      const { data } = await modal.onWillDismiss();
+    }
+
 }
 
