@@ -1,0 +1,51 @@
+<ion-content id="main-content">
+  <div class="container">
+
+    <!-- Contenido que será en componentes -->
+    <div class="container-center">
+      <ion-card class="form-container">
+        <ion-card-content>
+          <form class="form" [formGroup]="Form" (ngSubmit)="sendRegister()">
+              <!-- Campo Email -->
+              <div class="justify-content-center d-flex">
+                <h3 class="title">Crear una cuenta</h3>  
+              </div>
+              <div class="form-group">
+                <label for="email">Email:</label>
+                <input id="email" class="form-control input-text" formControlName="email" type="email" maxlength="150"
+                  placeholder="ejemplo@ejemplo.com" autocomplete="off">
+              </div>
+              <!-- <div *ngIf="Form.get('email')?.invalid && (Form.get('email')?.touched || Form.get('email')?.dirty)">
+                <small class="text-danger">El email es obligatorio y debe ser válido</small>
+              </div> -->
+
+              <!-- Campo Password -->
+              <div class="form-group">
+                <label for="password">Contraseña:</label>
+                <input id="password" class="form-control input-text" formControlName="password" type="password" maxlength="50"
+                  (keyup.enter)="sendRegister()" autocomplete="off">
+              </div>
+              <!-- <div
+                *ngIf="Form.get('password')?.invalid && (Form.get('password')?.touched || Form.get('password')?.dirty)">
+                <small class="text-danger">La contraseña es obligatoria y debe tener al menos 6 caracteres</small>
+              </div> -->
+
+
+              <ion-button class="ion-button capitalize" expand="block" type="submit" [disabled]="loading">
+                <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+                <span *ngIf="!loading">Registrarse</span>
+              </ion-button>
+
+              <div class="justify-content-center d-flex text-crear-cuenta">
+                <h6>¿Ya tienes una cuenta? <a routerLink="/login">Iniciar sesión.</a></h6>
+              </div>
+          </form>
+        </ion-card-content>
+      </ion-card>
+
+    </div>
+  </div>
+
+  <!-- Contenido que será en componentes -->
+
+</ion-content>

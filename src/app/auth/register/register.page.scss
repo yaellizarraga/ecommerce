@@ -1,0 +1,45 @@
+.form-container {
+    width: 500px;
+}
+
+.container-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.form {
+    margin: 20px;
+}
+.title{
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+ion-card{
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+        rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+        rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.text-crear-cuenta{
+    margin-top: 30px;
+
+    a{
+        color: var(--ion-color-primary);
+        text-decoration: none;
+    }
+}
+.input-text {
+    // --border-color: transparent !important;
+    // --highlight-color-focused: black !important;
+    // --highlight-color-valid: black !important;
+    // --highlight-color-invalid: black !important;
+    // --highlight-color: black !important;
+    margin-bottom: 20px;
+}
+ion-button{
+    margin-top: 40px;
+}

@@ -11,6 +11,52 @@
         <ion-button routerLink="/all-products" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Todos los productos</ion-button>
         <ion-button routerLink="/about-us" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Acerca de nosotros</ion-button>
         <ion-button routerLink="/contact" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Contacto</ion-button>
+        <ion-item class="d-none d-sm-none d-lg-block">
+          <ion-icon name="cart-outline"></ion-icon>
+          <ion-badge color="color-primary">11</ion-badge>
+        </ion-item>
+
+        <ion-item button (click)="openPopover($event)" id="login" class="d-none d-sm-none d-lg-block">
+          <ion-icon name="log-in-outline"></ion-icon>
+        </ion-item>
+        <ion-popover #login [isOpen]="isOpen" (didDismiss)="isOpen = false">
+          <ng-template>
+            <ion-list>
+              <ion-item button (click)="closePopover()" routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <ion-label>Iniciar sesión</ion-label>
+              </ion-item>
+              <ion-item button (click)="closePopover()" routerLink="/register" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                <ion-label>Crear cuenta</ion-label>
+              </ion-item>
+            </ion-list>
+          </ng-template>
+        </ion-popover>
+
+        <!-- <ion-item button id="logout" class="d-none d-sm-none d-lg-block">
+          <ion-avatar class="image-logout">
+            <img alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          </ion-avatar>
+          <p class="logout-p">Javier de Jesus</p>
+        </ion-item> -->
+        <ion-popover>
+          <ng-template>
+            <ion-list>
+              <ion-item button>
+                <ion-label>Mi perfil</ion-label>
+              </ion-item>
+              <ion-item button>
+                <ion-label>Pedidos</ion-label>
+              </ion-item>
+              <ion-item button>
+                <ion-label>Compras</ion-label>
+              </ion-item>
+              <ion-item button>
+                <ion-label>Salir</ion-label>
+              </ion-item>
+            </ion-list>
+          </ng-template>
+        </ion-popover>
+
       </ion-buttons>
       <ion-buttons slot="end" class="me-4 d-block d-lg-none">
         <ion-menu-button menu="mainMenu"></ion-menu-button>

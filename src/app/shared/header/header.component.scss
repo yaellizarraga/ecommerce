@@ -14,8 +14,22 @@ ion-button {
     color: var(--color-primary); // Cambia el texto al color primario cuando está activo
   }
 }
-
+.image-logout{
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+.logout-p{
+  margin-bottom: 0px;
+  margin: none;
+}
 .logo{
   width: 100px;
   margin-left: 20px;
+}
+
+@media screen and (max-width: 767px) {
+  .me-5 {
+      margin: 0 !important;
+  }
 }

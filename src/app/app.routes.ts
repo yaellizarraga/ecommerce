@@ -23,6 +23,16 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./all-products/all-products.page').then((m) => m.AllProductsPage),
       },
+      {
+        path: 'login',
+        loadComponent: () =>
+          import('./auth/login/login.page').then((m) => m.LoginPage),
+      },
+      {
+        path: 'register',
+        loadComponent: () =>
+          import('./auth/register/register.page').then((m) => m.RegisterPage),
+      },
     ]
   },
   {

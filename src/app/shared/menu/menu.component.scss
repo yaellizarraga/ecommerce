@@ -11,3 +11,16 @@ ion-item.active {
   width: 100px;
   margin-left: 20px;
 }
+.image-logout{
+  width: 25px;
+  height: 25px;
+  margin-right: 5px;
+}
+.logout-p{
+  margin-bottom: 0px;
+  margin: none;
+}
+.ion-padding{
+  --padding-start: var(--ion-padding, 0px);
+  --padding-end: var(--ion-padding, 0px);
+}
