@@ -31,3 +31,10 @@ ion-card {
 ion-accordion-group{
     width: 100%;
 }
+.ion-chip-delete{
+    background-color: var(--color-red);
+    color: var(--color-white);
+    ion-icon{
+        color: var(--color-white);
+    }
+}

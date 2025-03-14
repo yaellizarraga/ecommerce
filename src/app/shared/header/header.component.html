@@ -11,12 +11,13 @@
         <ion-button routerLink="/all-products" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Todos los productos</ion-button>
         <ion-button routerLink="/about-us" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Acerca de nosotros</ion-button>
         <ion-button routerLink="/contact" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="capitalize d-none d-lg-block">Contacto</ion-button>
-        <ion-item class="d-none d-sm-none d-lg-block">
+        
+        <ion-item lines="none" Button routerLink="/shopping-cart" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <ion-icon name="cart-outline"></ion-icon>
           <ion-badge color="color-primary">11</ion-badge>
         </ion-item>
 
-        <ion-item button (click)="openPopover($event)" id="login" class="d-none d-sm-none d-lg-block">
+        <ion-item lines="none" button (click)="openPopover($event)" id="login" class="d-none d-sm-none d-lg-block">
           <ion-icon name="log-in-outline"></ion-icon>
         </ion-item>
         <ion-popover #login [isOpen]="isOpen" (didDismiss)="isOpen = false">

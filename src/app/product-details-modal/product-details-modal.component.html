@@ -31,14 +31,54 @@
             <h1>{{ product?.productName }}</h1>
           </ion-item>
           <ion-item lines="none">
-            <h2 class="price">${{ product?.price }}</h2>
+            @if (product?.discount !== null) {
+              <h2 class="price-discount">${{ product?.discount }}</h2>
+              <h2 class="price tachado">${{ product?.price }}</h2>
+            }@else{
+              <h2 class="price">${{ product?.price }}</h2>
+            }
           </ion-item>
-          <ion-item lines="none">
-            <h5 class="mr">Descripción: </h5><p [innerHTML]="product?.description"></p>
-          </ion-item>
-          <ion-item lines="none">
-            <h5 class="mr">Detalles: </h5><p [innerHTML]="product?.detalles"></p>
-          </ion-item>
+          @if (product?.familia) {
+            <ion-item>
+              <h5 class="mr">Familia: </h5><p [innerHTML]="product?.familia"></p>
+            </ion-item>
+          }
+
+          @if (product?.familia) {
+            <ion-item>
+              <h5 class="mr">categoria: </h5><p [innerHTML]="product?.categoria"></p>
+            </ion-item>
+        }
+          @if (product?.modelo) {
+            <ion-item>
+              <h5 class="mr">modelo: </h5><p [innerHTML]="product?.modelo"></p>
+            </ion-item>
+        }
+          @if (product?.marca) {
+            <ion-item>
+              <h5 class="mr">marca: </h5><p [innerHTML]="product?.marca"></p>
+            </ion-item>
+        }
+          @if (product?.color) {
+            <ion-item>
+              <h5 class="mr">color: </h5><p [innerHTML]="product?.color"></p>
+            </ion-item>
+        }
+          @if (product?.medida) {
+            <ion-item>
+              <h5 class="mr">medida: </h5><p [innerHTML]="product?.medida"></p>
+            </ion-item>
+        }
+          @if (product?.description) {
+            <ion-item>
+              <h5 class="mr">Descripción: </h5><p [innerHTML]="product?.description"></p>
+            </ion-item>
+        }
+          @if (product?.detalles) {
+            <ion-item>
+              <h5 class="mr">Detalles: </h5><p [innerHTML]="product?.detalles"></p>
+            </ion-item>
+        }
           <ion-item lines="none">
             <div class="container-buttons">
               <ion-button class="cotizar">Agregar al carrito</ion-button>

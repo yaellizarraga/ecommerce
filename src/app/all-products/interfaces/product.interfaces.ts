@@ -7,4 +7,14 @@ export interface product {
     description: string;
     images:[];
     detalles: string;
+    familia?: string,
+    categoria?: string,
+    modelo?: string,
+    marca?: string,
+    color?: string,
+    medida?: string,
 }
+
+export interface Filters {
+    [key: string]: string[]; 
+  }

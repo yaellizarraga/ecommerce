@@ -13,3 +13,10 @@ ion-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 10px;
   }
+.ion-chip-delete{
+    background-color: var(--color-red);
+    color: var(--color-white);
+    ion-icon{
+        color: var(--color-white);
+    }
+}

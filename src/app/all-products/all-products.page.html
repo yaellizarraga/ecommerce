@@ -6,7 +6,7 @@
   <div class="container">
 
     <!-- Filtros -->
-    <app-filters-panel></app-filters-panel>
+    <app-filters-panel [data]="filtersData"></app-filters-panel>
   
 
   <ion-card class="ion-card-principal">
@@ -15,8 +15,8 @@
       <ion-grid>
         <ion-row>
           <ion-col size="12" size-md="12" size-lg="12" class="ion-text-start d-flex">
-            <ion-button class="d-block d-sm-block d-lg-none button-filters" (click)="openModalFiltersMobile()"><ion-icon name="filter-circle-outline"></ion-icon>Filtros</ion-button>
-            <ion-searchbar [debounce]="1000" mode="md" placeholder="Buscar" (ionInput)="filtrarLista($event)"></ion-searchbar>
+            <ion-button [disabled]="loadFiltersButton" class="d-block d-sm-block d-lg-none button-filters" (click)="openModalFiltersMobile()"><ion-icon name="filter-circle-outline"></ion-icon>Filtros</ion-button>
+            <ion-searchbar [debounce]="1000" mode="md" placeholder="Buscar" (ionInput)="filtrarListaBusqueda($event)"></ion-searchbar>
           </ion-col>
           <ion-col *ngIf="loading" size="12" class="ion-spiner-container">
               <ion-spinner width="100px" name="circles"></ion-spinner>

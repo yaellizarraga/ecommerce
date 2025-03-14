@@ -33,6 +33,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./auth/register/register.page').then((m) => m.RegisterPage),
       },
+      {
+        path: 'shopping-cart',
+        loadComponent: () =>
+          import('./shopping-cart/shopping-cart.page').then((m) => m.ShoppingCartPage),
+      },
     ]
   },
   {

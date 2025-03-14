@@ -32,9 +32,9 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-// @import '@ionic/angular/css/palettes/dark.system.css';
+//  @import "@ionic/angular/css/palettes/dark.always.css"; 
+//  @import "@ionic/angular/css/palettes/dark.class.css"; 
+//  @import '@ionic/angular/css/palettes/dark.system.css';
 
 @font-face {
   font-family: "Poppins-Regular";
@@ -89,11 +89,11 @@ body {
 }
 
 .capitalize {
-  text-transform: capitalize;
+  text-transform: capitalize !important;
 }
 
 .lowercase {
-  text-transform: lowercase;
+  text-transform: lowercase !important;
 }
 
 
@@ -141,6 +141,10 @@ h6 {
 label{
   font-family: var(--font-family) !important;
   font-size: 1.125rem;
+}
+ion-label{
+  font-family: var(--font-family) !important;
+  font-size: 1rem;
 }
 
 //modal producto details

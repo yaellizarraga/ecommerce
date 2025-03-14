@@ -1,58 +1,95 @@
-     <!-- Filtros -->
-  <ion-grid class="ion-grid-filters d-none d-lg-block">
-    <ion-row>
-      <ion-card class="container-filters">
-        <ion-card-content>
-        <ion-chip>
-          <ion-icon name="pin" color="primary"></ion-icon>
-          <ion-label>Modelo general</ion-label>
-          <ion-icon name="close"></ion-icon>
+<!-- Filtros -->
+<ion-grid class="ion-grid-filters d-none d-lg-block">
+  <ion-row>
+    <ion-card class="container-filters">
+      <ion-card-content>
+
+        <ion-chip *ngIf="hasFilters" class="ion-chip-delete" (click)="deleteFilterAll()">
+          <ion-label>Borrar todo</ion-label>
+          <ion-icon name="trash-outline"></ion-icon>
         </ion-chip>
-        <ion-chip>
-          <ion-icon name="pin" color="primary"></ion-icon>
-          <ion-label>Modelo general</ion-label>
-          <ion-icon name="close"></ion-icon>
-        </ion-chip>
+        <ng-container *ngFor="let tipo of objectKeys(AllFilters)">
+          <ion-chip *ngFor="let item of AllFilters[tipo]">
+            <ion-label class="lowercase">{{ item }}</ion-label>
+            <ion-icon name="close" (click)="deleteFilter(item, tipo)"></ion-icon>
+          </ion-chip>
+        </ng-container>
         
+
         <ion-accordion-group>
           <ion-accordion value="familia">
             <ion-item slot="header" color="light">
               <ion-label>Familia</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content">Third Content</div>
+            <div *ngFor="let item of data()?.familias" slot="content">
+              <ion-item Button (click)="addFilter(item?.Familia,item?.tipo)">
+                <ion-label class="lowercase">
+                  {{ item?.Familia }}
+                </ion-label>
+              </ion-item>
+            </div>
           </ion-accordion>
           <ion-accordion value="categoria">
             <ion-item slot="header" color="light">
               <ion-label>Categoria <!-- Clasificacion familia--></ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content">First Content</div>
+            <div *ngFor="let item of data()?.catalogos" slot="content">
+              <ion-item Button (click)="addFilter(item?.clasificacion,item?.tipo)">
+                <ion-label class="lowercase">
+                  {{ item?.clasificacion }}
+                </ion-label>
+              </ion-item>
+            </div>
           </ion-accordion>
           <ion-accordion value="modelo">
             <ion-item slot="header" color="light">
               <ion-label>Modelo</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content">Second Content</div>
+            <div *ngFor="let item of data()?.modelos" slot="content">
+              <ion-item Button (click)="addFilter(item?.Modelo,item?.tipo)">
+                <ion-label class="lowercase">
+                  {{ item?.Modelo }}
+                </ion-label>
+              </ion-item>
+            </div>
           </ion-accordion>
           <ion-accordion value="marca">
             <ion-item slot="header" color="light">
               <ion-label>Marca</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content">Second Content</div>
+            <div *ngFor="let item of data()?.Marcas" slot="content">
+              <ion-item Button (click)="addFilter(item?.Marca,item?.tipo)">
+                <ion-label class="lowercase">
+                  {{ item?.Marca }}
+                </ion-label>
+              </ion-item>
+            </div>
           </ion-accordion>
           <ion-accordion value="color">
             <ion-item slot="header" color="light">
               <ion-label>Color</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content">Second Content</div>
+            <div *ngFor="let item of data()?.colores" slot="content">
+              <ion-item Button (click)="addFilter(item?.Nombre,item?.tipo)">
+                <ion-label class="lowercase">
+                  {{ item?.Nombre }}
+                </ion-label>
+              </ion-item>
+            </div>
           </ion-accordion>
           <ion-accordion value="medida">
             <ion-item slot="header" color="light">
               <ion-label>Medida</ion-label>
             </ion-item>
-            <div class="ion-padding" slot="content">Second Content</div>
+            <div *ngFor="let item of data()?.medidas" slot="content">
+              <ion-item Button (click)="addFilter(item?.Medida,item?.tipo)">
+                <ion-label class="lowercase">
+                  {{ item?.Medida }}
+                </ion-label>
+              </ion-item>
+            </div>
           </ion-accordion>
         </ion-accordion-group>
-        </ion-card-content></ion-card>
-    </ion-row>
-  </ion-grid>
-  
+      </ion-card-content></ion-card>
+  </ion-row>
+</ion-grid>

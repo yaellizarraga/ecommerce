@@ -51,9 +51,21 @@ img{
 }
 
 .price{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  color: var(--color-black);
+}
+.price-discount{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 10px;
   color: var(--color-red);
 }
-
+.tachado {
+  text-decoration: line-through;
+  font-size: 14px;
+}
 .cotizar{
   --background-color: var(--color-red);
   width: 100%;
@@ -66,6 +78,8 @@ img{
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 ion-button{
@@ -79,4 +93,7 @@ ion-item{
 
 .mr{
   margin-right: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-bottom: 15px;
 }

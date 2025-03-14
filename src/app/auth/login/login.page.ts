@@ -25,7 +25,8 @@ export class LoginPage implements OnInit {
    constructor(private fb: FormBuilder) {
      
      this.Form = this.fb.group({
-       email: ['', [Validators.required, Validators.email]],
+       usuario: ['', [Validators.required]],
+      //  email: ['', [Validators.required, Validators.email]],
        password: ['',[Validators.required , Validators.minLength(8)]],
      });
    }

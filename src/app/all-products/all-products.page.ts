@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { FooterComponent } from "../shared/footer/footer.component";
 import { BannerTitleComponent } from '../shared/components/banner-title/banner-title.component';
-import { product } from './interfaces/product.interfaces';
+import { Filters, product } from './interfaces/product.interfaces';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../shared/components/product-card/product-card.component';
 import { ProductService } from './services/product.service';
@@ -15,6 +15,7 @@ import { addIcons } from 'ionicons';
 import { close, closeCircle, pin, filterCircleOutline } from 'ionicons/icons';
 import { FiltersPanelComponent } from './components/filters-panel/filters-panel.component';
 import { FiltersPanelMobileComponent } from './components/filters-panel-mobile/filters-panel-mobile.component';
+import { FiltersService } from './services/filters.service';
 
 @Component({
   selector: 'app-all-products',
@@ -28,7 +29,6 @@ import { FiltersPanelMobileComponent } from './components/filters-panel-mobile/f
     BannerTitleComponent,
     ProductCardComponent,
     FiltersPanelComponent,
-    FiltersPanelMobileComponent,
   ],
 })
 
@@ -45,10 +45,15 @@ export class AllProductsPage implements OnInit {
   filters = '';
   loading = true;
   sinData = false;
+  filtersData = [];
+  filtersDataMobile = signal([]);
+  PanelFiltersData: Filters = {};
+  loadFiltersButton = false;
 
   constructor(
     private ProductService: ProductService,
     private AllProductsService: AllProductsService,
+    private FiltersService: FiltersService,
     private HeaderService: HeaderService,
     private modalcontroller: ModalController,
   ) {
@@ -56,25 +61,44 @@ export class AllProductsPage implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    this.FiltersService.getFiltros().subscribe(value => {
+      this.FiltrandoData(value);
+    });
+
     this.loadData();
     this.loadHeader();
     this.loadBanner();
+    this.loadFilters();
+
+
   }
 
-  filtrarLista(event: any) {
+  FiltrandoData(event: Filters) {
+    this.PanelFiltersData = event;
+    this.loading = true;
+    this.sinData = false;
+    this.currentPage = 1;
+    this.isLastPage = false;
+    this.displayedData = []; // Reinicia la lista solo si es una nueva búsqueda
+    this.loadData();
+
+  }
+
+  filtrarListaBusqueda(event: any) {
     const busqueda = event.target.value.toLowerCase(); // Obtiene el valor y lo convierte a minúsculas
     this.loading = true;
     this.sinData = false;
     this.search = busqueda;
     this.currentPage = 1;
-    this.isLastPage = false; 
+    this.isLastPage = false;
     this.loadData();
   }
 
   loadHeader() {
     this.HeaderService.getAll().subscribe({
       next: (res: any) => {
-        this.link_logo = (res.data.length > 0) ? res.data[0].link_logo :'';
+        this.link_logo = (res.data.length > 0) ? res.data[0].link_logo : '';
 
       },
       error: (error) => {
@@ -86,11 +110,23 @@ export class AllProductsPage implements OnInit {
   loadBanner() {
     this.AllProductsService.getAll().subscribe({
       next: (res: any) => {
-        this.backgroudUrl = (res.data.length > 0) ? res.data[0].preview :'';
+        this.backgroudUrl = (res.data.length > 0) ? res.data[0].preview : '';
 
       },
       error: (error) => {
         console.error('Error fetching Header:', error);
+      }
+    });
+  }
+
+  async loadFilters() {
+    await this.FiltersService.getAll().subscribe({
+      next: (res: any) => {
+        this.filtersData = res.data;
+        this.filtersDataMobile.set(res.data);
+      },
+      error: (error) => {
+        console.error('Error fetching Filters:', error);
       }
     });
   }
@@ -108,63 +144,84 @@ export class AllProductsPage implements OnInit {
       this.isLastPage = false; // Asegura que pueda seguir paginando
     }
 
+
     if (this.search.trim() !== '') {
       this.filters = `?page=${this.currentPage}&search=${this.search}`;
     } else {
       this.filters = `?page=${this.currentPage}`;
     }
+
+    if (this.PanelFiltersData && Object.keys(this.PanelFiltersData).length > 0) {
+      Object.keys(this.PanelFiltersData).forEach(tipo => {
+        this.PanelFiltersData[tipo].forEach(filter => {
+          this.filters += `&${tipo}[]=${encodeURIComponent(filter)}`;
+        });
+      });
+
+    }
     
 
     this.ProductService.getAll(this.filters).pipe(
       take(1)).subscribe({
-      next: (res: any) => {
-        this.loading = false;
+        next: (res: any) => {
+          this.loading = false;
 
-        const newProducts = res.data.map((product: any) => ({
-          id: product.id,
-          productName: product.nombre.trim(),
-          description: product.descripcion,
-          imgUrl: environment.UrlImages + product.imagen,
-          images: product.imagenes.map((img: string) => environment.UrlImages + img),
-          price: parseFloat(product.precio).toFixed(2),
-          discount: product.discount,
-          detalles: product.Detalles_Producto,
-        }));
+          const newProducts = res.data.map((product: any) => ({
+            id: product.id,
+            productName: product.nombre.trim(),
+            description: product.descripcion,
+            imgUrl: environment.UrlImages + product.imagen,
+            images: product.imagenes.map((img: string) => environment.UrlImages + img),
+            price: product.precio,
+            discount: product.precio_oferta,
+            detalles: product.Detalles_Producto,
+            familia: product.familia,
+            categoria: product.categoria,
+            modelo: product.modelo,
+            marca: product.marca,
+            color: product.color,
+            medida: product.medida,
+          }));
 
-        this.displayedData = [...this.displayedData, ...newProducts];
-        if(res.data.length <= 0){
-          this.sinData = true;
+          this.displayedData = [...this.displayedData, ...newProducts];
+          if (res.data.length <= 0) {
+            this.sinData = true;
+          }
+
+          if (newProducts.length < this.itemsPerPage) {
+            this.isLastPage = true;
+          } else {
+            this.currentPage++;
+          }
+
+          this.previousSearch = this.search.trim();
+
+          if (event) event.target.complete();
+        },
+        error: (error) => {
+          console.error('Error fetching All Products:', error);
+          if (event) event.target.complete();
         }
-
-        if (newProducts.length < this.itemsPerPage) {
-          this.isLastPage = true;
-        } else {
-          this.currentPage++;
-        }
-
-        this.previousSearch = this.search.trim();
-
-        if (event) event.target.complete();
-      },
-      error: (error) => {
-        console.error('Error fetching All Products:', error);
-        if (event) event.target.complete();
-      }
-    });
+      });
   }
 
+
+  async openModalFiltersMobile() {
+    this.loadFiltersButton = true;
+    const modal = await this.modalcontroller.create({
+      component: FiltersPanelMobileComponent,
+      cssClass: 'custom-modal-class',
+      componentProps: {
+        data: this.filtersDataMobile,
+      },
+    });
   
-    async openModalFiltersMobile(){
+    await modal.present();
+    this.loadFiltersButton = false;
+    const { data } = await modal.onWillDismiss();
+    
+  }
   
-      const modal = await this.modalcontroller.create({
-        component: FiltersPanelMobileComponent,
-        cssClass:'custom-modal-class'
-      });
-  
-      await modal.present();
-  
-      const { data } = await modal.onWillDismiss();
-    }
 
 }
 
