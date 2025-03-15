@@ -10,25 +10,37 @@
               <div class="justify-content-center d-flex">
                 <h3 class="title">Iniciar sesión</h3>  
               </div>
-              <div class="form-group">
-                <label for="email">Usuario:</label>
-                <input id="email" class="form-control input-text" formControlName="usuario" type="usuario" maxlength="150"
-                  placeholder="ejemplo" autocomplete="off">
+              <div class="form-group input-text">
+                <label for="Correo">Usuario:</label>
+                <input 
+                  id="Correo" 
+                  class="form-control" 
+                  formControlName="Correo" 
+                  type="email" 
+                  maxlength="80"
+                  placeholder="ejemplo@ejemplo.com" 
+                  (input)="clearError('Correo')" 
+                  autocomplete="off">
+                  <div *ngIf="errors?.Correo">
+                    <small class="text-danger">{{ errors?.Correo }}</small>
+                  </div>
               </div>
-              <!-- <div *ngIf="Form.get('email')?.invalid && (Form.get('email')?.touched || Form.get('email')?.dirty)">
-                <small class="text-danger">El email es obligatorio y debe ser válido</small>
-              </div> -->
-
+              
               <!-- Campo Password -->
-              <div class="form-group">
-                <label for="password">Contraseña:</label>
-                <input id="password" class="form-control input-text" formControlName="password" type="password" maxlength="50"
-                  (keyup.enter)="sendLogin()" autocomplete="off">
+              <div class="form-group input-text">
+                <label for="Clave">Contraseña:</label>
+                <input 
+                  id="Clave" 
+                  class="form-control" 
+                  formControlName="Clave" 
+                  type="password" 
+                  maxlength="40" 
+                  (input)="clearError('Clave')" 
+                  autocomplete="off">
+                  <div *ngIf="errors?.Clave">
+                    <small class="text-danger">{{ errors?.Clave }}</small>
+                  </div>
               </div>
-              <!-- <div
-                *ngIf="Form.get('password')?.invalid && (Form.get('password')?.touched || Form.get('password')?.dirty)">
-                <small class="text-danger">La contraseña es obligatoria y debe tener al menos 6 caracteres</small>
-              </div> -->
 
 
               <ion-button class="ion-button capitalize" expand="block" type="submit" [disabled]="loading">

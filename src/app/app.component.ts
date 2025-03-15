@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { ThemeService } from './services/theme.service';
+import { TokenService } from './auth/services/token.service';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +16,11 @@ export class AppComponent implements OnInit {
   
   constructor(
       private Theme: ThemeService,
+      private Token: TokenService,
     ) {}
   
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+      await this.Token.checkToken();
       this.loadTheme();
     }
   

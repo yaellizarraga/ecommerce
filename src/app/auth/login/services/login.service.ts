@@ -15,20 +15,5 @@ export class LoginService {
   create(form: object): Observable<any> {
     return this.http.post<any>(this.urlBackend, form);
   }
-
-  getAll(): Observable<any> {
-    return this.http.get<any>(this.urlBackend);
-  }
-
-  getById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.urlBackend}/${id}`);
-  }
-
-  update(id: number, form: object): Observable<any> {
-    return this.http.put<any>(`${this.urlBackend}/${id}`, form);
-  }
-
-  delete(): Observable<any> {
-    return this.http.delete<any>(this.urlBackend);
-  }
+  
 }

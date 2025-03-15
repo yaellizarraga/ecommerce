@@ -66,7 +66,6 @@ export class AllProductsPage implements OnInit {
       this.FiltrandoData(value);
     });
 
-    this.loadData();
     this.loadHeader();
     this.loadBanner();
     this.loadFilters();

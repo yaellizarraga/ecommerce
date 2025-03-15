@@ -7,6 +7,9 @@ import { HeaderService } from './services/header.service';
 import { ValidUrlPipe } from '../pipes/validate-url.pipe';
 import { addIcons } from 'ionicons';
 import { cartOutline, logInOutline, logOutOutline } from 'ionicons/icons';
+import { TokenService } from 'src/app/auth/services/token.service';
+import { LogoutService } from 'src/app/auth/services/logout.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -26,15 +29,25 @@ export class HeaderComponent implements OnInit{
   Data = <any>([]); 
 
   isOpen = false;
+  isOpenLogout = false;
+
+  token = false;
   
   
 
     @ViewChild('login') popover!: HTMLIonPopoverElement;
+    @ViewChild('logoutPopover') popoverLogout!: HTMLIonPopoverElement;
 
     constructor(
       private HeaderService: HeaderService,
+      private TokenService: TokenService,
+      private LogoutService: LogoutService,
     ) {
       addIcons({cartOutline, logInOutline, logOutOutline});
+
+      this.TokenService.getToken().subscribe((token: boolean) => {
+        this.token = token;
+      });
     }
       
     ngOnInit(): void {
@@ -60,6 +73,32 @@ export class HeaderComponent implements OnInit{
   
     closePopover() {
       this.isOpen = false;
+    }
+    openPopoverLogout(e: Event) {
+      this.popoverLogout.event = e;
+      this.isOpenLogout = true;
+    }
+  
+    closePopoverLogout() {
+      this.isOpenLogout = false;
+    }
+
+    async logout(){
+      this.closePopoverLogout();
+      
+      const token = await localStorage.getItem('token') || '';
+      
+      this.LogoutService.logout(token).pipe(take(1)).subscribe({
+        next: (res: any) => {
+          localStorage.clear();
+          this.TokenService.setToken(false);
+        },
+        error: (error: any) => {
+          localStorage.clear();
+          this.TokenService.setToken(false);
+        }
+      });
+
     }
 
 }
