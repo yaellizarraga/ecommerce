@@ -43,6 +43,9 @@ export class ProductDetailsModalComponent implements AfterViewInit {
         delay: 2000, 
         disableOnInteraction: false, 
       },
+      zoom: {
+        maxRatio: 5,
+      },
       pagination: true,
       navigation: true,
     };

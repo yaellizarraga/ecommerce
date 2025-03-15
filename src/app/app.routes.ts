@@ -1,5 +1,7 @@
 import { Routes } from '@angular/router';
 import { MainLayoutComponent } from './layouts/main-layout/main-layout.component';
+import { AuthGuard } from './auth/guards/auth.guards';
+import { TokenGuard } from './auth/guards/token.guards';
 
 export const routes: Routes = [
   {
@@ -25,11 +27,13 @@ export const routes: Routes = [
       },
       {
         path: 'login',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import('./auth/login/login.page').then((m) => m.LoginPage),
       },
       {
         path: 'register',
+        canActivate: [AuthGuard],
         loadComponent: () =>
           import('./auth/register/register.page').then((m) => m.RegisterPage),
       },
@@ -37,6 +41,12 @@ export const routes: Routes = [
         path: 'shopping-cart',
         loadComponent: () =>
           import('./shopping-cart/shopping-cart.page').then((m) => m.ShoppingCartPage),
+      },
+      {
+        path: 'profile',
+        canActivate: [TokenGuard],
+        loadComponent: () =>
+          import('./profile/profile.page').then((m) => m.ProfilePage),
       },
     ]
   },

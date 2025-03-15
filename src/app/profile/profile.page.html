@@ -1,0 +1,290 @@
+<ion-content id="main-content">
+  <div class="container">
+    <!-- Contenido que será en componentes -->
+    <!-- Título -->
+
+    <form class="form" [formGroup]="Form" (ngSubmit)="sendProfile()">
+      <ion-card class="form-container">
+        <ion-card-content>
+          <div class="justify-content-center d-flex">
+            <h3 class="title">mi perfil</h3>
+          </div>
+          <ion-row>
+            <!-- Foto -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Foto">Foto:</label>
+                <input id="Foto" class="form-control" formControlName="Foto" type="file" accept="image/*"
+                  (input)="clearError('Foto')">
+                <div *ngIf="errors?.Foto">
+                  <small class="text-danger">{{ errors?.Foto }}</small>
+                </div>
+              </div>
+            </ion-col>
+
+            <!-- Nombre -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Nombre">Nombre:</label>
+                <input id="Nombre" class="form-control" formControlName="Nombre" type="text" maxlength="80"
+                  placeholder="" (input)="clearError('Nombre')" autocomplete="off">
+                <div *ngIf="errors?.Nombre">
+                  <small class="text-danger">{{ errors?.Nombre }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <!-- Apellido Paterno -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Apellido_Paterno">Apellido Paterno:</label>
+                <input id="Apellido_Paterno" class="form-control" formControlName="Apellido_Paterno" type="text"
+                  maxlength="40" (input)="clearError('Apellido_Paterno')">
+                <div *ngIf="errors?.Apellido_Paterno">
+                  <small class="text-danger">{{ errors?.Apellido_Paterno }}</small>
+                </div>
+              </div>
+            </ion-col>
+
+            <!-- Apellido Materno -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Apellido_Materno">Apellido Materno:</label>
+                <input id="Apellido_Materno" class="form-control" formControlName="Apellido_Materno" type="text"
+                  maxlength="40" (input)="clearError('Apellido_Materno')">
+                <div *ngIf="errors?.Apellido_Materno">
+                  <small class="text-danger">{{ errors?.Apellido_Materno }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <!-- Whatsapp -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Whatsapp">WhatsApp:</label>
+                <input id="Whatsapp" class="form-control" formControlName="Whatsapp" type="text"
+                  (input)="clearError('Whatsapp')">
+                <div *ngIf="errors?.Whatsapp">
+                  <small class="text-danger">{{ errors?.Whatsapp }}</small>
+                </div>
+              </div>
+            </ion-col>
+
+            <!-- Teléfono -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Telefono">Teléfono:</label>
+                <input id="Telefono" class="form-control" formControlName="Telefono" type="tel"
+                  (input)="clearError('Telefono')">
+                <div *ngIf="errors?.Telefono">
+                  <small class="text-danger">{{ errors?.Telefono }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <!-- Celular -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Celular">Celular:</label>
+                <input id="Celular" class="form-control" formControlName="Celular" type="tel"
+                  (input)="clearError('Celular')">
+                <div *ngIf="errors?.Celular">
+                  <small class="text-danger">{{ errors?.Celular }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+            <!-- Botón Guardar -->
+            <ion-button class="ion-button capitalize" expand="block" type="submit" [disabled]="loading">
+              <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+              <span *ngIf="!loading">Guardar</span>
+            </ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="form-container">
+        <ion-card-content>
+          <div class="justify-content-center d-flex mt-5 mb-3">
+            <h3 class="title">Recuperar Contraseña</h3>
+          </div>
+
+          <ion-row>
+            <!-- Correo -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Correo">Correo:</label>
+                <input id="Correo" class="form-control" formControlName="Correo" type="email"
+                  (input)="clearError('Correo')">
+                <div *ngIf="errors?.Correo">
+                  <small class="text-danger">{{ errors?.Correo }}</small>
+                </div>
+              </div>
+            </ion-col>
+
+            <!-- Usuario -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Usuario">Usuario:</label>
+                <input id="Usuario" class="form-control" formControlName="Usuario" type="text" readonly
+                  (input)="clearError('Usuario')">
+                <div *ngIf="errors?.Usuario">
+                  <small class="text-danger">{{ errors?.Usuario }}</small>
+                </div>
+              </div>
+            </ion-col>
+
+            <!-- Clave -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Clave">Contraseña:</label>
+                <input id="Clave" class="form-control" formControlName="Clave" type="password"
+                  (input)="clearError('Clave')">
+                <div *ngIf="errors?.Clave">
+                  <small class="text-danger">{{ errors?.Clave }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <!-- Clave Confirmación -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Clave2">Confirmar Contraseña:</label>
+                <input id="Clave2" class="form-control" formControlName="Clave2" type="password"
+                  (input)="clearError('Clave2')">
+                <div *ngIf="errors?.Clave2">
+                  <small class="text-danger">{{ errors?.Clave2 }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+          <!-- Botón Guardar -->
+          <ion-button class="ion-button capitalize" expand="block" type="submit" [disabled]="loading">
+            <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+            <span *ngIf="!loading">Guardar</span>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card class="form-container">
+        <ion-card-content>
+          <div class="justify-content-center d-flex mt-5 mb-3">
+            <h3 class="title">Datos Fiscales</h3>
+          </div>
+          <ion-row>
+            <!-- RFC -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="RFC">RFC:</label>
+                <input id="RFC" class="form-control" formControlName="RFC" type="text" (input)="clearError('RFC')">
+                <div *ngIf="errors?.RFC">
+                  <small class="text-danger">{{ errors?.RFC }}</small>
+                </div>
+              </div>
+            </ion-col>
+            <!-- Giro -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Giro">Giro:</label>
+                <input id="Giro" class="form-control" formControlName="Giro" type="number" (input)="clearError('Giro')">
+                <div *ngIf="errors?.Giro">
+                  <small class="text-danger">{{ errors?.Giro }}</small>
+                </div>
+              </div>
+            </ion-col>
+
+            <!-- Razón Social -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="razonsocial">Razón Social:</label>
+                <input id="razonsocial" class="form-control" formControlName="razonsocial" type="text"
+                  (input)="clearError('razonsocial')">
+                <div *ngIf="errors?.razonsocial">
+                  <small class="text-danger">{{ errors?.razonsocial }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <!-- Régimen Fiscal -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="regimenfiscal">Régimen Fiscal:</label>
+                <input id="regimenfiscal" class="form-control" formControlName="regimenfiscal" type="text"
+                  (input)="clearError('regimenfiscal')">
+                <div *ngIf="errors?.regimenfiscal">
+                  <small class="text-danger">{{ errors?.regimenfiscal }}</small>
+                </div>
+              </div>
+            </ion-col>
+
+            <!-- Código Postal Cliente -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="codigopostalcliente">Código Postal Cliente:</label>
+                <input id="codigopostalcliente" class="form-control" formControlName="codigopostalcliente" type="text"
+                  (input)="clearError('codigopostalcliente')">
+                <div *ngIf="errors?.codigopostalcliente">
+                  <small class="text-danger">{{ errors?.codigopostalcliente }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <!-- Uso CFDI (Select) -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="usocfdi">Uso CFDI:</label>
+                <select id="usocfdi" class="form-control" formControlName="usocfdi" (change)="clearError('usocfdi')">
+                  <option value="">Selecciona una opción</option>
+                  <option value="G01">Adquisición de mercancías</option>
+                  <option value="G02">Devoluciones, descuentos o bonificaciones</option>
+                  <option value="G03">Gastos en general</option>
+                  <!-- Agregar más opciones según sea necesario -->
+                </select>
+                <div *ngIf="errors?.usocfdi">
+                  <small class="text-danger">{{ errors?.usocfdi }}</small>
+                </div>
+              </div>
+            </ion-col>
+
+            <!-- Constancia (Input File) -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="constancia">Constancia (.PDF, .JPG, .PNG, .JPEG):</label>
+                <input id="constancia" class="form-control" formControlName="constancia" type="file"
+                  accept=".pdf, .jpg, .png, .jpeg" (change)="clearError('constancia')">
+                <div *ngIf="errors?.constancia">
+                  <small class="text-danger">{{ errors?.constancia }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <!-- Botón Guardar -->
+          <ion-button class="ion-button capitalize" expand="block" type="submit" [disabled]="loading">
+            <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+            <span *ngIf="!loading">Guardar</span>
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+
+    </form>
+
+
+
+
+  </div>
+
+  <!-- Contenido que será en componentes -->
+
+</ion-content>

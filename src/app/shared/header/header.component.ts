@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
 import { MenuComponent } from '../menu/menu.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { HeaderService } from './services/header.service';
 import { ValidUrlPipe } from '../pipes/validate-url.pipe';
 import { addIcons } from 'ionicons';
@@ -32,8 +32,7 @@ export class HeaderComponent implements OnInit{
   isOpenLogout = false;
 
   token = false;
-  
-  
+  UserData: any = {};
 
     @ViewChild('login') popover!: HTMLIonPopoverElement;
     @ViewChild('logoutPopover') popoverLogout!: HTMLIonPopoverElement;
@@ -42,11 +41,15 @@ export class HeaderComponent implements OnInit{
       private HeaderService: HeaderService,
       private TokenService: TokenService,
       private LogoutService: LogoutService,
+      private router: Router,
     ) {
       addIcons({cartOutline, logInOutline, logOutOutline});
 
       this.TokenService.getToken().subscribe((token: boolean) => {
         this.token = token;
+      });
+      this.TokenService.getUserData().subscribe((data: boolean) => {
+        this.UserData = data;
       });
     }
       
@@ -92,10 +95,14 @@ export class HeaderComponent implements OnInit{
         next: (res: any) => {
           localStorage.clear();
           this.TokenService.setToken(false);
+          this.TokenService.setUserData({});
+          this.router.navigate(['login']);
         },
         error: (error: any) => {
           localStorage.clear();
           this.TokenService.setToken(false);
+          this.router.navigate(['login']);
+
         }
       });
 

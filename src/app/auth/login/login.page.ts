@@ -71,6 +71,7 @@ export class LoginPage {
           ApellidoMaterno: res.data.Apellido_Materno,
           NombreCompleto: res.data.Nombre + ' ' + res.data.Apellido_Paterno + (res.data.Apellido_Materno ? ' ' + res.data.Apellido_Materno : ''),
         };
+        this.TokenService.setUserData(userData);
         await localStorage.clear();
         await localStorage.setItem('token', token);
         await localStorage.setItem('userData', JSON.stringify(userData));

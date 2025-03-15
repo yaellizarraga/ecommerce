@@ -6,8 +6,8 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ShoppingCartService {
-  private urlBackend: string = environment.apiUrl + '/shopping-cart';
+export class ProfileService {
+  private urlBackend: string = environment.apiUrl + '/profile';
   private http = inject(HttpClient);
 
   constructor() {}
