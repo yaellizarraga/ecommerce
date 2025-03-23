@@ -3,19 +3,25 @@
     <!-- Contenido que será en componentes -->
     <!-- Título -->
 
-    <form class="form" [formGroup]="Form" (ngSubmit)="sendProfile()">
+    <form class="form" [formGroup]="Form">
       <ion-card class="form-container">
         <ion-card-content>
           <div class="justify-content-center d-flex">
-            <h3 class="title">mi perfil</h3>
+            <h3 class="title">Mi perfil</h3>
           </div>
-          <ion-row>
+          <ion-row class="d-flex align-items-center">
             <!-- Foto -->
-            <ion-col size="12" size-md="6">
+            <ion-col class="d-flex justify-content-center" size="3" size-md="3">
+              <ion-avatar class="ion-avatar">
+                <img alt="profile" [src]="FotoTemporal" />
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="9" size-md="9">
               <div class="form-group input-text">
-                <label for="Foto">Foto:</label>
-                <input id="Foto" class="form-control" formControlName="Foto" type="file" accept="image/*"
-                  (input)="clearError('Foto')">
+                <label for="Foto">Foto: (formato: .jpeg, .jpg, .png, o .svg)</label>
+                <input id="Foto" class="form-control" formControlName="Foto" name="Foto" type="file"
+                  accept="image/jpeg, image/jpg, image/png, image/svg" (input)="clearError('Foto')"
+                  (change)="onFileSelected($event)">
                 <div *ngIf="errors?.Foto">
                   <small class="text-danger">{{ errors?.Foto }}</small>
                 </div>
@@ -28,35 +34,49 @@
                 <label for="Nombre">Nombre:</label>
                 <input id="Nombre" class="form-control" formControlName="Nombre" type="text" maxlength="80"
                   placeholder="" (input)="clearError('Nombre')" autocomplete="off">
-                <div *ngIf="errors?.Nombre">
+                @if (errors?.Nombre) {
+                <div>
                   <small class="text-danger">{{ errors?.Nombre }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
-          </ion-row>
-
-          <ion-row>
             <!-- Apellido Paterno -->
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
                 <label for="Apellido_Paterno">Apellido Paterno:</label>
                 <input id="Apellido_Paterno" class="form-control" formControlName="Apellido_Paterno" type="text"
                   maxlength="40" (input)="clearError('Apellido_Paterno')">
-                <div *ngIf="errors?.Apellido_Paterno">
+                @if (errors?.Apellido_Paterno) {
+                <div>
                   <small class="text-danger">{{ errors?.Apellido_Paterno }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
+          </ion-row>
 
+          <ion-row>
             <!-- Apellido Materno -->
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
                 <label for="Apellido_Materno">Apellido Materno:</label>
                 <input id="Apellido_Materno" class="form-control" formControlName="Apellido_Materno" type="text"
                   maxlength="40" (input)="clearError('Apellido_Materno')">
-                <div *ngIf="errors?.Apellido_Materno">
+                @if (errors?.Apellido_Materno) {
+                <div>
                   <small class="text-danger">{{ errors?.Apellido_Materno }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
           </ion-row>
@@ -68,43 +88,60 @@
                 <label for="Whatsapp">WhatsApp:</label>
                 <input id="Whatsapp" class="form-control" formControlName="Whatsapp" type="text"
                   (input)="clearError('Whatsapp')">
-                <div *ngIf="errors?.Whatsapp">
-                  <small class="text-danger">{{ errors?.Whatsapp }}</small>
+                @if (errors?.WhatsApp) {
+                <div>
+                  <small class="text-danger">{{ errors?.WhatsApp }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
 
             <!-- Teléfono -->
-            <ion-col size="12" size-md="6">
-              <div class="form-group input-text">
-                <label for="Telefono">Teléfono:</label>
-                <input id="Telefono" class="form-control" formControlName="Telefono" type="tel"
-                  (input)="clearError('Telefono')">
-                <div *ngIf="errors?.Telefono">
-                  <small class="text-danger">{{ errors?.Telefono }}</small>
-                </div>
-              </div>
-            </ion-col>
-          </ion-row>
-
-          <ion-row>
             <!-- Celular -->
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
                 <label for="Celular">Celular:</label>
                 <input id="Celular" class="form-control" formControlName="Celular" type="tel"
                   (input)="clearError('Celular')">
-                <div *ngIf="errors?.Celular">
+                @if (errors?.Celular) {
+                <div>
                   <small class="text-danger">{{ errors?.Celular }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
+              </div>
+            </ion-col>
+
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Telefono">Teléfono:</label>
+                <input id="Telefono" class="form-control" formControlName="Telefono" type="tel"
+                  (input)="clearError('Telefono')">
+                @if (errors?.Telefono) {
+                <div>
+                  <small class="text-danger">{{ errors?.Telefono }}</small>
+                </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
           </ion-row>
-            <!-- Botón Guardar -->
-            <ion-button class="ion-button capitalize" expand="block" type="submit" [disabled]="loading">
-              <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
-              <span *ngIf="!loading">Guardar</span>
-            </ion-button>
+
+          <ion-row>
+          </ion-row>
+          <!-- Botón Guardar -->
+          <ion-button (click)="sendProfile()" class="ion-button capitalize" expand="block" type="submit"
+            [disabled]="loading">
+            <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+            <span *ngIf="!loading">Guardar</span>
+          </ion-button>
         </ion-card-content>
       </ion-card>
 
@@ -119,11 +156,16 @@
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
                 <label for="Correo">Correo:</label>
-                <input id="Correo" class="form-control" formControlName="Correo" type="email"
-                  (input)="clearError('Correo')">
-                <div *ngIf="errors?.Correo">
+                <input id="Correo" class="form-control disabled" formControlName="Correo" type="email"
+                  (input)="clearError('Correo')" readonly [disabled]="true">
+                @if (errors?.Correo) {
+                <div>
                   <small class="text-danger">{{ errors?.Correo }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
 
@@ -131,23 +173,33 @@
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
                 <label for="Usuario">Usuario:</label>
-                <input id="Usuario" class="form-control" formControlName="Usuario" type="text" readonly
-                  (input)="clearError('Usuario')">
-                <div *ngIf="errors?.Usuario">
+                <input id="Usuario" class="form-control disabled" formControlName="Usuario" type="text" readonly
+                  (input)="clearError('Usuario')" readonly [disabled]="true">
+                @if (errors?.Usuario) {
+                <div>
                   <small class="text-danger">{{ errors?.Usuario }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
 
             <!-- Clave -->
-            <ion-col size="12" size-md="6">
+            <ion-col size="12" size-md="12">
               <div class="form-group input-text">
-                <label for="Clave">Contraseña:</label>
-                <input id="Clave" class="form-control" formControlName="Clave" type="password"
-                  (input)="clearError('Clave')">
-                <div *ngIf="errors?.Clave">
-                  <small class="text-danger">{{ errors?.Clave }}</small>
+                <label for="ClaveActual">Contraseña Actual:</label>
+                <input id="ClaveActual" class="form-control" formControlName="ClaveActual" type="password"
+                  (input)="clearError('ClaveActual')">
+                @if (errors?.ClaveActual) {
+                <div>
+                  <small class="text-danger">{{ errors?.ClaveActual }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
           </ion-row>
@@ -156,17 +208,38 @@
             <!-- Clave Confirmación -->
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
-                <label for="Clave2">Confirmar Contraseña:</label>
+                <label for="Clave">Nueva Contraseña:</label>
+                <input id="Clave" class="form-control" formControlName="Clave" type="password"
+                  (input)="clearError('Clave')">
+                @if (errors?.Clave) {
+                <div>
+                  <small class="text-danger">{{ errors?.Clave }}</small>
+                </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
+              </div>
+            </ion-col>
+            <!-- Clave Confirmación -->
+            <ion-col size="12" size-md="6">
+              <div class="form-group input-text">
+                <label for="Clave2">Confirmar Nueva Contraseña:</label>
                 <input id="Clave2" class="form-control" formControlName="Clave2" type="password"
                   (input)="clearError('Clave2')">
-                <div *ngIf="errors?.Clave2">
+                @if (errors?.Clave2) {
+                <div>
                   <small class="text-danger">{{ errors?.Clave2 }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
           </ion-row>
           <!-- Botón Guardar -->
-          <ion-button class="ion-button capitalize" expand="block" type="submit" [disabled]="loading">
+          <ion-button (click)="sendResetPassword()" class="ion-button capitalize" expand="block" type="submit" [disabled]="loading">
             <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
             <span *ngIf="!loading">Guardar</span>
           </ion-button>
@@ -179,24 +252,59 @@
             <h3 class="title">Datos Fiscales</h3>
           </div>
           <ion-row>
+            <!-- Constancia (Input File) -->
+            <ion-col size="12" size-md="12">
+              <div class="form-group input-text">
+                <label for="constancia" class="constancia">
+                  Constancia (.PDF, .JPG, .PNG, .JPEG):
+
+                  <a *ngIf="constanciaTemporal" [href]="constanciaTemporal" target="_blank" class="ver">Ver Constancia
+                    <ion-icon name="eye" class="eye"></ion-icon></a>
+                </label>
+                <input id="constancia" class="form-control" formControlName="constancia" type="file"
+                  accept=".pdf, .jpg, .png, .jpeg" (change)="onFileSelectedConstancia($event)"
+                  (input)="clearError('constancia')">
+                <div *ngIf="errors?.constancia">
+                  <small class="text-danger">{{ errors?.constancia }}</small>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
             <!-- RFC -->
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
                 <label for="RFC">RFC:</label>
                 <input id="RFC" class="form-control" formControlName="RFC" type="text" (input)="clearError('RFC')">
-                <div *ngIf="errors?.RFC">
+                @if (errors?.RFC) {
+                <div>
                   <small class="text-danger">{{ errors?.RFC }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
             <!-- Giro -->
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
                 <label for="Giro">Giro:</label>
-                <input id="Giro" class="form-control" formControlName="Giro" type="number" (input)="clearError('Giro')">
-                <div *ngIf="errors?.Giro">
+                <select id="Giro" class="form-control" formControlName="Giro" (change)="clearError('Giro')">
+                  <option value="0" disabled selected>Selecciona una opción</option>
+                  @for (item of giro; track $index) {
+                  <option [value]="item?.Id_Giro">{{ item?.giro}}</option>
+                  }
+                </select>
+                @if (errors?.Giro) {
+                <div>
                   <small class="text-danger">{{ errors?.Giro }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
 
@@ -206,23 +314,35 @@
                 <label for="razonsocial">Razón Social:</label>
                 <input id="razonsocial" class="form-control" formControlName="razonsocial" type="text"
                   (input)="clearError('razonsocial')">
-                <div *ngIf="errors?.razonsocial">
+                @if (errors?.razonsocial) {
+                <div>
                   <small class="text-danger">{{ errors?.razonsocial }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
-          </ion-row>
-
-          <ion-row>
             <!-- Régimen Fiscal -->
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
                 <label for="regimenfiscal">Régimen Fiscal:</label>
-                <input id="regimenfiscal" class="form-control" formControlName="regimenfiscal" type="text"
-                  (input)="clearError('regimenfiscal')">
-                <div *ngIf="errors?.regimenfiscal">
+                <select id="regimenfiscal" class="form-control" formControlName="regimenfiscal"
+                  (change)="clearError('regimenfiscal')">
+                  <option value="0" disabled selected>Selecciona una opción</option>
+                  @for (item of regimenFiscal; track $index) {
+                  <option [value]="item?.clave_sat">{{ item?.Regimen}}</option>
+                  }
+                </select>
+                @if (errors?.regimenfiscal) {
+                <div>
                   <small class="text-danger">{{ errors?.regimenfiscal }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
 
@@ -232,46 +352,41 @@
                 <label for="codigopostalcliente">Código Postal Cliente:</label>
                 <input id="codigopostalcliente" class="form-control" formControlName="codigopostalcliente" type="text"
                   (input)="clearError('codigopostalcliente')">
-                <div *ngIf="errors?.codigopostalcliente">
+                @if (errors?.codigopostalcliente) {
+                <div>
                   <small class="text-danger">{{ errors?.codigopostalcliente }}</small>
                 </div>
+
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
-          </ion-row>
-
-          <ion-row>
             <!-- Uso CFDI (Select) -->
             <ion-col size="12" size-md="6">
               <div class="form-group input-text">
                 <label for="usocfdi">Uso CFDI:</label>
                 <select id="usocfdi" class="form-control" formControlName="usocfdi" (change)="clearError('usocfdi')">
-                  <option value="">Selecciona una opción</option>
-                  <option value="G01">Adquisición de mercancías</option>
-                  <option value="G02">Devoluciones, descuentos o bonificaciones</option>
-                  <option value="G03">Gastos en general</option>
-                  <!-- Agregar más opciones según sea necesario -->
+                  <option value="" disabled selected>Selecciona una opción</option>
+                  @for (item of usoCFDI; track $index) {
+                  <option [value]="item?.Id_Uso_CFDI">{{ item?.Uso_CFDI}}</option>
+                  }
                 </select>
-                <div *ngIf="errors?.usocfdi">
+                @if (errors?.usocfdi) {
+                <div>
                   <small class="text-danger">{{ errors?.usocfdi }}</small>
                 </div>
-              </div>
-            </ion-col>
 
-            <!-- Constancia (Input File) -->
-            <ion-col size="12" size-md="6">
-              <div class="form-group input-text">
-                <label for="constancia">Constancia (.PDF, .JPG, .PNG, .JPEG):</label>
-                <input id="constancia" class="form-control" formControlName="constancia" type="file"
-                  accept=".pdf, .jpg, .png, .jpeg" (change)="clearError('constancia')">
-                <div *ngIf="errors?.constancia">
-                  <small class="text-danger">{{ errors?.constancia }}</small>
-                </div>
+                } @else {
+                <div class="d-none d-md-block d-lg-block" style="padding-top: 21px;"></div>
+                }
               </div>
             </ion-col>
           </ion-row>
 
           <!-- Botón Guardar -->
-          <ion-button class="ion-button capitalize" expand="block" type="submit" [disabled]="loading">
+          <ion-button (click)="sendTaxData()" class="ion-button capitalize" expand="block" type="submit"
+            [disabled]="loading">
             <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
             <span *ngIf="!loading">Guardar</span>
           </ion-button>
@@ -279,9 +394,6 @@
       </ion-card>
 
     </form>
-
-
-
 
   </div>
 

@@ -6,6 +6,7 @@ import { MenuController } from '@ionic/angular';
 import { take } from 'rxjs';
 import { LogoutService } from 'src/app/auth/services/logout.service';
 import { TokenService } from 'src/app/auth/services/token.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -23,6 +24,7 @@ export class MenuComponent {
   linkLogo = input<string>();
   token = false;
   UserData: any = {};
+  urlFoto: any = 'assets/icons/avatar.svg';
 
   constructor(
     private menuCtrl: MenuController,
@@ -34,9 +36,28 @@ export class MenuComponent {
     this.TokenService.getToken().subscribe((token: boolean) => {
       this.token = token;
     });
-    this.TokenService.getUserData().subscribe((data: boolean) => {
+    this.TokenService.getUserData().subscribe(async(data: boolean) => {
       this.UserData = data;
+      
+      if (this.UserData?.Foto) {
+        let res = await this.isValidUrl(this.UserData.Foto);
+
+        if (res) {
+          this.urlFoto = this.UserData.Foto;
+        } else {
+          this.urlFoto = environment.UrlImages + 'images/usuarios/' + this.UserData.Foto;
+          console.log(this.urlFoto);
+        }
+      } else {
+        this.urlFoto = 'assets/icons/avatar.svg';
+      }
+      
+
     });
+  }
+
+  isValidUrl(url: string | undefined): boolean {
+    return !!url && (url.startsWith('http://') || url.startsWith('https://'));
   }
 
   closeMenu() {

@@ -1,0 +1,27 @@
+ion-card {
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
+        rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
+        rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.title {
+    font-size: 30px;
+    margin-top: 40px;
+    margin-bottom: 30px;
+}
+
+.form-container {
+    margin-top: 40px;
+}
+
+ion-button {
+    --background: var(--color-primary);
+    width: 183.72px;
+    height: 49.59px;
+}
+
+.ion-icon{
+    margin-left: 5px;
+}

@@ -48,6 +48,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./profile/profile.page').then((m) => m.ProfilePage),
       },
+      {
+        path: 'address',
+        canActivate: [TokenGuard],
+        loadComponent: () =>
+          import('./address/address.page').then((m) => m.AddressPage),
+      },
     ]
   },
   {

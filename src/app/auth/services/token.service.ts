@@ -28,7 +28,7 @@ export class TokenService {
           if(res.status){
             this.setToken(res.status);
             const userData = JSON.parse(localStorage.getItem('userData') || '{}') || {};
-            this.setUserData(userData);
+            this.setUserData(userData,true);
           }else{
             this.setToken(false);
           }
@@ -55,8 +55,25 @@ export class TokenService {
     return this.UserData.asObservable();
   }
 
-  setUserData(value: {}): void {
-    this.UserData.next(value);
+  setUserData(value: any, original = false): void {
+    
+    if(Object.keys(value).length > 0 && !original){
+
+      const UserData = {
+        Id: value?.Id_Persona,
+        Nombre: value?.Nombre,
+        ApellidoPaterno: value?.Apellido_Paterno,
+        ApellidoMaterno: value?.Apellido_Materno,
+        NombreCompleto: value?.Nombre + ' ' + value?.Apellido_Paterno + (value?.Apellido_Materno ? ' ' + value?.Apellido_Materno : ''),
+        Foto: value?.Foto,
+      };
+      this.UserData.next(UserData);
+      localStorage.setItem('userData', JSON.stringify(UserData));
+    }else{
+      this.UserData.next(value);
+    }
+
+    
   }
 
 }

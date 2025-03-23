@@ -43,6 +43,26 @@ ion-button {
     margin-bottom: 20px;
     --background: var(--color-primary);
 }
+.ion-avatar{
+    min-width: 64px;
+    min-height: 64px;
+    max-width: 200px;
+    max-height: 200px;
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    //xs <576px to md <991px
+    @media screen and (max-width: 991px) {
+        width: 100px;
+        height: 100px;
+    }
+    //xs
+    @media screen and (max-width: 576px) {
+        width: 64px;
+        height: 64px;
+    }
+}
+
 
 .ion-img {
     width: 72px;
@@ -56,3 +76,25 @@ ion-list{
 .product-name{
     margin-left: 10px;
 }
+
+.ver{
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+.eye{
+    margin-left: 10px;
+}
+.constancia{
+    display: flex;
+    align-items: center;
+}
+
+.disabled {
+    pointer-events: none; // Evita clics
+    opacity: 0.6; // Reduce la opacidad para indicar que está deshabilitado
+    background-color: #f5f5f5; // Color de fondo para simular un input deshabilitado
+    cursor: not-allowed; // Cambia el cursor a "no permitido"
+  }
+  

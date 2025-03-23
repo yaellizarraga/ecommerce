@@ -1,0 +1,23 @@
+<ion-card class="form-container">
+  <ion-card-content>
+    <!-- <label>
+        C.P. 82199
+    </label> -->
+    <p>
+        {{item()?.Calle}} {{item()?.Num_Ext}} {{'Numero interior: ' + item()?.Num_Int}} {{ ' - ' + item()?.Colonia}} {{ ', Entre ' + item()?.Entre_Calle1}} {{ ' y entre ' + item()?.Entre_Calle2}} {{ ', ' + item()?.Indicaciones}} {{ ', ' + item()?.Referencia}}
+    </p>
+    <!-- <p>
+        Javier De Jesus Bautista - 6692815526
+    </p> -->
+    <div class="d-flex">
+      <ion-button (click)="openEditModal(item()?.Id_Persona_Direccion)" class="capitalize editar" fill="clear">
+        Editar
+        <ion-icon name="create"></ion-icon>
+      </ion-button>
+      <ion-button (click)="deleteItem(item()?.Id_Persona_Direccion)" class="capitalize eliminar" fill="clear">
+        Eliminar
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </div>
+  </ion-card-content>
+</ion-card>

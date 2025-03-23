@@ -74,17 +74,10 @@ export class RegisterPage {
         this.TokenService.setToken(true);
         
         const token = res.access_token.split('|')[1];
-        const userData = {
-          Id: res.data.Id_Persona,
-          Nombre: res.data.Nombre,
-          ApellidoPaterno: res.data.Apellido_Paterno,
-          ApellidoMaterno: res.data.Apellido_Materno,
-          NombreCompleto: res.data.Nombre + ' ' + res.data.Apellido_Paterno + (res.data.Apellido_Materno ? ' ' + res.data.Apellido_Materno : ''),
-        };
-        this.TokenService.setUserData(userData);
+       
         await localStorage.clear();
+        await this.TokenService.setUserData(res.data);
         await localStorage.setItem('token', token);
-        await localStorage.setItem('userData', JSON.stringify(userData));
 
         this.toastComponent.showToast(
           '¡Registro exitoso! Se ha registrado correctamente.', 

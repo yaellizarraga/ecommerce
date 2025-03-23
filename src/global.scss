@@ -166,3 +166,27 @@ input:-webkit-autofill:active {
   font-size: 15px;
 }
 
+.alert-title.sc-ion-alert-ios {
+  font-size: 14px;
+  font-family: 'Volte-Bold';
+  font-weight: 700;
+  line-height: 19.2px;
+  word-wrap: break-word;
+  --ion-text-color: var(--color-primary) !important;
+}
+.alert-button-inner.sc-ion-alert-ios {
+  font-family: 'Volte-Bold';
+  font-size: 16px;
+}
+.alert-message.sc-ion-alert-ios,
+.alert-input-group.sc-ion-alert-ios {
+  color: #7f7f7f;
+  font-weight: 500;
+  line-height: 19.2px;
+  word-wrap: break-word;
+  --ion-text-color: var(--color-primary) !important;
+}
+ion-alert{
+  --ion-color-primary: var(--color-primary) !important;
+}
+

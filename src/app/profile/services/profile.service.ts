@@ -8,6 +8,8 @@ import { environment } from '../../../environments/environment';
 })
 export class ProfileService {
   private urlBackend: string = environment.apiUrl + '/profile';
+  private urlResetPassword: string = this.urlBackend + '/reset-password';
+  private urlTaxData: string = this.urlBackend + '/tax-data';
   private http = inject(HttpClient);
 
   constructor() {}
@@ -23,12 +25,16 @@ export class ProfileService {
   getById(id: number): Observable<any> {
     return this.http.get<any>(`${this.urlBackend}/${id}`);
   }
-
-  update(id: number, form: object): Observable<any> {
-    return this.http.put<any>(`${this.urlBackend}/${id}`, form);
+  
+  updateProfile(form: FormData,id: number): Observable<any> {
+    return this.http.post<any>(`${this.urlBackend}/${id}`, form);
   }
 
-  delete(): Observable<any> {
-    return this.http.delete<any>(this.urlBackend);
+  updateResetPassword(form: object,id: number): Observable<any> {
+    return this.http.post<any>(`${this.urlResetPassword}/${id}`, form);
+  }
+
+  updateTaxData(form: FormData,id: number): Observable<any> {
+    return this.http.post<any>(`${this.urlTaxData}/${id}`, form);
   }
 }

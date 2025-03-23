@@ -36,7 +36,7 @@ export class LoginPage {
     ) {
      
      this.Form = this.fb.group({
-      Correo: ['', [Validators.required, Validators.email]],
+      Correo: ['', [Validators.required, Validators.maxLength(80)]],
       Clave: ['',[Validators.required , Validators.minLength(8),Validators.maxLength(40)]],
      });
    }
@@ -55,6 +55,7 @@ export class LoginPage {
 
     const data = {
       Correo: this.Form.value.Correo,
+      Usuario: this.Form.value.Correo,
       Clave: this.Form.value.Clave,
     };
 
@@ -64,20 +65,14 @@ export class LoginPage {
         this.TokenService.setToken(true);
         
         const token = res.access_token.split('|')[1];
-        const userData = {
-          Id: res.data.Id_Persona,
-          Nombre: res.data.Nombre,
-          ApellidoPaterno: res.data.Apellido_Paterno,
-          ApellidoMaterno: res.data.Apellido_Materno,
-          NombreCompleto: res.data.Nombre + ' ' + res.data.Apellido_Paterno + (res.data.Apellido_Materno ? ' ' + res.data.Apellido_Materno : ''),
-        };
-        this.TokenService.setUserData(userData);
+        
         await localStorage.clear();
+        await this.TokenService.setUserData(res.data);
         await localStorage.setItem('token', token);
-        await localStorage.setItem('userData', JSON.stringify(userData));
 
+        let NombreCompleto = res.data?.Nombre + ' ' + res.data?.Apellido_Paterno + (res.data?.Apellido_Materno ? ' ' + res.data?.Apellido_Materno : '');
         this.toastComponent.showToast(
-          '¡Bienvenido! ' + userData.NombreCompleto, 
+          '¡Bienvenido! ' + NombreCompleto, 
           'bottom', 
           'success', 
           5000,
