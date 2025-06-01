@@ -20,6 +20,8 @@
         </div>
       </ion-card-content>
     </ion-card>
+
+    <app-shared-spinner *ngIf="loadingcards" [title]="'Cargando domicilios...'"></app-shared-spinner>
     
     @for (item of Data.data; track $index) {
       <app-address-address-card [link_logo]="link_logo" [item]="item"></app-address-address-card>

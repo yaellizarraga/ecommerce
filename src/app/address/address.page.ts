@@ -12,6 +12,7 @@ import { addCircleOutline } from 'ionicons/icons';
 import { HeaderService } from '../shared/header/services/header.service';
 import { AddressModalComponent } from './components/address-modal/address-modal.component';
 import { filter, switchMap } from 'rxjs';
+import { SpinnerComponent } from "../shared/components/spinner/spinner.component";
 
 @Component({
   selector: 'app-address',
@@ -25,7 +26,8 @@ import { filter, switchMap } from 'rxjs';
     ReactiveFormsModule,
     RouterModule,
     AddressCardComponent,
-  ],
+    SpinnerComponent
+],
 })
 export class AddressPage {
 
@@ -36,6 +38,7 @@ export class AddressPage {
   Data: any = [];
   Id = 0;
   link_logo: string = '';
+  loadingcards = true;
 
    constructor(
     private fb: FormBuilder,
@@ -119,9 +122,11 @@ export class AddressPage {
     this.addressService.getAll(this.Id).subscribe({
       next: (res: any) => {
         this.Data = res;
+        this.loadingcards = false;
       },
       error: (error) => {
         console.error('Error fetching Data:', error);
+        this.loadingcards = false;
       }
     });
   }
