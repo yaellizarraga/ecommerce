@@ -1,9 +1,8 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input, input, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'; 
 import { Router, RouterModule } from '@angular/router';
-import { ToastComponent } from 'src/app/shared/components/toast/toast.component';
 import { TokenService } from '../auth/services/token.service';
 import { addressService } from './services/address.service';
 import { AddressCardComponent } from './components/address-card/address-card.component';
@@ -11,8 +10,9 @@ import { addIcons } from 'ionicons';
 import { addCircleOutline } from 'ionicons/icons';
 import { HeaderService } from '../shared/header/services/header.service';
 import { AddressModalComponent } from './components/address-modal/address-modal.component';
-import { filter, switchMap } from 'rxjs';
+import { switchMap } from 'rxjs';
 import { SpinnerComponent } from "../shared/components/spinner/spinner.component";
+import { HeaderModalComponent } from '../shared/header-modal/header-modal.component';
 
 @Component({
   selector: 'app-address',
@@ -26,8 +26,10 @@ import { SpinnerComponent } from "../shared/components/spinner/spinner.component
     ReactiveFormsModule,
     RouterModule,
     AddressCardComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    HeaderModalComponent,
 ],
+schemas:[CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AddressPage {
 
@@ -39,6 +41,7 @@ export class AddressPage {
   Id = 0;
   link_logo: string = '';
   loadingcards = true;
+  @Input() isModal: boolean = false;
 
    constructor(
     private fb: FormBuilder,
@@ -48,7 +51,6 @@ export class AddressPage {
     private HeaderService: HeaderService,
     private modalcontroller: ModalController,
     ) {
-
       this.loadHeader();
 
       this.TokenService.getUserData().pipe(
@@ -87,7 +89,7 @@ export class AddressPage {
               colonias:res?.colonias,
               estados:res?.estados,
               localidades:res?.localidades,
-              link_logo: this.link_logo,
+              link_logo: this.link_logo, 
             },
             cssClass:'custom-modal-class'
           });
@@ -131,7 +133,9 @@ export class AddressPage {
     });
   }
 
- 
+ closeModal() {
+    this.modalcontroller.dismiss();
+  }
 
 
 }

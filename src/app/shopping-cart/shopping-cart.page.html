@@ -1,26 +1,136 @@
-<ion-content>
+<ion-content id="main-content">
   <div class="container">
     <!-- Contenido que será en componentes -->
-   <ion-list>
-    <ion-item>
-      <ion-img class="ion-img" src="assets/icons/avatar.svg" alt="imagen"></ion-img>
-      <ion-label class="product-name">LODERA DE HULE P/AUTOMOVIL GM. (MOÑO) ( 4 PZAS )</ion-label>
-      
-      <ion-label>$4.00</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-img class="ion-img" src="assets/icons/avatar.svg" alt="imagen"></ion-img>
-      <ion-label class="product-name">LODERA DE HULE P/AUTOMOVIL GM. (MOÑO) ( 4 PZAS )</ion-label>
-      
-      <ion-label>$4.00</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-img class="ion-img" src="assets/icons/avatar.svg" alt="imagen"></ion-img>
-      <ion-label class="product-name">LODERA DE HULE P/AUTOMOVIL GM. (MOÑO) ( 4 PZAS )</ion-label>
-      
-      <ion-label>$4.00</ion-label>
-    </ion-item>
-   </ion-list>
+    <ion-list>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Carrito de Compras</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div class="table-scroll">
+            <table class="product-table">
+              <thead>
+                <tr>
+                  <th>
+                    <p>Img</p>
+                  </th>
+                  <th>
+                    <p>Producto</p>
+                  </th>
+                  <th>
+                    <p>Precio</p>
+                  </th>
+                  <th>
+                    <p>Cantidad</p>
+                  </th>
+                  <th>
+                    <p>Total</p>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
+                  <td>
+                    <p>LODERA DE HULE P/AUTOMOVIL GM. (MOÑO) (4 PZAS)</p>
+                  </td>
+                  <td>
+                    <p>$4.00</p>
+                  </td>
+                  <td>
+                    <p>2</p>
+                  </td>
+                  <td>
+                    <p>$8.00</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
+                  <td>
+                    <p>ESPEJO LATERAL IZQUIERDO CROMADO</p>
+                  </td>
+                  <td>
+                    <p>$15.00</p>
+                  </td>
+                  <td>
+                    <p>1</p>
+                  </td>
+                  <td>
+                    <p>$15.00</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
+                  <td>
+                    <p>JUEGO DE TAPETES DE GOMA UNIVERSAL</p>
+                  </td>
+                  <td>
+                    <p>$12.50</p>
+                  </td>
+                  <td>
+                    <p>3</p>
+                  </td>
+                  <td>
+                    <p>$37.50</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
+                  <td>
+                    <p>JUEGO DE TAPETES DE GOMA UNIVERSAL</p>
+                  </td>
+                  <td>
+                    <p>$12.50</p>
+                  </td>
+                  <td>
+                    <p>3</p>
+                  </td>
+                  <td>
+                    <p>$37.50</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
+                  <td>
+                    <p>JUEGO DE TAPETES DE GOMA UNIVERSAL</p>
+                  </td>
+                  <td>
+                    <p>$12.50</p>
+                  </td>
+                  <td>
+                    <p>3</p>
+                  </td>
+                  <td>
+                    <p>$37.50</p>
+                  </td>
+                </tr>
+                <tr class="total-row">
+                  <td colspan="4" style="text-align: right; font-weight: bold;">
+                    <p>Subtotal</p>
+                  </td>
+                  <td style="font-weight: bold;">
+                    <p>$60.50</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ion-card-content>
+      </ion-card>
+
+
+    </ion-list>
+
+    <div class="cart-buttons">
+      <ion-button expand="block" [disabled]="loadingButton" class="actualizar-button" (click)="actualizarCarrito()">
+        Actualizar carrito
+      </ion-button>
+      <ion-button expand="block" [disabled]="loadingButton" class="finalizar-button" (click)="finalizarCompra()">
+        Finalizar compra
+      </ion-button>
+    </div>
+
   </div>
 
   <!-- Contenido que será en componentes -->

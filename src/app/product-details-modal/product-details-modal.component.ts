@@ -3,9 +3,9 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, AfterViewInit, ViewChild, ElementRef
 import { RouterModule } from '@angular/router';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { product } from 'src/app/all-products/interfaces/product.interfaces';
-import { ValidUrlPipe } from '../shared/pipes/validate-url.pipe';
 import { addIcons } from 'ionicons';
 import { close } from 'ionicons/icons';
+import { HeaderModalComponent } from "../shared/header-modal/header-modal.component";
 
 @Component({
   selector: 'app-product-details-modal',
@@ -16,8 +16,8 @@ import { close } from 'ionicons/icons';
     IonicModule,
     CommonModule,
     RouterModule,
-    ValidUrlPipe,
-  ],
+    HeaderModalComponent
+],
   schemas:[CUSTOM_ELEMENTS_SCHEMA],
 })
 export class ProductDetailsModalComponent implements AfterViewInit {

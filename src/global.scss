@@ -56,6 +56,10 @@
   src: url("./assets/fonts/Poppins-Bold.otf");
 }
 
+font{
+  font-family: var(--font-family) !important;
+}
+
 body {
   font-family: var(--font-family) !important;
 }

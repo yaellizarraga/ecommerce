@@ -1,0 +1,17 @@
+<ion-header mode="md">
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-img (click)="closeModal()" 
+      routerLink="/" 
+      routerLinkActive="active" 
+      [routerLinkActiveOptions]="{ exact: true }" 
+      class="logo" 
+      [src]="linkLogo() | validUrl:'https://picsum.photos/id/250/200/100'">
+    </ion-img>
+    <ion-label class="toolbar-title-center"><h3>{{ title() }}</h3></ion-label>
+    <ion-buttons slot="end">
+      <ion-icon (click)="closeModal()" class="ion-icon" name="close"></ion-icon>
+    </ion-buttons>
+  </ion-item>
+  </ion-toolbar>
+</ion-header>

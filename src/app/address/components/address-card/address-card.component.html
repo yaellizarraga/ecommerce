@@ -1,22 +1,18 @@
-<ion-card class="form-container">
+<ion-card class="form-container" (click)="SelectAddress()">
   <ion-card-content>
-    <!-- <label>
-        C.P. 82199
-    </label> -->
     <p>
-        {{item()?.Calle}} 
-        {{item()?.Num_Ext}} 
-        {{'Numero interior: ' + item()?.Num_Int}} 
-        {{ ' - ' + item()?.Colonia}} 
-        {{ ', Entre ' + item()?.Entre_Calle1}} 
-        {{ ' y entre ' + item()?.Entre_Calle2}} 
-        {{ ', ' + item()?.Indicaciones}} 
-        {{ ', ' + item()?.Referencia}}
+      <span *ngIf="item()?.Calle">{{ item()?.Calle }} </span>
+      <span *ngIf="item()?.Num_Ext">{{ item()?.Num_Ext }} </span>
+      <span *ngIf="item()?.Num_Int">Número interior: {{ item()?.Num_Int }} </span>
+      <span *ngIf="item()?.Colonia">- {{ item()?.Colonia }} </span>
+      <span *ngIf="item()?.Entre_Calle1">, Entre {{ item()?.Entre_Calle1 }} </span>
+      <span *ngIf="item()?.Entre_Calle2">y {{ item()?.Entre_Calle2 }} </span>
+      <span *ngIf="item()?.Indicaciones">, {{ item()?.Indicaciones }} </span>
+      <span *ngIf="item()?.Referencia">, {{ item()?.Referencia }} </span>
     </p>
-    <!-- <p>
-        Javier De Jesus Bautista - 6692815526
-    </p> -->
-    <div class="d-flex">
+
+
+    <div class="d-flex buttons">
       <ion-button (click)="openEditModal(item()?.Id_Persona_Direccion)" class="capitalize editar" fill="clear">
         Editar
         <ion-icon name="create"></ion-icon>

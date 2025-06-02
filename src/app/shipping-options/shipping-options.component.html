@@ -1,0 +1,30 @@
+<app-shared-header-modal [linkLogo]="link_logo" [title]="'Selecciona una opcion de envio'"></app-shared-header-modal>
+<ion-content>
+  <ion-card class="horizontal-card" (click)="SelectShipping(1)">
+  <ion-img src="assets/images/paqueteria.jpg" alt="Paquetería"></ion-img>
+  <ion-card-content class="font">
+    <p><ion-card-title class="font">Paquetería</ion-card-title></p>
+    <p><ion-card-subtitle class="font">Envío por servicio externo</ion-card-subtitle></p>
+    <p>Entrega tu pedido a través de paquetería confiable y rápida.</p>
+  </ion-card-content>
+</ion-card>
+
+<ion-card class="horizontal-card" (click)="SelectShipping(2)">
+  <ion-img src="assets/images/repartidor-interno.jpg" alt="Repartidor interno"></ion-img>
+  <ion-card-content class="font">
+    <p><ion-card-title class="font">Repartidor Interno</ion-card-title></p>
+    <p><ion-card-subtitle class="font">Entrega con nuestro personal</ion-card-subtitle></p>
+    <p>Utiliza a nuestro equipo interno para repartir tus productos directamente.</p>
+  </ion-card-content>
+</ion-card>
+
+<ion-card class="horizontal-card" (click)="SelectShipping(3)">
+  <ion-img src="assets/images/recojer-en-sitio.jpg" alt="Recoger en sitio"></ion-img>
+  <ion-card-content class="font">
+    <p><ion-card-title class="font">Recoger en Sitio</ion-card-title></p>
+    <p><ion-card-subtitle class="font">Recoje tu pedido personalmente</ion-card-subtitle></p>
+    <p>Ven a nuestras instalaciones y recoge tu pedido cuando prefieras.</p>
+  </ion-card-content>
+</ion-card>
+
+</ion-content>

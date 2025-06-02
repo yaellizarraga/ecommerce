@@ -1,0 +1,29 @@
+.logo {
+  width: 100px;
+  @media screen and (max-width: 767px) {
+    width: 60px;
+  }
+  cursor: pointer;
+}
+
+.ion-icon {
+  font-size: 30px;
+  color: var(--color-primary);
+  // margin-right: 20px;
+  cursor: pointer;
+}
+
+.toolbar-title-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 18px;
+  color: var(--color-primary);
+
+  @media screen and (max-width: 767px) {
+    font-size: 12px;
+  }
+
+  font-weight: bold;
+  white-space: nowrap;
+}

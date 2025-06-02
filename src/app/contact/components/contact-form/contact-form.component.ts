@@ -3,6 +3,7 @@ import { Component, input } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'; 
 import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-contact-form',
@@ -39,7 +40,7 @@ export class ContactFormComponent {
       interes: this.emailForm.value.interes,
     };
 
-    emailjs.send("service_q4jzljy", "template_pkdvtvn", templateParams,{ publicKey: "-B3DGpJesDE2DdESE",})
+    emailjs.send(environment.ServiceID, environment.Template, templateParams,{ publicKey: environment.publicKey,})
     .then(
       () => {
         console.log('El correo se envio correctamente!');

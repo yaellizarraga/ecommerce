@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AddressPage } from '../address/address.page';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -17,14 +18,39 @@ import { RouterModule } from '@angular/router';
 export class ShoppingCartPage implements OnInit {
 
   loading = false;
- 
-   constructor() {
-   }
+  loadingButton = false;
+
+  constructor(
+    private router: Router,
+    private modalcontroller: ModalController,
+) {
+  }
 
   ngOnInit(): void {
     console.log("shopping");
   }
 
+  async finalizarCompra() {
+        this.loadingButton = true;
+        const modal = await this.modalcontroller.create({
+          component: AddressPage,
+          cssClass: 'custom-modal-class',
+          componentProps: {
+            isModal: true,
+          },
+        });
+      
+        await modal.present();
+        this.loadingButton = false;
+        const { data } = await modal.onWillDismiss();
+        
+  }
+
+  async actualizarCarrito() {
+    this.loadingButton = true;
+    this.router.navigate(['/all-products']);
+    this.loadingButton = false;
+  }
 
 
 }

@@ -9,6 +9,7 @@ import { AddressModalComponent } from '../address-modal/address-modal.component'
 import { addressService } from '../../services/address.service';
 import { ToastComponent } from 'src/app/shared/components/toast/toast.component';
 import { Domicilio } from '../../interfaces/address.interface';
+import { ShippingOptionsComponent } from 'src/app/shipping-options/shipping-options.component';
 
 @Component({
   selector: 'app-address-address-card',
@@ -24,6 +25,8 @@ export class AddressCardComponent {
 
   item = input<Domicilio>();
   link_logo = input<string>();
+  loading = false;
+  @Input() isModal: boolean = false;
 
   constructor(
     private modalcontroller: ModalController,
@@ -32,6 +35,28 @@ export class AddressCardComponent {
     private toastComponent: ToastComponent,
   ) {
     addIcons({ trash, create });
+  }
+
+  
+  closeModal() {
+    this.modalcontroller.dismiss();
+  }
+
+  async SelectAddress(){
+    this.closeModal();
+
+    const modal = await this.modalcontroller.create({
+            component: ShippingOptionsComponent,
+            componentProps: {
+              linkLogo: this.link_logo, 
+            },
+            cssClass:'custom-modal-class'
+          });
+      
+          await modal.present();
+          this.loading = false;
+
+          const { data } = await modal.onWillDismiss();
   }
 
   async openEditModal(Id: any) {

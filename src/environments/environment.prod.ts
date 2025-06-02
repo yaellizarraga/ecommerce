@@ -7,4 +7,14 @@ export const environment = {
   apiUrl: 'https://comercializadoraseaumn.zamtostech.com/api/public/api',
   UrlImages: 'https://comercializadoraseaumn.zamtostech.com/',
   // apiUrl: 'http://localhost/api-ecommerce/public/api',
+
+  //EmailJS
+  ServiceID:'service_q4jzljy',
+  Template:'template_pkdvtvn',
+  publicKey:'-B3DGpJesDE2DdESE',
+
+  //Paypal
+  ClavePublica:'AS9thjbz2D6Nf3eB7ho59iwc8nnESscF_MQGiC2CxD_LKNJGxtDUxzhhudfR4Yzz78p4F6EXD4TiFs67',
+  ClavePrivada:'EE8SpUFuJDZKRdsSVEI4H0iM_iVqIynYPg_BdhhKFEluVnitTqoxxN55mzH1h8LT0F0IDc4K6K9RRagn',
+
 };

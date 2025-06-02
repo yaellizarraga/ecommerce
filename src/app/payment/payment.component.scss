@@ -1,0 +1,11 @@
+.container{
+  display: flex;
+  justify-content: center;
+}
+.container-paypal{
+  width: 730px;
+}
+#paypal-button-container {
+  /* Opcional: un poco de espacio arriba */
+  margin-top: 40px;
+}
