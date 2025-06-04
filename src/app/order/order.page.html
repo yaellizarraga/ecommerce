@@ -1,0 +1,44 @@
+<ion-content id="main-content">
+  <div class="container">
+
+    <!-- Contenido que será en componentes -->
+
+    <ion-list>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Guías de Envío</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div class="table-scroll">
+            <table class="product-table">
+              <thead>
+                <tr>
+                  <th><p class="font">Número de Guía</p></th>
+                  <th><p class="font">Estatus</p></th>
+                  <th><p class="font">Cliente</p></th>
+                  <th><p class="font">Fecha de Recolección</p></th>
+                  <th><p class="font">Repartidor</p></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let envio of envios">
+                  <td><p class="font">{{ envio.numeroGuia }}</p></td>
+                  <td><p class="font">{{ envio.estatus }}</p></td>
+                  <td><p class="font">{{ envio.cliente }}</p></td>
+                  <td><p class="font">{{ envio.fechaRecoleccion | date:'medium' }}</p></td>
+                  <td>
+                    <ion-button size="small" class="ver-button capitalize" (click)="verBitacora(envio)">
+                      Bitacora
+                    </ion-button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+
+  </div>
+</ion-content>

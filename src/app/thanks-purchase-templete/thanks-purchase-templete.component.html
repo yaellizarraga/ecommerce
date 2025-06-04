@@ -1,0 +1,41 @@
+<app-shared-header-modal [linkLogo]="link_logo" [title]="''"></app-shared-header-modal>
+<ion-content class="ion-padding">
+  <div class="container">
+    <div class="thank-you-container">
+      <ion-icon name="checkmark-circle" class="success-icon"></ion-icon>
+      <h2 class="font">¡Gracias por su compra!</h2>
+      <p class="font">Tu pedido ha sido procesado con éxito.</p>
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Resumen del pago</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="font"><strong>ID de la transacción:</strong> {{ transactionId }}</p>
+          <p class="font"><strong>Monto:</strong> ${{ amount }} {{ currency }}</p>
+          <p class="font"><strong>Estado:</strong> {{ status }}</p>
+          <p class="font"><strong>Comprador:</strong> {{ fullName }}</p>
+          <p class="font"><strong>Correo:</strong> {{ email }}</p>
+        </ion-card-content>
+      </ion-card>
+
+      <ion-card *ngIf="addressLine1">
+        <ion-card-header>
+          <ion-card-title class="font">Envío</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <p class="font"><strong>Dirección:</strong></p>
+          <p class="font">{{ addressLine1 }}</p>
+          <p class="font" *ngIf="addressLine2">{{ addressLine2 }}</p>
+          <p class="font">{{ city }}, {{ state }} {{ postalCode }}</p>
+          <p class="font">{{ country }}</p>
+        </ion-card-content>
+      </ion-card>
+
+
+      <ion-button expand="block" class="pedido-button" routerLink="/order">Ver Pedido</ion-button>
+      <ion-button expand="block" class="seguir-button" routerLink="/all-products">Seguir Comprando</ion-button>
+    </div>
+  </div>
+
+</ion-content>

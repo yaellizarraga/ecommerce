@@ -54,6 +54,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./address/address.page').then((m) => m.AddressPage),
       },
+      {
+        path: 'order',
+        canActivate: [TokenGuard],
+        loadComponent: () =>
+          import('./order/order.page').then((m) => m.OrderPage),
+      },
     ]
   },
   {

@@ -1,4 +1,4 @@
-<ion-card class="form-container" (click)="SelectAddress()">
+<ion-card class="form-container" [ngStyle]="isModal ? {'cursor': 'pointer'} : {}" (click)="SelectAddress($event)">
   <ion-card-content>
     <p>
       <span *ngIf="item()?.Calle">{{ item()?.Calle }} </span>
@@ -13,11 +13,11 @@
 
 
     <div class="d-flex buttons">
-      <ion-button (click)="openEditModal(item()?.Id_Persona_Direccion)" class="capitalize editar" fill="clear">
+      <ion-button (click)="openEditModal(item()?.Id_Persona_Direccion)" class="capitalize button-option editar" fill="clear">
         Editar
         <ion-icon name="create"></ion-icon>
       </ion-button>
-      <ion-button (click)="deleteItem(item()?.Id_Persona_Direccion)" class="capitalize eliminar" fill="clear">
+      <ion-button (click)="deleteItem(item()?.Id_Persona_Direccion)" class="capitalize button-option eliminar" fill="clear">
         Eliminar
         <ion-icon name="trash"></ion-icon>
       </ion-button>

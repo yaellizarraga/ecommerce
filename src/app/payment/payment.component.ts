@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { RouterModule } from '@angular/router';
 import { HeaderModalComponent } from "../shared/header-modal/header-modal.component";
 import { HeaderService } from '../shared/header/services/header.service';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { ThanksPurchaseTempleteComponent } from '../thanks-purchase-templete/thanks-purchase-templete.component';
+import { ToastComponent } from '../shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-payment',
@@ -26,7 +27,8 @@ export class PaymentComponent implements OnInit {
 
   constructor(
     private HeaderService: HeaderService,
-    private http: HttpClient,
+    private modalcontroller: ModalController,
+    private toastComponent: ToastComponent,
   ) { }
 
   ngOnInit() {
@@ -45,48 +47,74 @@ export class PaymentComponent implements OnInit {
     });
   }
 
- async pay() {
-  const paypalClientId = environment.ClientId;
+  async pay() {
+    const paypalClientId = environment.ClientId;
 
-  if (!document.querySelector('#paypal-sdk')) {
-    const script = document.createElement('script');
-    script.id = 'paypal-sdk';
-    script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=MXN`;
-    script.onload = () => this.renderPayPalButton();
-    document.body.appendChild(script);
-  } else {
-    this.renderPayPalButton();
+    if (!document.querySelector('#paypal-sdk')) {
+      const script = document.createElement('script');
+      script.id = 'paypal-sdk';
+      script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=MXN`;
+      script.onload = () => this.renderPayPalButton();
+      document.body.appendChild(script);
+    } else {
+      this.renderPayPalButton();
+    }
   }
-}
 
-renderPayPalButton() {
-  if ((window as any).paypal) {
-    (window as any).paypal.Buttons({
-      createOrder: (data: any, actions: any) => {
-        return actions.order.create({
-          purchase_units: [{
-            amount: {
-              value: '10.00' // Monto en MXN
+  renderPayPalButton() {
+    if ((window as any).paypal) {
+      (window as any).paypal.Buttons({
+        createOrder: (data: any, actions: any) => {
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: '10.00' // Monto en MXN
+              }
+            }]
+          });
+        },
+        onApprove: async (data: any, actions: any) => {
+          return actions.order.capture().then(async (details: any) => {
+            if (details.status === "COMPLETED") {
+
+              ThanksPurchaseTempleteComponent
+              this.closeModal();
+
+              const modal = await this.modalcontroller.create({
+                component: ThanksPurchaseTempleteComponent,
+                componentProps: {
+                  linkLogo: this.link_logo,
+                  data: details,
+                },
+                cssClass: 'custom-modal-class'
+              });
+
+              await modal.present();
+
+              const { data } = await modal.onWillDismiss();
             }
-          }]
-        });
-      },
-      onApprove: (data: any, actions: any) => {
-        return actions.order.capture().then((details: any) => {
-          if(details.status === "COMPLETED"){
 
-          }
-
-          console.log(details);
-          console.log('Pago completado por', details.payer.name.given_name);
-          // Puedes llamar a tu backend aquí si deseas registrar la compra
-        });
-      },
-      onError: (err: any) => {
-        console.error('Error en el pago:', err);
-      }
-    }).render('#paypal-button-container'); // Asegúrate de tener este div en tu HTML
+            console.log(details);
+            console.log('Pago completado por', details.payer.name.given_name);
+            // Puedes llamar a tu backend aquí si deseas registrar la compra
+          });
+        },
+        onError: (err: any) => {
+          console.error('Error en el pago:', err);
+          this.toastComponent.showToast(
+            'Error en el pago',
+            'bottom',
+            'danger',
+            5000,
+            true
+          );
+        }
+      }).render('#paypal-button-container'); // Asegúrate de tener este div en tu HTML
+    }
   }
-}
+
+  closeModal() {
+    this.modalcontroller.dismiss();
+  }
 
 }

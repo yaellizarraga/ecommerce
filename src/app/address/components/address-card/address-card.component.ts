@@ -42,7 +42,14 @@ export class AddressCardComponent {
     this.modalcontroller.dismiss();
   }
 
-  async SelectAddress(){
+  async SelectAddress(event: any){
+  const path = event.composedPath(); 
+  const clickedInsideOptionButton = path.some((el: any) => 
+    el.classList?.contains?.('button-option') // clase común de "editar" y "eliminar"
+  );
+
+  if (!clickedInsideOptionButton && this.isModal) {
+    
     this.closeModal();
 
     const modal = await this.modalcontroller.create({
@@ -57,6 +64,7 @@ export class AddressCardComponent {
           this.loading = false;
 
           const { data } = await modal.onWillDismiss();
+    }
   }
 
   async openEditModal(Id: any) {

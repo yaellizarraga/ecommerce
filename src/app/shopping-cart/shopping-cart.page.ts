@@ -3,6 +3,7 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { AddressPage } from '../address/address.page';
+import { TokenService } from '../auth/services/token.service';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -23,7 +24,9 @@ export class ShoppingCartPage implements OnInit {
   constructor(
     private router: Router,
     private modalcontroller: ModalController,
-) {
+    private TokenService: TokenService,
+
+  ) {
   }
 
   ngOnInit(): void {
@@ -31,19 +34,35 @@ export class ShoppingCartPage implements OnInit {
   }
 
   async finalizarCompra() {
-        this.loadingButton = true;
-        const modal = await this.modalcontroller.create({
-          component: AddressPage,
-          cssClass: 'custom-modal-class',
-          componentProps: {
-            isModal: true,
-          },
-        });
-      
-        await modal.present();
-        this.loadingButton = false;
-        const { data } = await modal.onWillDismiss();
-        
+    this.loadingButton = true;
+
+    const token = await localStorage.getItem('token') || "";
+
+    if (!token || token === "") {
+      this.router.navigate(['/login']);
+      this.loadingButton = false;
+      return;
+    }
+
+    const res: any = await this.TokenService.validateToken(token).toPromise();
+    if (res.status === false) {
+      this.router.navigate(['/login']);
+      this.loadingButton = false;
+      return;
+    }
+
+    const modal = await this.modalcontroller.create({
+      component: AddressPage,
+      cssClass: 'custom-modal-class',
+      componentProps: {
+        isModal: true,
+      },
+    });
+
+    await modal.present();
+    this.loadingButton = false;
+    const { data } = await modal.onWillDismiss();
+
   }
 
   async actualizarCarrito() {

@@ -2,12 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { RouterModule } from '@angular/router';
-import { HeaderModalComponent } from "../shared/header-modal/header-modal.component";
-import { HeaderService } from '../shared/header/services/header.service';
-import { PaymentComponent } from '../payment/payment.component';
+import { HeaderModalComponent } from 'src/app/shared/header-modal/header-modal.component';
+import { HeaderService } from 'src/app/shared/header/services/header.service';
+import { addIcons } from 'ionicons';
+import { checkmarkCircle, ellipse, ellipseOutline, time } from 'ionicons/icons';
 
 @Component({
-  selector: 'app-shipping-options',
+  selector: 'app-order-status-modal',
   standalone: true,
   imports: [
     IonicModule,
@@ -15,10 +16,10 @@ import { PaymentComponent } from '../payment/payment.component';
     RouterModule,
     HeaderModalComponent
   ],
-  templateUrl: './shipping-options.component.html',
-  styleUrl: './shipping-options.component.scss',
+  templateUrl: './status-modal.component.html',
+  styleUrl: './status-modal.component.scss',
 })
-export class ShippingOptionsComponent implements OnInit {
+export class StatusModalComponent implements OnInit {
 
   link_logo = '';
   card: any;
@@ -27,7 +28,9 @@ export class ShippingOptionsComponent implements OnInit {
   constructor(
     private HeaderService: HeaderService,
     private modalcontroller: ModalController,
-  ) { }
+  ) { 
+    addIcons({checkmarkCircle ,time ,ellipse});
+  }
 
   ngOnInit() {
     this.loadHeader();
@@ -46,24 +49,6 @@ export class ShippingOptionsComponent implements OnInit {
 
   closeModal() {
     this.modalcontroller.dismiss();
-  }
-
-  async SelectShipping(id: number) {
-
-    this.closeModal();
-
-    const modal = await this.modalcontroller.create({
-      component: PaymentComponent,
-      componentProps: {
-        linkLogo: this.link_logo,
-      },
-      cssClass: 'custom-modal-class'
-    });
-
-    await modal.present();
-    this.loading = false;
-
-    const { data } = await modal.onWillDismiss();
   }
 
 }

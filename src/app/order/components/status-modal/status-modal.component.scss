@@ -1,0 +1,75 @@
+.background-light {
+    background-color: #f8f9fa;
+}
+
+.container {
+    padding: 16px;
+}
+
+.bitacora-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 16px;
+}
+
+.title-with-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.bitacora-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.bitacora-subtitle {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.bitacora-destino {
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+}
+
+.progress-container {
+    margin: 12px 0;
+}
+
+.progress-label {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.progress-bar {
+    height: 10px;
+    border-radius: 8px;
+}
+
+.animated-progress::part(bar) {
+    transition: width 1s ease-in-out;
+}
+
+.etapas-list {
+    margin-top: 16px;
+}
+
+.etapa-item {
+    border-radius: 8px;
+    margin-bottom: 8px;
+    transition: background-color 0.3s;
+}
+
+.progress-percentage {
+    font-size: 0.85rem;
+    text-align: right;
+    margin-top: 4px;
+    color: #333;
+}
+
+ion-progress-bar{
+    --ion-color-base: var(--color-primary) !important;
+}
