@@ -67,24 +67,30 @@ img{
   font-size: 14px;
 }
 .cotizar{
-  --background-color: var(--color-red);
   width: 100%;
   height: 40px;
+  --background: var(--color-primary);
+}
+.carrito{
+  width: 100%;
+  height: 40px;
+  --background: var(--color-secondary);
 }
 
 .container-buttons{
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 20px;
   margin-bottom: 40px;
 }
 
-ion-button{
-  --background: var(--color-primary);
-}
+// ion-button{
+//   --background: var(--color-primary);
+// }
 
 ion-item{
   display: flex;

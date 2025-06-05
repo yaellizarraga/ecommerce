@@ -11,6 +11,7 @@
 }
 
 th {
+    width: 140px;
     padding-left: 10px;
     padding-right: 10px;
     border-bottom: 1px solid #ccc;
@@ -68,4 +69,26 @@ ion-img {
     font-weight: bold;
     --background: var(--color-primary);
     font-size: 16px;
+}
+.button-cantidad {
+    font-weight: bold;
+    --background: var(--color-primary);
+    font-size: 16px;
+}
+
+.no-data-message {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    font-weight: bold;
+}
+
+.container-icon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-trash{
+    margin-bottom: 5px;
+    margin-right: 5px;
 }

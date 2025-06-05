@@ -11,6 +11,7 @@ import { TokenService } from 'src/app/auth/services/token.service';
 import { LogoutService } from 'src/app/auth/services/logout.service';
 import { take } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-header',
@@ -35,6 +36,7 @@ export class HeaderComponent implements OnInit {
   token = false;
   UserData: any = {};
   urlFoto: any = 'assets/icons/avatar.svg';
+  totalProductsCount = 0;
 
   @ViewChild('login') popover!: HTMLIonPopoverElement;
   @ViewChild('logoutPopover') popoverLogout!: HTMLIonPopoverElement;
@@ -44,6 +46,7 @@ export class HeaderComponent implements OnInit {
     private TokenService: TokenService,
     private LogoutService: LogoutService,
     private router: Router,
+    private cartService: CartService
   ) {
     addIcons({ cartOutline, logInOutline, logOutOutline });
 
@@ -66,6 +69,10 @@ export class HeaderComponent implements OnInit {
         this.urlFoto = 'assets/icons/avatar.svg';
       }
 
+    });
+
+    this.cartService.totalItems$.subscribe(count => {
+      this.totalProductsCount = count;
     });
   }
   isValidUrl(url: string | undefined): boolean {

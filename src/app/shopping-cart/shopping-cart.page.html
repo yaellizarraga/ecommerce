@@ -9,9 +9,12 @@
 
         <ion-card-content>
           <div class="table-scroll">
-            <table class="product-table">
+            <table class="product-table" *ngIf="!withoutData; else noDataTemplate">
               <thead>
                 <tr>
+                  <th>
+                    <p>Acciones</p>
+                  </th>
                   <th>
                     <p>Img</p>
                   </th>
@@ -27,94 +30,61 @@
                   <th>
                     <p>Total</p>
                   </th>
+                  
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
+                <tr *ngFor="let item of cartItems">
                   <td>
-                    <p>LODERA DE HULE P/AUTOMOVIL GM. (MOÑO) (4 PZAS)</p>
+                    <ion-button color="danger" fill="clear" size="small" (click)="removeFromCart(item.id)">
+                      <div class="container-icon">
+                        <ion-icon class="icon-trash" name="trash-outline"></ion-icon>
+                        <p class="font capitalize">eliminar</p>
+                      </div>
+                    </ion-button>
+                  </td>
+                  <td><ion-img [src]="item.image" alt="imagen" /></td>
+                  <td>
+                    <p>{{ item.name }}</p>
                   </td>
                   <td>
-                    <p>$4.00</p>
+                    <p>
+                      ${{ (item.discount && item.discount > 0 ? item.discount : item.price) | number:'1.2-2' }}
+                    </p>
                   </td>
                   <td>
-                    <p>2</p>
+                    <div class="d-flex justify-content-left align-content-center">
+                      <ion-button size="small" class="button-cantidad" (click)="decreaseQuantity(item)">-</ion-button>
+                      <span style="margin: 10px 10px 10px 10px;">{{ item.quantity }}</span>
+                      <ion-button size="small" class="button-cantidad" (click)="increaseQuantity(item)">+</ion-button>
+                    </div>
                   </td>
                   <td>
-                    <p>$8.00</p>
+                    <p>
+                      ${{ ((item.discount && item.discount > 0 ? item.discount : item.price) * item.quantity) |
+                      number:'1.2-2' }}
+                    </p>
                   </td>
-                </tr>
-                <tr>
-                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
-                  <td>
-                    <p>ESPEJO LATERAL IZQUIERDO CROMADO</p>
-                  </td>
-                  <td>
-                    <p>$15.00</p>
-                  </td>
-                  <td>
-                    <p>1</p>
-                  </td>
-                  <td>
-                    <p>$15.00</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
-                  <td>
-                    <p>JUEGO DE TAPETES DE GOMA UNIVERSAL</p>
-                  </td>
-                  <td>
-                    <p>$12.50</p>
-                  </td>
-                  <td>
-                    <p>3</p>
-                  </td>
-                  <td>
-                    <p>$37.50</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
-                  <td>
-                    <p>JUEGO DE TAPETES DE GOMA UNIVERSAL</p>
-                  </td>
-                  <td>
-                    <p>$12.50</p>
-                  </td>
-                  <td>
-                    <p>3</p>
-                  </td>
-                  <td>
-                    <p>$37.50</p>
-                  </td>
-                </tr>
-                <tr>
-                  <td><ion-img src="assets/icons/avatar.svg" alt="imagen" /></td>
-                  <td>
-                    <p>JUEGO DE TAPETES DE GOMA UNIVERSAL</p>
-                  </td>
-                  <td>
-                    <p>$12.50</p>
-                  </td>
-                  <td>
-                    <p>3</p>
-                  </td>
-                  <td>
-                    <p>$37.50</p>
-                  </td>
+                  
                 </tr>
                 <tr class="total-row">
-                  <td colspan="4" style="text-align: right; font-weight: bold;">
+                  <td colspan="5" style="text-align: right; font-weight: bold;">
                     <p>Subtotal</p>
                   </td>
                   <td style="font-weight: bold;">
-                    <p>$60.50</p>
+                    <p>${{ subtotal | number:'1.2-2' }}</p>
                   </td>
                 </tr>
               </tbody>
+
             </table>
+
+            <ng-template #noDataTemplate>
+              <div class="no-data-message">
+                <h2 class="font">No hay productos en el carrito.</h2>
+              </div>
+            </ng-template>
+
           </div>
         </ion-card-content>
       </ion-card>
@@ -123,10 +93,12 @@
     </ion-list>
 
     <div class="cart-buttons">
-      <ion-button expand="block" [disabled]="loadingButton" class="actualizar-button capitalize" (click)="actualizarCarrito()">
+      <ion-button expand="block" [disabled]="loadingButton" class="actualizar-button capitalize"
+        (click)="actualizarCarrito()">
         Actualizar carrito
       </ion-button>
-      <ion-button expand="block" [disabled]="loadingButton" class="finalizar-button capitalize" (click)="finalizarCompra()">
+      <ion-button expand="block" [disabled]="loadingButton" class="finalizar-button capitalize"
+        (click)="finalizarCompra()">
         Finalizar compra
       </ion-button>
     </div>

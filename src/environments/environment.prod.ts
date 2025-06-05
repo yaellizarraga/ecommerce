@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  // apiUrl: 'https://api.legazpi.zamtostech.com/api',
+   // apiUrl: 'https://api.legazpi.zamtostech.com/api',
   // UrlImages: 'https://legazpi.zamtostech.com/',
   // apiUrl: 'https://api-ecommerce.zamtostech.com/api',
   // UrlImages: 'https://espacios218.zamtostech.com/',
@@ -14,7 +14,7 @@ export const environment = {
   publicKey:'-B3DGpJesDE2DdESE',
 
   //Paypal
-  ClavePublica:'AS9thjbz2D6Nf3eB7ho59iwc8nnESscF_MQGiC2CxD_LKNJGxtDUxzhhudfR4Yzz78p4F6EXD4TiFs67',
+  ClientId:'AS9thjbz2D6Nf3eB7ho59iwc8nnESscF_MQGiC2CxD_LKNJGxtDUxzhhudfR4Yzz78p4F6EXD4TiFs67',
   ClavePrivada:'EE8SpUFuJDZKRdsSVEI4H0iM_iVqIynYPg_BdhhKFEluVnitTqoxxN55mzH1h8LT0F0IDc4K6K9RRagn',
 
 };

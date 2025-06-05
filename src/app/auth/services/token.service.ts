@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, take } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class TokenService {
   private token: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private UserData: BehaviorSubject<{}> = new BehaviorSubject<{}>({});
   private urlBackend: string = environment.apiUrl + '/token';
-  constructor() {
+  constructor(
+    private router: Router,
+  ) {
   }
 
   async checkToken(): Promise<void> {
@@ -23,21 +26,21 @@ export class TokenService {
       return;
     }
 
-      this.validateToken(token).pipe(take(1)).subscribe({
-        next: async(res: any) => {
-          if(res.status){
-            this.setToken(res.status);
-            const userData = JSON.parse(localStorage.getItem('userData') || '{}') || {};
-            this.setUserData(userData,true);
-          }else{
-            this.setToken(false);
-          }
-        },
-        error: (error: any) => {
-          localStorage.clear();
+    this.validateToken(token).pipe(take(1)).subscribe({
+      next: async (res: any) => {
+        if (res.status) {
+          this.setToken(res.status);
+          const userData = JSON.parse(localStorage.getItem('userData') || '{}') || {};
+          this.setUserData(userData, true);
+        } else {
           this.setToken(false);
         }
-      });
+      },
+      error: (error: any) => {
+        localStorage.clear();
+        this.setToken(false);
+      }
+    });
   }
 
   validateToken(token: string): Observable<any> {
@@ -56,8 +59,8 @@ export class TokenService {
   }
 
   setUserData(value: any, original = false): void {
-    
-    if(Object.keys(value).length > 0 && !original){
+
+    if (Object.keys(value).length > 0 && !original) {
 
       const UserData = {
         Id: value?.Id_Persona,
@@ -69,11 +72,29 @@ export class TokenService {
       };
       this.UserData.next(UserData);
       localStorage.setItem('userData', JSON.stringify(UserData));
-    }else{
+    } else {
       this.UserData.next(value);
     }
 
-    
+
   }
+
+  async validateSesion(): Promise<boolean> {
+    const token = await localStorage.getItem('token') || "";
+
+    if (!token || token === "") {
+      this.router.navigate(['/login']);
+      return false; 
+    }
+
+    const res: any = await this.validateToken(token).toPromise();
+    if (res.status === false) {
+      this.router.navigate(['/login']);
+      return false; 
+    }
+
+    return true; 
+  }
+
 
 }

@@ -68,7 +68,8 @@
         }
           <ion-item lines="none">
             <div class="container-buttons">
-              <ion-button class="cotizar font">Agregar al carrito</ion-button>
+              <ion-button class="cotizar font" (click)="addToCart(product)">Agregar al carrito</ion-button>
+              <ion-button class="carrito font" (click)="goToCart()">ir al carrito</ion-button>
             </div>
           </ion-item>
         </ion-list>

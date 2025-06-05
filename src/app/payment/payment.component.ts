@@ -7,6 +7,7 @@ import { HeaderService } from '../shared/header/services/header.service';
 import { environment } from 'src/environments/environment';
 import { ThanksPurchaseTempleteComponent } from '../thanks-purchase-templete/thanks-purchase-templete.component';
 import { ToastComponent } from '../shared/components/toast/toast.component';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-payment',
@@ -24,16 +25,18 @@ export class PaymentComponent implements OnInit {
 
   link_logo = '';
   card: any;
-
+  subtotal: number = 0;
   constructor(
     private HeaderService: HeaderService,
     private modalcontroller: ModalController,
     private toastComponent: ToastComponent,
+    private cartService: CartService
   ) { }
 
   ngOnInit() {
     this.loadHeader();
     this.pay();
+
   }
 
   loadHeader() {
@@ -50,15 +53,19 @@ export class PaymentComponent implements OnInit {
   async pay() {
     const paypalClientId = environment.ClientId;
 
-    if (!document.querySelector('#paypal-sdk')) {
-      const script = document.createElement('script');
-      script.id = 'paypal-sdk';
-      script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=MXN`;
-      script.onload = () => this.renderPayPalButton();
-      document.body.appendChild(script);
-    } else {
-      this.renderPayPalButton();
-    }
+    this.cartService.subtotal$.subscribe(total => {
+      this.subtotal = total;
+
+      if (!document.querySelector('#paypal-sdk')) {
+        const script = document.createElement('script');
+        script.id = 'paypal-sdk';
+        script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=MXN`;
+        script.onload = () => this.renderPayPalButton();
+        document.body.appendChild(script);
+      } else {
+        this.renderPayPalButton();
+      }
+    });
   }
 
   renderPayPalButton() {
@@ -68,7 +75,7 @@ export class PaymentComponent implements OnInit {
           return actions.order.create({
             purchase_units: [{
               amount: {
-                value: '10.00' // Monto en MXN
+                value: `${this.subtotal}` // Monto en MXN
               }
             }]
           });

@@ -14,7 +14,7 @@
         
         <ion-item lines="none" Button routerLink="/shopping-cart" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <ion-icon name="cart-outline"></ion-icon>
-          <ion-badge color="color-primary">11</ion-badge>
+          <ion-badge color="color-primary">{{ totalProductsCount }}</ion-badge>
         </ion-item>
 
         <ng-container *ngIf="!token">
