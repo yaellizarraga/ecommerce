@@ -1,9 +1,9 @@
-<app-menu [linkLogo]="Data?.link_logo | validUrl:'https://picsum.photos/id/250/200/100'"></app-menu>
+<app-menu [linkLogo]="Data?.preview | validUrl:'https://picsum.photos/id/250/200/100'"></app-menu>
 
 <ion-header collapse="fade" mode="md">
     <ion-toolbar>
       <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-        <ion-img class="logo" [src]="Data?.link_logo | validUrl:'https://picsum.photos/id/250/200/100'"></ion-img>
+        <ion-img class="logo" [src]="Data?.preview | validUrl:'https://picsum.photos/id/250/200/100'"></ion-img>
       </a>
       
       <ion-buttons slot="end" class="me-5">

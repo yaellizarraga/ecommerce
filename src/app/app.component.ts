@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
           }
         },
         error: (error) => {
-          console.error('Error fetching Header:', error);
+          console.log(error);
         }
       });
     }

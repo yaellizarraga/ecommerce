@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
 import { ThanksPurchaseTempleteComponent } from '../thanks-purchase-templete/thanks-purchase-templete.component';
 import { ToastComponent } from '../shared/components/toast/toast.component';
 import { CartService } from '../services/cart.service';
+import { SpinnerComponent } from '../shared/components/spinner/spinner.component';
 
 @Component({
   selector: 'app-payment',
@@ -16,7 +17,8 @@ import { CartService } from '../services/cart.service';
     IonicModule,
     CommonModule,
     RouterModule,
-    HeaderModalComponent
+    HeaderModalComponent,
+    SpinnerComponent,
   ],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.scss',
@@ -26,6 +28,7 @@ export class PaymentComponent implements OnInit {
   link_logo = '';
   card: any;
   subtotal: number = 0;
+  loading = false;
   constructor(
     private HeaderService: HeaderService,
     private modalcontroller: ModalController,
@@ -42,20 +45,22 @@ export class PaymentComponent implements OnInit {
   loadHeader() {
     this.HeaderService.getAll().subscribe({
       next: (res: any) => {
-        this.link_logo = res.data[0]?.link_logo;
+        this.link_logo = (res.data.length > 0) ? res.data[0].preview : '';
       },
       error: (error: any) => {
-        console.error('Error fetching Header:', error);
+        console.log(error);
       }
     });
   }
 
   async pay() {
+    this.loading = true;
     const paypalClientId = environment.ClientId;
 
     this.cartService.subtotal$.subscribe(total => {
       this.subtotal = total;
 
+      this.loading = false;
       if (!document.querySelector('#paypal-sdk')) {
         const script = document.createElement('script');
         script.id = 'paypal-sdk';
@@ -84,8 +89,8 @@ export class PaymentComponent implements OnInit {
           return actions.order.capture().then(async (details: any) => {
             if (details.status === "COMPLETED") {
 
-              ThanksPurchaseTempleteComponent
               this.closeModal();
+              this.cartService.clearCart();
 
               const modal = await this.modalcontroller.create({
                 component: ThanksPurchaseTempleteComponent,

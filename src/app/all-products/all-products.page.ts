@@ -97,11 +97,11 @@ export class AllProductsPage implements OnInit {
   loadHeader() {
     this.HeaderService.getAll().subscribe({
       next: (res: any) => {
-        this.link_logo = (res.data.length > 0) ? res.data[0].link_logo : '';
+        this.link_logo = (res.data.length > 0) ? res.data[0].preview : '';
 
       },
       error: (error) => {
-        console.error('Error fetching Header:', error);
+        console.log(error);
       }
     });
   }
@@ -113,7 +113,7 @@ export class AllProductsPage implements OnInit {
 
       },
       error: (error) => {
-        console.error('Error fetching Header:', error);
+        console.log(error);
       }
     });
   }

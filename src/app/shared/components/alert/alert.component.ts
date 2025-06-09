@@ -31,20 +31,26 @@ export class AlertComponent {
             text: 'Cancelar',
             role: 'Cancelar',
             handler: () => {
-              resolve(false); 
+              resolve(false);
             }
           },
           {
             text: 'Aceptar',
             role: 'Aceptar',
             handler: () => {
-              resolve(true); 
+              resolve(true);
             }
           }
         ],
       });
 
       await simpleAlert.present();
+
+      const alertMessageEl = document.querySelector('.alert-message');
+      if (alertMessageEl) {
+        alertMessageEl.innerHTML = message;
+      }
+
     });
   }
 }

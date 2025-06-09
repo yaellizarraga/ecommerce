@@ -13,14 +13,14 @@ import { FooterService } from './services/footer.service';
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })
-export class FooterComponent implements OnInit { 
+export class FooterComponent implements OnInit {
 
-  Data = <any>([]); 
+  Data = <any>([]);
 
   constructor(
     private FooterService: FooterService,
-  ) {}
-    
+  ) { }
+
   ngOnInit(): void {
 
     this.loadData();
@@ -28,7 +28,7 @@ export class FooterComponent implements OnInit {
   loadData() {
     this.FooterService.getAll().subscribe({
       next: (res: any) => {
-        this.Data = res.data[0];
+        this.Data = res?.data?.[0] ? res.data[0] : [];
 
       },
       error: (error) => {

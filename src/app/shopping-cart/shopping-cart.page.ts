@@ -8,6 +8,8 @@ import { CartService } from '../services/cart.service';
 import { addIcons } from 'ionicons';
 import { trashOutline } from 'ionicons/icons';
 import { ToastComponent } from '../shared/components/toast/toast.component';
+import { AlertComponent } from '../shared/components/alert/alert.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -18,12 +20,14 @@ import { ToastComponent } from '../shared/components/toast/toast.component';
     IonicModule,
     CommonModule,
     RouterModule,
+    FormsModule
   ],
 })
 export class ShoppingCartPage implements OnInit {
 
   loading = false;
-  loadingButton = false;
+  loadingButtonActualizar = false;
+  loadingButtonFinalizar = false;
 
   cartItems: any[] = [];
   subtotal: number = 0;
@@ -35,7 +39,8 @@ export class ShoppingCartPage implements OnInit {
     private modalcontroller: ModalController,
     private TokenService: TokenService,
     private cartService: CartService,
-    private toastComponent: ToastComponent
+    private toastComponent: ToastComponent,
+    private AlertComponent: AlertComponent
 
   ) {
     addIcons({ trashOutline });
@@ -69,10 +74,10 @@ export class ShoppingCartPage implements OnInit {
   }
 
   async finalizarCompra() {
-    this.loadingButton = true;
+    this.loadingButtonFinalizar = true;
 
     if (this.withoutData === true) {
-      this.loadingButton = false;
+      this.loadingButtonFinalizar = false;
       this.toastComponent.showToast(
         'No tienes Productos que Comprar',
         'bottom',
@@ -84,10 +89,46 @@ export class ShoppingCartPage implements OnInit {
     }
     const isValid = await this.TokenService.validateSesion();
     if (!isValid) {
-      this.loadingButton = false;
+      this.loadingButtonFinalizar = false;
       return;
     }
 
+    this.cartService.checkStockAvailability().subscribe({
+      next: async (result) => {
+
+        const outOfStockItems = result.filter((p: any) => !p.enough_stock);
+
+        if (outOfStockItems.length) {
+
+          const message = `${outOfStockItems.map((p: any) => `• ${p.name} (Disponibles: ${p.available_quantity})`).join('<br>')}`;
+
+          const res = await this.AlertComponent.simpleAlert(
+            'Algunos productos no tienen suficiente stock:',
+            message,
+          );
+
+          this.loadingButtonFinalizar = false;
+        } else {
+          this.nextProcess();
+          this.loadingButtonFinalizar = false;
+        }
+      },
+      error: (error) => {
+        console.error('Error verificando stock', error);
+        this.toastComponent.showToast(
+          'Error al verificar stock',
+          'bottom',
+          'danger',
+          5000,
+          true
+        );
+        this.loadingButtonFinalizar = false;
+      }
+    });
+
+  }
+
+  async nextProcess() {
     const modal = await this.modalcontroller.create({
       component: AddressPage,
       cssClass: 'custom-modal-class',
@@ -97,15 +138,14 @@ export class ShoppingCartPage implements OnInit {
     });
 
     await modal.present();
-    this.loadingButton = false;
+    this.loadingButtonFinalizar = false;
     const { data } = await modal.onWillDismiss();
-
   }
 
   async actualizarCarrito() {
-    this.loadingButton = true;
+    this.loadingButtonActualizar = true;
     this.router.navigate(['/all-products']);
-    this.loadingButton = false;
+    this.loadingButtonActualizar = false;
   }
 
   removeFromCart(itemId: number | string) {
@@ -123,4 +163,18 @@ export class ShoppingCartPage implements OnInit {
       this.cartService.updateItemQuantity(item.id, newQuantity);
     }
   }
+
+  onQuantityInput(event: any, item: any) {
+
+    console.log(event);
+    console.log("value");
+    const value = parseInt(event.detail.value, 10);
+    if (!isNaN(value) && value > 0) {
+      item.quantity = value;
+      this.cartService.updateItemQuantity(item.id, value);
+    } else {
+      event.target.value = item.quantity;
+    }
+  }
+
 }

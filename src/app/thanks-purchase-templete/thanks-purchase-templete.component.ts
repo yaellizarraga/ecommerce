@@ -71,10 +71,10 @@ export class ThanksPurchaseTempleteComponent implements OnInit {
   loadHeader() {
     this.HeaderService.getAll().subscribe({
       next: (res: any) => {
-        this.link_logo = res.data[0]?.link_logo;
+        this.link_logo = (res.data.length > 0) ? res.data[0].preview : '';
       },
       error: (error: any) => {
-        console.error('Error fetching Header:', error);
+        console.log(error);
       }
     });
   }
@@ -83,12 +83,11 @@ export class ThanksPurchaseTempleteComponent implements OnInit {
     this.modalcontroller.dismiss();
   }
 
-  async order() {
-    this.router.navigate(['/order']);
+  
+  async navigateTo(url: string) {
+    this.closeModal();
+    this.router.navigate([url]);
   }
-
-  seguirComprando(){
-    this.router.navigate(['/all-products']);
-  } 
+  
 
 }

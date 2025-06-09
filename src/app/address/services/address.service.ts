@@ -34,7 +34,7 @@ export class addressService {
     return this.http.get<any>(`${this.urlBackend}/show/${id}`);
   }
 
-  update(id: number, form: object): Observable<any> {
+  update(id: number, form: FormData): Observable<any> {
     return this.http.post<any>(`${this.urlBackend}/update/${id}`, form);
   }
 
@@ -42,7 +42,7 @@ export class addressService {
     return this.http.post<any>(`${this.urlBackend}/destroy/${id}`,{});
   }
 
-  create(id: number,form: object): Observable<any> {
+  create(id: number,form: FormData): Observable<any> {
     return this.http.post<any>(`${this.urlBackend}/store/${id}`, form);
   }
 

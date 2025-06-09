@@ -36,7 +36,7 @@ export class AboutUsPage implements OnInit {
   loadData() {
     this.AboutUsService.getAll().subscribe({
       next: (res: any) => {
-        this.Data = res.data[0];
+        this.Data = res?.data?.[0] ? res.data[0] : [];
         
         if(this.Data?.link_banner){
           this.backgroudUrl = this.Data?.preview;

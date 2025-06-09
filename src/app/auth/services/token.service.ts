@@ -37,7 +37,8 @@ export class TokenService {
         }
       },
       error: (error: any) => {
-        localStorage.clear();
+        localStorage.removeItem('userData');
+        localStorage.removeItem('token');
         this.setToken(false);
       }
     });

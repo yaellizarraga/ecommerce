@@ -49,7 +49,7 @@ export class HomePage implements OnInit {
   loadData() {
     this.homeService.getAll().subscribe({
       next: (res: any) => {
-        this.Data = res.data[0];
+        this.Data = res?.data?.[0] ? res.data[0] : [];
 
         if(this.Data?.preview){
           this.backgroudUrl = this.Data?.preview;

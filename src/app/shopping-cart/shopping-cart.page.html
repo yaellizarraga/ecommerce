@@ -30,7 +30,7 @@
                   <th>
                     <p>Total</p>
                   </th>
-                  
+
                 </tr>
               </thead>
               <tbody>
@@ -53,19 +53,21 @@
                     </p>
                   </td>
                   <td>
-                    <div class="d-flex justify-content-left align-content-center">
+                    <div class="d-flex justify-content-left align-content-center container-cantidad">
                       <ion-button size="small" class="button-cantidad" (click)="decreaseQuantity(item)">-</ion-button>
-                      <span style="margin: 10px 10px 10px 10px;">{{ item.quantity }}</span>
+                      <ion-input style="width: 100px;" mode="md" [debounce]="1000" type="number" min="1"
+                        [value]="item.quantity" (ionInput)="onQuantityInput($event, item)" />
                       <ion-button size="small" class="button-cantidad" (click)="increaseQuantity(item)">+</ion-button>
                     </div>
                   </td>
+
                   <td>
                     <p>
                       ${{ ((item.discount && item.discount > 0 ? item.discount : item.price) * item.quantity) |
                       number:'1.2-2' }}
                     </p>
                   </td>
-                  
+
                 </tr>
                 <tr class="total-row">
                   <td colspan="5" style="text-align: right; font-weight: bold;">
@@ -93,13 +95,19 @@
     </ion-list>
 
     <div class="cart-buttons">
-      <ion-button expand="block" [disabled]="loadingButton" class="actualizar-button capitalize"
+      <ion-button expand="block" [disabled]="loadingButtonActualizar" class="actualizar-button capitalize"
         (click)="actualizarCarrito()">
-        Actualizar carrito
+        <ion-spinner *ngIf="loadingButtonActualizar" name="crescent"></ion-spinner>
+        <span *ngIf="!loadingButtonActualizar">
+          Actualizar carrito
+        </span>
       </ion-button>
-      <ion-button expand="block" [disabled]="loadingButton" class="finalizar-button capitalize"
+      <ion-button expand="block" [disabled]="loadingButtonFinalizar" class="finalizar-button capitalize"
         (click)="finalizarCompra()">
-        Finalizar compra
+        <ion-spinner *ngIf="loadingButtonFinalizar" name="crescent"></ion-spinner>
+        <span *ngIf="!loadingButtonFinalizar">
+          Finalizar compra
+        </span>
       </ion-button>
     </div>
 

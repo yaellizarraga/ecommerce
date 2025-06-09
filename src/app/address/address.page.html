@@ -1,31 +1,31 @@
-<app-shared-header-modal *ngIf="isModal" [linkLogo]="link_logo" [title]="'Seleccione un Domicilio'"></app-shared-header-modal>
+<app-shared-header-modal *ngIf="isModal" [linkLogo]="link_logo"
+  [title]="'Seleccione un Domicilio'"></app-shared-header-modal>
 <ion-content id="main-content">
   <div class="container">
 
     <!-- Contenido que será en componentes -->
-    
+
     <ion-card>
       <ion-card-content>
         <div class="d-flex justify-content-center">
           <h3 class="title">Mis domicilios</h3>
         </div>
         <div class="d-flex justify-content-end">
-          <ion-button (click)="openCreateModal()" class="capitalize ion-button" type="submit"
-          [disabled]="loading">
-          <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
-          <span *ngIf="!loading">
-            Agregar Domicilio
-            <ion-icon name="add-circle-outline" class="ion-icon"></ion-icon>
-          </span>
-        </ion-button>
+          <ion-button (click)="openCreateModal()" class="capitalize ion-button" type="submit" [disabled]="loading">
+            <ion-spinner *ngIf="loading" name="crescent"></ion-spinner>
+            <span *ngIf="!loading" class="font font-add-address">
+              Agregar Domicilio
+              <ion-icon name="add-circle-outline" class="ion-icon"></ion-icon>
+            </span>
+          </ion-button>
         </div>
       </ion-card-content>
     </ion-card>
 
     <app-shared-spinner *ngIf="loadingcards" [title]="'Cargando domicilios...'"></app-shared-spinner>
-    
+
     @for (item of Data.data; track $index) {
-      <app-address-address-card [link_logo]="link_logo" [item]="item" [isModal]="isModal"></app-address-address-card>
+    <app-address-address-card [link_logo]="link_logo" [item]="item" [isModal]="isModal"></app-address-address-card>
     }
   </div>
 </ion-content>

@@ -26,6 +26,7 @@ export class AddressCardComponent {
   item = input<Domicilio>();
   link_logo = input<string>();
   loading = false;
+  loadingButton = false;
   @Input() isModal: boolean = false;
 
   constructor(
@@ -68,7 +69,7 @@ export class AddressCardComponent {
   }
 
   async openEditModal(Id: any) {
-
+    this.loadingButton = true;
     this.AddressService.getById(Id).subscribe({
       next: async (res: any) => {
         console.log(res);
@@ -88,6 +89,8 @@ export class AddressCardComponent {
         });
 
         await modal.present();
+        this.loadingButton = false;
+
 
         const { data } = await modal.onWillDismiss();
 
@@ -121,7 +124,7 @@ export class AddressCardComponent {
           this.AddressService.emitTrigger();
         },
         error: (error: any) => {
-          console.error('Error fetching Header:', error);
+          console.log(error);
           this.toastComponent.showToast(
             error.error.message,
             'bottom',

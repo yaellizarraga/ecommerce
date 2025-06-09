@@ -65,8 +65,8 @@ export class LoginPage {
         this.TokenService.setToken(true);
         
         const token = res.access_token.split('|')[1];
-        
-        await localStorage.clear();
+        localStorage.removeItem('userData');
+        localStorage.removeItem('token');
         await this.TokenService.setUserData(res.data);
         await localStorage.setItem('token', token);
 

@@ -62,18 +62,23 @@ ion-img {
 .actualizar-button {
     font-weight: bold;
     --background: var(--color-secondary);
-    font-size: 16px;
+    font-size: 14px;
+    width: 180.36px;
+    height: 36px;
 }
 
 .finalizar-button {
     font-weight: bold;
     --background: var(--color-primary);
-    font-size: 16px;
+    font-size: 14px;
+    width: 180.36px;
+    height: 36px;
 }
 .button-cantidad {
     font-weight: bold;
     --background: var(--color-primary);
     font-size: 16px;
+    padding-right: 5px;
 }
 
 .no-data-message {
@@ -91,4 +96,8 @@ ion-img {
 .icon-trash{
     margin-bottom: 5px;
     margin-right: 5px;
+}
+
+.native-input.sc-ion-input-md {
+    width: 100px;
 }

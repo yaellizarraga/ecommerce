@@ -86,11 +86,11 @@ export class HeaderComponent implements OnInit {
   loadData() {
     this.HeaderService.getAll().subscribe({
       next: (res: any) => {
-        this.Data = res.data[0];
+          this.Data = res?.data?.[0] ? res.data[0] : [];
 
       },
       error: (error) => {
-        console.error('Error fetching Header:', error);
+        console.log(error);
       }
     });
   }
@@ -119,13 +119,15 @@ export class HeaderComponent implements OnInit {
 
     this.LogoutService.logout(token).pipe(take(1)).subscribe({
       next: (res: any) => {
-        localStorage.clear();
+        localStorage.removeItem('userData');
+        localStorage.removeItem('token');
         this.TokenService.setToken(false);
         this.TokenService.setUserData({});
         this.router.navigate(['login']);
       },
       error: (error: any) => {
-        localStorage.clear();
+        localStorage.removeItem('userData');
+        localStorage.removeItem('token');
         this.TokenService.setToken(false);
         this.router.navigate(['login']);
 

@@ -1,6 +1,6 @@
 <ion-card class="form-container" [ngStyle]="isModal ? {'cursor': 'pointer'} : {}" (click)="SelectAddress($event)">
   <ion-card-content>
-    <p>
+    <p class="font font-size">
       <span *ngIf="item()?.Calle">{{ item()?.Calle }} </span>
       <span *ngIf="item()?.Num_Ext">{{ item()?.Num_Ext }} </span>
       <span *ngIf="item()?.Num_Int">Número interior: {{ item()?.Num_Int }} </span>
@@ -11,13 +11,15 @@
       <span *ngIf="item()?.Referencia">, {{ item()?.Referencia }} </span>
     </p>
 
-
     <div class="d-flex buttons">
-      <ion-button (click)="openEditModal(item()?.Id_Persona_Direccion)" class="capitalize button-option editar" fill="clear">
+      <ion-button (click)="openEditModal(item()?.Id_Persona_Direccion)" class="capitalize button-option editar"
+        fill="clear" [disabled]="loadingButton">
+        <ion-spinner *ngIf="loadingButton" name="crescent"></ion-spinner>
         Editar
         <ion-icon name="create"></ion-icon>
       </ion-button>
-      <ion-button (click)="deleteItem(item()?.Id_Persona_Direccion)" class="capitalize button-option eliminar" fill="clear">
+      <ion-button (click)="deleteItem(item()?.Id_Persona_Direccion)" class="capitalize button-option eliminar"
+        fill="clear">
         Eliminar
         <ion-icon name="trash"></ion-icon>
       </ion-button>

@@ -211,15 +211,18 @@
 
           <ion-col size="12" size-md="6">
             <div class="form-group input-text">
-              <label for="Imagen_Domicilio">Imagen Domicilio (opcional):</label>
-              <input id="Imagen_Domicilio" class="form-control" formControlName="Imagen_Domicilio" type="text"
-                maxlength="200" placeholder="" (input)="clearError('Imagen_Domicilio')" autocomplete="off">
+              <label for="Imagen_Domicilio">Imagen Domicilio (.JPG, .PNG, .JPEG) (opcional):</label>
+              <input id="Imagen_Domicilio" class="form-control" formControlName="Imagen_Domicilio" type="file"
+                  accept="image/jpeg, image/jpg, image/png, image/svg" (change)="onFileSelected($event)">
+
               @if (errors?.Imagen_Domicilio) {
               <div>
                 <small class="text-danger">{{ errors?.Imagen_Domicilio }}</small>
               </div>
               }
             </div>
+
+            <img *ngIf="imagenTemporal" alt="profile" [src]="imagenTemporal" />
           </ion-col>
 
           <ion-col size="12" size-md="6">

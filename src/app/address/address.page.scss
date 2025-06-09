@@ -18,8 +18,17 @@ ion-card {
 
 ion-button {
     --background: var(--color-primary);
-    width: 183.72px;
-    height: 49.59px;
+    font-weight: bold;
+    font-size: 14px;
+    width: 190.36px;
+    height: 36px;
+}
+.font-add-address{
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ion-icon{

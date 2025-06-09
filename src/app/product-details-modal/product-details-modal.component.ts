@@ -44,6 +44,7 @@ export class ProductDetailsModalComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
+
     const swiperEl = this.swiperContainer.nativeElement;
 
     const swiperParams = {

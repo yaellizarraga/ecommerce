@@ -21,7 +21,9 @@ export class CartService {
   private totalItemsSubject = new BehaviorSubject<number>(this.calculateTotalItems(this.cartSubject.value));
   totalItems$ = this.totalItemsSubject.asObservable();
 
-  constructor(private toastComponent: ToastComponent,
+  constructor(
+    private toastComponent: ToastComponent,
+    private http: HttpClient 
   ) { }
 
   private updateCart(cart: any[]): void {
@@ -92,7 +94,7 @@ export class CartService {
     localStorage.removeItem(this.CART_KEY);
     this.cartSubject.next([]);
     this.subtotalSubject.next(0);
-    this.totalItemsSubject.next(0); // Resetear contador también
+    this.totalItemsSubject.next(0);
   }
 
   updateItemQuantity(itemId: string | number, quantity: number): void {
@@ -105,4 +107,18 @@ export class CartService {
 
     this.updateCart(cart);
   }
+
+  checkStockAvailability(): Observable<any> {
+  const cart = this.getCart();
+
+  const productsPayload = cart.map(item => ({
+    id: item.id,
+    quantity: item.quantity
+  }));
+
+  return this.http.post<any[]>(`${environment.apiUrl}/products/stock-check`, {
+    products: productsPayload
+  });
+}
+
 }
