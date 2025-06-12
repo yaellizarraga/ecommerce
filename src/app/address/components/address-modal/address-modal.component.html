@@ -16,16 +16,16 @@
         <div class="d-flex justify-content-center">
           <h3 class="title">
             @if (create) {
-              Agregar Domicilio
+            Agregar Domicilio
             }
             @if (edit) {
-              Editar Domicilio
+            Editar Domicilio
             }
           </h3>
         </div>
-       
+
         <ion-row>
-          
+
           <ion-col size="12" size-md="6">
             <div class="form-group input-text">
               <label for="Pais">País:</label>
@@ -49,20 +49,28 @@
           <ion-col size="12" size-md="6">
             <div class="form-group input-text">
               <label for="Estado">Estado:</label>
-              <input id="Estado" class="form-control" formControlName="Estado" type="text" maxlength="100"
-                placeholder="" (input)="clearError('Estado')" autocomplete="off">
+              <select id="Estado" class="form-control" formControlName="Estado" (change)="clearError('Estado')">
+                <option value="" disabled selected>Selecciona una opción</option>
+                @for (item of estados; track $index) {
+                <option [value]="item?.Id_Estado">{{ item?.Estado }}</option>
+                }
+              </select>
               @if (errors?.Estado) {
               <div>
                 <small class="text-danger">{{ errors?.Estado }}</small>
               </div>
+              } @else {
+              <div class="d-lg-block d-md-block d-none" style="padding-top: 21px;"></div>
               }
             </div>
           </ion-col>
-          
+
+
           <ion-col size="12" size-md="6">
             <div class="form-group input-text">
               <label for="Municipio">Municipio:</label>
-              <select id="Municipio" class="form-control" formControlName="Municipio" (change)="clearError('Municipio')">
+              <select id="Municipio" class="form-control" formControlName="Municipio"
+                (change)="clearError('Municipio')">
                 <option value="" disabled selected>Selecciona una opción</option>
                 @for (item of municipios; track $index) {
                 <option [value]="item?.Id_Municipio">{{ item?.Municipio }}</option>
@@ -78,11 +86,12 @@
               }
             </div>
           </ion-col>
-         
+
           <ion-col size="12" size-md="6">
             <div class="form-group input-text">
               <label for="Localidad">Localidad:</label>
-              <select id="Localidad" class="form-control" formControlName="Localidad" (change)="clearError('Localidad')">
+              <select id="Localidad" class="form-control" formControlName="Localidad"
+                (change)="clearError('Localidad')">
                 <option value="" disabled selected>Selecciona una opción</option>
                 @for (item of localidades; track $index) {
                 <option [value]="item?.Id_Localidad">{{ item?.Localidad }}</option>
@@ -112,13 +121,13 @@
               <div>
                 <small class="text-danger">{{ errors?.Colonia }}</small>
               </div>
-  
+
               } @else {
               <div class="d-lg-block d-md-block d-none" style="padding-top: 21px;"></div>
               }
             </div>
           </ion-col>
-          
+
           <ion-col size="12" size-md="6">
             <div class="form-group input-text">
               <label for="Calle">Calle:</label>
@@ -213,7 +222,7 @@
             <div class="form-group input-text">
               <label for="Imagen_Domicilio">Imagen Domicilio (.JPG, .PNG, .JPEG) (opcional):</label>
               <input id="Imagen_Domicilio" class="form-control" formControlName="Imagen_Domicilio" type="file"
-                  accept="image/jpeg, image/jpg, image/png, image/svg" (change)="onFileSelected($event)">
+                accept="image/jpeg, image/jpg, image/png, image/svg" (change)="onFileSelected($event)">
 
               @if (errors?.Imagen_Domicilio) {
               <div>

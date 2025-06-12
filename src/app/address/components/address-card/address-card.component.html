@@ -1,14 +1,19 @@
 <ion-card class="form-container" [ngStyle]="isModal ? {'cursor': 'pointer'} : {}" (click)="SelectAddress($event)">
   <ion-card-content>
     <p class="font font-size">
-      <span *ngIf="item()?.Calle">{{ item()?.Calle }} </span>
-      <span *ngIf="item()?.Num_Ext">{{ item()?.Num_Ext }} </span>
+      <strong>
+        <span *ngIf="item()?.Calle">{{ item()?.Calle }} </span>
+        <span *ngIf="item()?.Num_Ext">{{ item()?.Num_Ext }}, </span>
+      </strong>
+      <span *ngIf="colonia.length > 0">{{ colonia }}, </span>
+      <span *ngIf="estado.length > 0">{{ estado }}, </span>
+      <span *ngIf="pais.length > 0">{{ pais }}, </span>
       <span *ngIf="item()?.Num_Int">Número interior: {{ item()?.Num_Int }} </span>
-      <span *ngIf="item()?.Colonia">- {{ item()?.Colonia }} </span>
       <span *ngIf="item()?.Entre_Calle1">, Entre {{ item()?.Entre_Calle1 }} </span>
       <span *ngIf="item()?.Entre_Calle2">y {{ item()?.Entre_Calle2 }} </span>
       <span *ngIf="item()?.Indicaciones">, {{ item()?.Indicaciones }} </span>
       <span *ngIf="item()?.Referencia">, {{ item()?.Referencia }} </span>
+      <span>.</span>
     </p>
 
     <div class="d-flex buttons">

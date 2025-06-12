@@ -52,6 +52,7 @@ export class ShippingOptionsComponent implements OnInit {
 
     this.closeModal();
 
+    localStorage.setItem("type_send", String(id) );
     const modal = await this.modalcontroller.create({
       component: PaymentComponent,
       componentProps: {

@@ -23,7 +23,7 @@ export class CartService {
 
   constructor(
     private toastComponent: ToastComponent,
-    private http: HttpClient 
+    private http: HttpClient
   ) { }
 
   private updateCart(cart: any[]): void {
@@ -34,12 +34,15 @@ export class CartService {
   }
 
   private calculateSubtotal(cart: any[]): number {
-    return cart.reduce((acc, item) => {
+    const subtotal = cart.reduce((acc, item) => {
       const precioFinal = parseFloat(item.discount) > 0
         ? parseFloat(item.discount)
         : parseFloat(item.price);
       return acc + (precioFinal * item.quantity);
     }, 0);
+
+    return parseFloat(subtotal.toFixed(2)); // número con 2 decimales
+
   }
 
   // Nueva función para calcular la suma total de cantidades
@@ -92,6 +95,8 @@ export class CartService {
 
   clearCart(): void {
     localStorage.removeItem(this.CART_KEY);
+    localStorage.removeItem("address");
+    localStorage.removeItem("type_send");
     this.cartSubject.next([]);
     this.subtotalSubject.next(0);
     this.totalItemsSubject.next(0);
@@ -109,16 +114,16 @@ export class CartService {
   }
 
   checkStockAvailability(): Observable<any> {
-  const cart = this.getCart();
+    const cart = this.getCart();
 
-  const productsPayload = cart.map(item => ({
-    id: item.id,
-    quantity: item.quantity
-  }));
+    const productsPayload = cart.map(item => ({
+      id: item.id,
+      quantity: item.quantity
+    }));
 
-  return this.http.post<any[]>(`${environment.apiUrl}/products/stock-check`, {
-    products: productsPayload
-  });
-}
+    return this.http.post<any[]>(`${environment.apiUrl}/products/stock-check`, {
+      products: productsPayload
+    });
+  }
 
 }

@@ -24,8 +24,11 @@
 
     <app-shared-spinner *ngIf="loadingcards" [title]="'Cargando domicilios...'"></app-shared-spinner>
 
-    @for (item of Data.data; track $index) {
-    <app-address-address-card [link_logo]="link_logo" [item]="item" [isModal]="isModal"></app-address-address-card>
+    @if(!loadingcards){
+      @for (item of Data.data; track $index) {
+        <app-address-address-card [link_logo]="link_logo" [item]="item" [isModal]="isModal" [paises]="paises"
+            [estados]="estados" [colonias]="colonias" [municipios]="municipios"></app-address-address-card>
+      }
     }
   </div>
 </ion-content>

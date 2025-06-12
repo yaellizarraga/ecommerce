@@ -38,6 +38,10 @@ export class AddressPage {
   errors: any = [];
   UserData: any = {};
   Data: any = [];
+  paises: any = [];
+  municipios: any = [];
+  estados: any = [];
+  colonias: any = [];
   Id = 0;
   link_logo: string = '';
   loadingcards = true;
@@ -123,8 +127,13 @@ export class AddressPage {
     this.Id = id;
     this.addressService.getAll(this.Id).subscribe({
       next: (res: any) => {
-        this.Data = res;
+        this.Data = res.data ? res : [];
+        this.paises = res.paises ? res.paises : [];
+        this.municipios = res.municipios ? res.municipios : [];
+        this.estados = res.estados ? res.estados : [];
+        this.colonias = res.colonias ? res.colonias : [];
         this.loadingcards = false;
+        
       },
       error: (error) => {
         console.error('Error fetching Data:', error);

@@ -9,6 +9,8 @@ import { ThanksPurchaseTempleteComponent } from '../thanks-purchase-templete/tha
 import { ToastComponent } from '../shared/components/toast/toast.component';
 import { CartService } from '../services/cart.service';
 import { SpinnerComponent } from '../shared/components/spinner/spinner.component';
+import { CheckoutData } from './interfaces/payment.interfaces';
+import { PaymentService } from './services/payment.service';
 
 @Component({
   selector: 'app-payment',
@@ -26,14 +28,21 @@ import { SpinnerComponent } from '../shared/components/spinner/spinner.component
 export class PaymentComponent implements OnInit {
 
   link_logo = '';
-  card: any;
-  subtotal: number = 0;
+  productos: any;
+  subtotal = 0;
+  address = '';
+  typeSend = 0;
+  fullName = '';
+  id = 0;
   loading = false;
+  data!: CheckoutData;
+
   constructor(
     private HeaderService: HeaderService,
     private modalcontroller: ModalController,
     private toastComponent: ToastComponent,
-    private cartService: CartService
+    private cartService: CartService,
+    private paymentService: PaymentService,
   ) { }
 
   ngOnInit() {
@@ -57,10 +66,24 @@ export class PaymentComponent implements OnInit {
     this.loading = true;
     const paypalClientId = environment.ClientId;
 
-    this.cartService.subtotal$.subscribe(total => {
+    this.cartService.subtotal$.subscribe(async (total) => {
       this.subtotal = total;
+      this.address = await localStorage.getItem("address") || "";
+      this.typeSend = await Number(localStorage.getItem("type_send")) || 0;
+      this.fullName = await JSON.parse(localStorage.getItem("userData") || '[]')?.NombreCompleto || "";
+      this.productos = await JSON.parse(localStorage.getItem("cart_items") || '[]') || "";
+      this.id = await JSON.parse(localStorage.getItem("userData") || '[]')?.Id || "";
+
+      this.data = {
+        productos: this.productos,
+        subtotal: this.subtotal,
+        address: this.address,
+        typeSend: this.typeSend,
+        fullName: this.fullName
+      };
 
       this.loading = false;
+
       if (!document.querySelector('#paypal-sdk')) {
         const script = document.createElement('script');
         script.id = 'paypal-sdk';
@@ -89,26 +112,35 @@ export class PaymentComponent implements OnInit {
           return actions.order.capture().then(async (details: any) => {
             if (details.status === "COMPLETED") {
 
-              this.closeModal();
-              this.cartService.clearCart();
+              this.paymentService.create(this.data, this.id).subscribe({
+                next: async (response) => {
+                  this.closeModal();
+                  this.cartService.clearCart();
 
-              const modal = await this.modalcontroller.create({
-                component: ThanksPurchaseTempleteComponent,
-                componentProps: {
-                  linkLogo: this.link_logo,
-                  data: details,
+                  const modal = await this.modalcontroller.create({
+                    component: ThanksPurchaseTempleteComponent,
+                    componentProps: {
+                      linkLogo: this.link_logo,
+                      data: details,
+                    },
+                    cssClass: 'custom-modal-class'
+                  });
+
+                  await modal.present();
+
+                  const { data } = await modal.onWillDismiss();
                 },
-                cssClass: 'custom-modal-class'
+                error: (error) => {
+                  console.error('Error al crear pago:', error);
+                }
               });
+              
+              console.log(details);
+              console.log('Pago completado por', details.payer.name.given_name);
+              // Puedes llamar a tu backend aquí si deseas registrar la compra
 
-              await modal.present();
-
-              const { data } = await modal.onWillDismiss();
             }
 
-            console.log(details);
-            console.log('Pago completado por', details.payer.name.given_name);
-            // Puedes llamar a tu backend aquí si deseas registrar la compra
           });
         },
         onError: (err: any) => {
