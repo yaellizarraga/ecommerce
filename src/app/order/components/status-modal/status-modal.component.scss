@@ -70,6 +70,21 @@
     color: #333;
 }
 
-ion-progress-bar{
+ion-progress-bar {
     --ion-color-base: var(--color-primary) !important;
+}
+
+.color-text {
+    color: #9e9e9e;
+}
+
+.container-bitacora {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.container-info {
+    display: flex;
+    justify-content: space-between;
 }

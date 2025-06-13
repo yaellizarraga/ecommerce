@@ -10,38 +10,21 @@
             <ion-button class="capitalize" size="small" color="success" fill="outline">Autorizado</ion-button>
           </div>
         </ion-card-title>
-        <ion-card-subtitle class="font bitacora-subtitle">
-          El pedido <strong>#1</strong> con número de guía <strong>0201_01</strong> se recogerá en:
-        </ion-card-subtitle>
-        <p class="bitacora-destino">
-          <strong>Lugar de destino:</strong> Calle Ficticia 123, CDMX
-        </p>
-
-        <!-- Barra de progreso -->
-        <div class="progress-container">
-          <ion-label class="progress-label">Progreso del pedido</ion-label>
-          <ion-progress-bar value="0.6" color="primary" class="progress-bar animated-progress"></ion-progress-bar>
-          <p class="progress-percentage">60% completado</p>
-        </div>
 
         <!-- Etapas del pedido -->
         <ion-list class="etapas-list">
-          <ion-item lines="full">
+          
+          <ion-item lines="full" *ngFor="let bit of bitacora">
             <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
-            <ion-label>Pedido recibido</ion-label>
+            <div class="container-bitacora">
+              <ion-label>{{ bit.Detalles }}</ion-label>
+              <div class="container-info">
+                <p class="font color-text">{{ bit.Fecha_Hora }}</p>
+                <p class="font color-text">{{ bit.cliente }}</p>
+              </div>
+            </div>
           </ion-item>
-          <ion-item lines="full">
-            <ion-icon slot="start" name="checkmark-circle" color="success"></ion-icon>
-            <ion-label>Preparando pedido</ion-label>
-          </ion-item>
-          <ion-item lines="full">
-            <ion-icon slot="start" name="time" color="warning"></ion-icon>
-            <ion-label>En camino</ion-label>
-          </ion-item>
-          <ion-item lines="full">
-            <ion-icon slot="start" name="ellipse" color="medium"></ion-icon>
-            <ion-label>Entregado</ion-label>
-          </ion-item>
+
         </ion-list>
       </ion-card-content>
     </ion-card>

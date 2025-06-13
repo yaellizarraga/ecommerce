@@ -6,7 +6,7 @@
     <ion-list>
       <ion-card>
         <ion-card-header>
-          <ion-card-title>Guías de Envío</ion-card-title>
+          <ion-card-title>Listado de pedidos</ion-card-title>
         </ion-card-header>
 
         <ion-card-content>
@@ -14,27 +14,31 @@
             <table class="product-table">
               <thead>
                 <tr>
-                  <th><p class="font">Número de Guía</p></th>
+                  <th><p class="font">Número de pedido</p></th>
                   <th><p class="font">Estatus</p></th>
                   <th><p class="font">Cliente</p></th>
-                  <th><p class="font">Fecha de Recolección</p></th>
-                  <th><p class="font">Repartidor</p></th>
+                  <th><p class="font">Fecha del pedido</p></th>
+                  <th><p class="font">Bitacora</p></th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let envio of envios">
-                  <td><p class="font">{{ envio.numeroGuia }}</p></td>
-                  <td><p class="font">{{ envio.estatus }}</p></td>
-                  <td><p class="font">{{ envio.cliente }}</p></td>
-                  <td><p class="font">{{ envio.fechaRecoleccion | date:'medium' }}</p></td>
+                <tr *ngFor="let envio of data">
+                  <td><p class="font">{{ envio[1][0].guia }}</p></td>
+                  <td><p class="font">{{ envio[1][0].estatus }}</p></td>
+                  <td><p class="font">{{ envio[1][0].cliente }}</p></td>
+                  <td><p class="font">{{ envio[1][0].Fecha_Hora }}</p></td>
                   <td>
-                    <ion-button size="small" class="ver-button capitalize" (click)="verBitacora(envio)">
+                    <ion-button size="small" class="ver-button capitalize" (click)="verBitacora(envio[1])">
                       Bitacora
                     </ion-button>
                   </td>
                 </tr>
               </tbody>
             </table>
+
+            <ng-container *ngIf="data.length <= 0">
+                <p class="font" class="message-no-data">No hay datos disponibles.</p>
+            </ng-container>
           </div>
         </ion-card-content>
       </ion-card>

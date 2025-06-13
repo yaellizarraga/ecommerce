@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { RouterModule } from '@angular/router';
 import { HeaderModalComponent } from 'src/app/shared/header-modal/header-modal.component';
@@ -24,6 +24,7 @@ export class StatusModalComponent implements OnInit {
   link_logo = '';
   card: any;
   loading = false;
+  @Input() bitacora: any;
 
   constructor(
     private HeaderService: HeaderService,
