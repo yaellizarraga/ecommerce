@@ -3,8 +3,8 @@
 
 <div class="container">
   <div class="container-paypal">
-  <app-shared-spinner *ngIf="loading" [title]="'Cargando metodos de pago...'"></app-shared-spinner>
-    <div id="paypal-button-container"></div>
+  <app-shared-spinner *ngIf="loading" [title]="'redireccionando...'"></app-shared-spinner>
+    <ngx-paypal [config]="payPalConfig"></ngx-paypal>
   </div>
   </div>
 

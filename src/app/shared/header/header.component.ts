@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, ViewChild } from '@angular/core';
 import { IonicModule } from "@ionic/angular";
 import { MenuComponent } from '../menu/menu.component';
 import { Router, RouterModule } from '@angular/router';
@@ -12,6 +12,7 @@ import { LogoutService } from 'src/app/auth/services/logout.service';
 import { take } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { CartService } from 'src/app/services/cart.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-header',
@@ -40,6 +41,8 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild('login') popover!: HTMLIonPopoverElement;
   @ViewChild('logoutPopover') popoverLogout!: HTMLIonPopoverElement;
+
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
     private HeaderService: HeaderService,
@@ -84,7 +87,7 @@ export class HeaderComponent implements OnInit {
     this.loadData();
   }
   loadData() {
-    this.HeaderService.getAll().subscribe({
+    this.HeaderService.getAll().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (res: any) => {
           this.Data = res?.data?.[0] ? res.data[0] : [];
 

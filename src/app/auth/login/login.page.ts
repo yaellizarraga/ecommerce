@@ -1,11 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms'; 
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ToastComponent } from 'src/app/shared/components/toast/toast.component';
 import { TokenService } from '../services/token.service';
 import { LoginService } from './services/login.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
@@ -27,21 +28,22 @@ export class LoginPage {
   errors: any = [];
 
   private toastComponent = inject(ToastComponent);
+  private readonly destroyRef = inject(DestroyRef);
 
-   constructor(
+  constructor(
     private fb: FormBuilder,
     private LoginService: LoginService,
     private router: Router,
     private TokenService: TokenService,
-    ) {
-     
-     this.Form = this.fb.group({
-      Correo: ['', [Validators.required, Validators.maxLength(80)]],
-      Clave: ['',[Validators.required , Validators.minLength(8),Validators.maxLength(40)]],
-     });
-   }
+  ) {
 
- 
+    this.Form = this.fb.group({
+      Correo: ['', [Validators.required, Validators.maxLength(80)]],
+      Clave: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(40)]],
+    });
+  }
+
+
 
   clearError(field: string) {
     if (this.errors && this.errors[field]) {
@@ -49,7 +51,7 @@ export class LoginPage {
     }
   }
 
-  async sendLogin(){
+  async sendLogin() {
     this.loading = true;
     this.errors = [];
 
@@ -59,11 +61,11 @@ export class LoginPage {
       Clave: this.Form.value.Clave,
     };
 
-    await this.LoginService.create(data).subscribe({
-      next: async(res: any) => {
+    await this.LoginService.create(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: async (res: any) => {
 
         this.TokenService.setToken(true);
-        
+
         const token = res.access_token.split('|')[1];
         localStorage.removeItem('userData');
         localStorage.removeItem('token');
@@ -72,13 +74,13 @@ export class LoginPage {
 
         let NombreCompleto = res.data?.Nombre + ' ' + res.data?.Apellido_Paterno + (res.data?.Apellido_Materno ? ' ' + res.data?.Apellido_Materno : '');
         this.toastComponent.showToast(
-          '¡Bienvenido! ' + NombreCompleto, 
-          'bottom', 
-          'success', 
+          '¡Bienvenido! ' + NombreCompleto,
+          'bottom',
+          'success',
           5000,
           true
         );
-        
+
         this.Form.reset();
         this.loading = false;
         this.router.navigate(['all-products']);
@@ -87,11 +89,11 @@ export class LoginPage {
         this.errors = error.error.errors;
         this.loading = false;
 
-        if(this.errors.Toast){
+        if (this.errors.Toast) {
           this.toastComponent.showToast(
-            this.errors.Toast[0], 
-            'bottom', 
-            'danger', 
+            this.errors.Toast[0],
+            'bottom',
+            'danger',
             5000,
             true
           );
@@ -100,7 +102,7 @@ export class LoginPage {
     });
 
   }
-  
+
 
 
 }

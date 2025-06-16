@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, input, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DestroyRef, inject, Input, input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { product } from 'src/app/all-products/interfaces/product.interfaces';
@@ -12,6 +12,7 @@ import { ToastComponent } from 'src/app/shared/components/toast/toast.component'
 import { Capacitor } from '@capacitor/core';
 import { Geolocation } from '@capacitor/geolocation';
 import { environment } from 'src/environments/environment';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-address-modal',
@@ -47,6 +48,8 @@ export class AddressModalComponent implements OnInit {
   Form: FormGroup;
   imagenTemporal: string = '';
   imagen: any = undefined;
+  private readonly destroyRef1 = inject(DestroyRef);
+  private readonly destroyRef2 = inject(DestroyRef);
 
   constructor(
     private modalController: ModalController,
@@ -149,7 +152,7 @@ export class AddressModalComponent implements OnInit {
   }
 
   async createData(data: any) {
-    this.AddressService.create(this.Id, data).subscribe({
+    this.AddressService.create(this.Id, data).pipe(takeUntilDestroyed(this.destroyRef1)).subscribe({
       next: (res: any) => {
         this.updateForm(res.data);
         this.loading = false;
@@ -181,7 +184,7 @@ export class AddressModalComponent implements OnInit {
   }
   async updateData(data: any) {
     this.Id = this.Form.value.Id_Persona_Direccion;
-    this.AddressService.update(this.Id, data).subscribe({
+    this.AddressService.update(this.Id, data).pipe(takeUntilDestroyed(this.destroyRef2)).subscribe({
       next: (res: any) => {
         this.updateForm(res.data);
         this.loading = false;
@@ -226,7 +229,7 @@ export class AddressModalComponent implements OnInit {
       if (res) {
         this.imagenTemporal = data?.Imagen_Domicilio;
       }
-    } 
+    }
 
     this.Form.patchValue({
       Id_Persona_Direccion: data?.Id_Persona_Direccion || '',

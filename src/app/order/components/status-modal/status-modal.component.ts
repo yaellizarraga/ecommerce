@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { RouterModule } from '@angular/router';
 import { HeaderModalComponent } from 'src/app/shared/header-modal/header-modal.component';
 import { HeaderService } from 'src/app/shared/header/services/header.service';
 import { addIcons } from 'ionicons';
 import { checkmarkCircle, ellipse, ellipseOutline, time } from 'ionicons/icons';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-order-status-modal',
@@ -25,12 +26,13 @@ export class StatusModalComponent implements OnInit {
   card: any;
   loading = false;
   @Input() bitacora: any;
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
     private HeaderService: HeaderService,
     private modalcontroller: ModalController,
-  ) { 
-    addIcons({checkmarkCircle ,time ,ellipse});
+  ) {
+    addIcons({ checkmarkCircle, time, ellipse });
   }
 
   ngOnInit() {
@@ -38,7 +40,7 @@ export class StatusModalComponent implements OnInit {
   }
 
   loadHeader() {
-    this.HeaderService.getAll().subscribe({
+    this.HeaderService.getAll().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (res: any) => {
         this.link_logo = (res.data.length > 0) ? res.data[0].preview : '';
       },

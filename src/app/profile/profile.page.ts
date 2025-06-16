@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -9,6 +9,7 @@ import { ToastComponent } from '../shared/components/toast/toast.component';
 import { addIcons } from 'ionicons';
 import { eye } from 'ionicons/icons';
 import { environment } from 'src/environments/environment';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +41,14 @@ export class ProfilePage implements OnInit {
 
   Form: FormGroup;
   errors: any = [];
+
+  private readonly destroyRef1 = inject(DestroyRef);
+  private readonly destroyRef2 = inject(DestroyRef);
+  private readonly destroyRef3 = inject(DestroyRef);
+  private readonly destroyRef4 = inject(DestroyRef);
+  private readonly destroyRef5 = inject(DestroyRef);
+  private readonly destroyRef6 = inject(DestroyRef);
+  private readonly destroyRef7 = inject(DestroyRef);
 
   constructor(
     private TokenService: TokenService,
@@ -82,10 +91,10 @@ export class ProfilePage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.TokenService.getToken().subscribe((token) => {
+    this.TokenService.getToken().pipe(takeUntilDestroyed(this.destroyRef1)).subscribe((token) => {
       this.token = token;
     });
-    this.TokenService.getUserData().subscribe((data) => {
+    this.TokenService.getUserData().pipe(takeUntilDestroyed(this.destroyRef2)).subscribe((data) => {
       this.UserData = data;
       this.loadProfile();
     });
@@ -109,7 +118,7 @@ export class ProfilePage implements OnInit {
     formData.append('Telefono', this.Form.value.Telefono);
     formData.append('Celular', this.Form.value.Celular);
 
-    this.ProfileService.updateProfile(formData, this.Id).subscribe({
+    this.ProfileService.updateProfile(formData, this.Id).pipe(takeUntilDestroyed(this.destroyRef3)).subscribe({
       next: (res: any) => {
         this.updateForm(res.data);
         this.TokenService.setUserData(res.data);
@@ -154,7 +163,7 @@ export class ProfilePage implements OnInit {
     formData.append('codigopostalcliente', this.Form.value.codigopostalcliente);
     formData.append('usocfdi', this.Form.value.usocfdi);
     
-    this.ProfileService.updateTaxData(formData, this.Id).subscribe({
+    this.ProfileService.updateTaxData(formData, this.Id).pipe(takeUntilDestroyed(this.destroyRef4)).subscribe({
       next: (res: any) => {
         this.updateForm(res.data);
         this.TokenService.setUserData(res.data);
@@ -196,7 +205,7 @@ export class ProfilePage implements OnInit {
     formData.append('Clave', this.Form.value.Clave);
     formData.append('Clave2', this.Form.value.Clave2);
     
-    this.ProfileService.updateResetPassword(formData, this.Id).subscribe({
+    this.ProfileService.updateResetPassword(formData, this.Id).pipe(takeUntilDestroyed(this.destroyRef5)).subscribe({
       next: (res: any) => {
         this.updateForm(res.data);
         this.TokenService.setUserData(res.data);
@@ -232,7 +241,7 @@ export class ProfilePage implements OnInit {
   async loadProfile() {
     let id = this.UserData?.Id;
     this.Id = id;
-    this.ProfileService.getById(id).subscribe({
+    this.ProfileService.getById(id).pipe(takeUntilDestroyed(this.destroyRef6)).subscribe({
       next: (res: any) => {
         this.giro = res.giro;
         this.usoCFDI = res.usoCFDI;
@@ -316,7 +325,7 @@ export class ProfilePage implements OnInit {
         formData.append('constancia', this.constancia);
       } 
 
-      this.ProfileService.updateTaxData(formData, this.Id).subscribe({
+      this.ProfileService.updateTaxData(formData, this.Id).pipe(takeUntilDestroyed(this.destroyRef7)).subscribe({
         next: (res: any) => {
           console.log(res.data);
           this.updateForm(res.data);

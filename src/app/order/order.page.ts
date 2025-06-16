@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { RouterModule } from '@angular/router';
 import { StatusModalComponent } from './components/status-modal/status-modal.component';
 import { OrderService } from './services/order.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-order.page',
@@ -22,6 +23,7 @@ export class OrderPage implements OnInit {
   link_logo = '';
   id = 0;
   data: any = [];
+  private readonly destroyRef = inject(DestroyRef);
 
   constructor(
     private modalcontroller: ModalController,
@@ -30,18 +32,17 @@ export class OrderPage implements OnInit {
 
   async ngOnInit() {
     this.id = await JSON.parse(localStorage.getItem("userData") || '[]')?.Id || "";
-    this.OrderService.getAll(this.id).subscribe({
-      next: (value) =>{
+    this.OrderService.getAll(this.id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (value) => {
         this.data = value ? this.data = Object.entries(value) : [];
       },
-      error: (error: any) =>{
+      error: (error: any) => {
         this.data = [];
       }
     });
   }
 
   async verBitacora(bitacora: any) {
-    this.closeModal();
 
     const modal = await this.modalcontroller.create({
       component: StatusModalComponent,

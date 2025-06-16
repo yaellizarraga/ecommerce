@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { Component, DestroyRef, inject, input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { IonicModule } from "@ionic/angular";
 import { MenuController } from '@ionic/angular';
@@ -7,6 +7,7 @@ import { take } from 'rxjs';
 import { LogoutService } from 'src/app/auth/services/logout.service';
 import { TokenService } from 'src/app/auth/services/token.service';
 import { environment } from 'src/environments/environment';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-menu',
@@ -26,6 +27,8 @@ export class MenuComponent {
   UserData: any = {};
   urlFoto: any = 'assets/icons/avatar.svg';
 
+  private readonly destroyRef1 = inject(DestroyRef);
+  private readonly destroyRef2 = inject(DestroyRef);
   constructor(
     private menuCtrl: MenuController,
     private TokenService: TokenService,
@@ -33,10 +36,10 @@ export class MenuComponent {
     private router:Router,
   ) {
     
-    this.TokenService.getToken().subscribe((token: boolean) => {
+    this.TokenService.getToken().pipe(takeUntilDestroyed(this.destroyRef1)).subscribe((token: boolean) => {
       this.token = token;
     });
-    this.TokenService.getUserData().subscribe(async(data: boolean) => {
+    this.TokenService.getUserData().pipe(takeUntilDestroyed(this.destroyRef2)).subscribe(async(data: boolean) => {
       this.UserData = data;
       
       if (this.UserData?.Foto) {

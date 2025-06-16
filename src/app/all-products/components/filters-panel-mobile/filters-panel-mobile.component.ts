@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, DestroyRef, inject, input, output } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 
 import { addIcons } from 'ionicons';
@@ -6,6 +6,7 @@ import { close, trashOutline, arrowBackOutline } from 'ionicons/icons';
 import { Filters } from '../../interfaces/product.interfaces';
 import { CommonModule } from '@angular/common';
 import { FiltersService } from '../../services/filters.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-filters-panel-mobile',
@@ -23,6 +24,8 @@ export class FiltersPanelMobileComponent {
   data = input<any>();
   AllFilters: Filters = {};
 
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor(
     private modalController: ModalController,
     private FiltersService: FiltersService,
@@ -30,7 +33,7 @@ export class FiltersPanelMobileComponent {
     addIcons({ close,trashOutline, arrowBackOutline });
     console.log(this.data());
 
-    this.FiltersService.getFiltros().subscribe(value => {
+    this.FiltersService.getFiltros().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(value => {
       this.AllFilters = value;
     });
 

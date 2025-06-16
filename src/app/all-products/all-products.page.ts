@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { FooterComponent } from "../shared/footer/footer.component";
 import { BannerTitleComponent } from '../shared/components/banner-title/banner-title.component';
@@ -16,6 +16,7 @@ import { close, closeCircle, pin, filterCircleOutline } from 'ionicons/icons';
 import { FiltersPanelComponent } from './components/filters-panel/filters-panel.component';
 import { FiltersPanelMobileComponent } from './components/filters-panel-mobile/filters-panel-mobile.component';
 import { FiltersService } from './services/filters.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-all-products',
@@ -50,6 +51,12 @@ export class AllProductsPage implements OnInit {
   PanelFiltersData: Filters = {};
   loadFiltersButton = false;
 
+  private readonly destroyRef1 = inject(DestroyRef);
+  private readonly destroyRef2 = inject(DestroyRef);
+  private readonly destroyRef3 = inject(DestroyRef);
+  private readonly destroyRef4 = inject(DestroyRef);
+  private readonly destroyRef5 = inject(DestroyRef);
+  
   constructor(
     private ProductService: ProductService,
     private AllProductsService: AllProductsService,
@@ -62,7 +69,7 @@ export class AllProductsPage implements OnInit {
 
   ngOnInit(): void {
     
-    this.FiltersService.getFiltros().subscribe(value => {
+    this.FiltersService.getFiltros().pipe(takeUntilDestroyed(this.destroyRef1)).subscribe(value => {
       this.FiltrandoData(value);
     });
 
@@ -95,7 +102,7 @@ export class AllProductsPage implements OnInit {
   }
 
   loadHeader() {
-    this.HeaderService.getAll().subscribe({
+    this.HeaderService.getAll().pipe(takeUntilDestroyed(this.destroyRef2)).subscribe({
       next: (res: any) => {
         this.link_logo = (res.data.length > 0) ? res.data[0].preview : '';
 
@@ -107,7 +114,7 @@ export class AllProductsPage implements OnInit {
   }
 
   loadBanner() {
-    this.AllProductsService.getAll().subscribe({
+    this.AllProductsService.getAll().pipe(takeUntilDestroyed(this.destroyRef3)).subscribe({
       next: (res: any) => {
         this.backgroudUrl = (res.data.length > 0) ? res.data[0].preview : '';
 
@@ -119,7 +126,7 @@ export class AllProductsPage implements OnInit {
   }
 
   async loadFilters() {
-    await this.FiltersService.getAll().subscribe({
+    await this.FiltersService.getAll().pipe(takeUntilDestroyed(this.destroyRef4)).subscribe({
       next: (res: any) => {
         this.filtersData = res.data;
         this.filtersDataMobile.set(res.data);
@@ -161,7 +168,7 @@ export class AllProductsPage implements OnInit {
     
 
     this.ProductService.getAll(this.filters).pipe(
-      take(1)).subscribe({
+      take(1), takeUntilDestroyed(this.destroyRef5)).subscribe({
         next: (res: any) => {
           this.loading = false;
 

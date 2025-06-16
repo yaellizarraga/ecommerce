@@ -1,11 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, input, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { Router, RouterModule } from '@angular/router';
 import { HeaderService } from '../shared/header/services/header.service';
 import { HeaderModalComponent } from '../shared/header-modal/header-modal.component';
 import { checkmarkCircle } from 'ionicons/icons';
 import { addIcons } from 'ionicons';
+import { environment } from 'src/environments/environment';
+import emailjs, { type EmailJSResponseStatus } from '@emailjs/browser';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-thanks-purchase-templete',
@@ -21,10 +24,10 @@ import { addIcons } from 'ionicons';
 })
 export class ThanksPurchaseTempleteComponent implements OnInit {
 
-  @Input() data:any = {};
+  @Input() data: any = {};
   link_logo = '';
   loading = false;
-  
+
   transactionId!: string;
   amount!: string;
   currency!: string;
@@ -41,6 +44,41 @@ export class ThanksPurchaseTempleteComponent implements OnInit {
 
   ngOnInit() {
     this.loadHeader();
+  }
+  private readonly destroyRef = inject(DestroyRef);
+
+  constructor(
+    private HeaderService: HeaderService,
+    private modalcontroller: ModalController,
+    private router: Router,
+  ) {
+    addIcons({ checkmarkCircle });
+  }
+
+  loadHeader() {
+    this.HeaderService.getAll().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
+      next: (res: any) => {
+        this.link_logo = (res.data.length > 0) ? res.data[0].preview : '';
+        this.sendEmailCheck();
+
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
+  }
+
+  closeModal() {
+    this.modalcontroller.dismiss();
+  }
+
+
+  async navigateTo(url: string) {
+    this.closeModal();
+    this.router.navigate([url]);
+  }
+
+  sendEmailCheck() {
 
     const capture = this.data.purchase_units[0]?.payments?.captures[0];
     const shipping = this.data.purchase_units[0]?.shipping;
@@ -58,36 +96,34 @@ export class ThanksPurchaseTempleteComponent implements OnInit {
     this.state = shipping?.address?.admin_area_1;
     this.postalCode = shipping?.address?.postal_code;
     this.country = shipping?.address?.country_code;
-  }
 
-  constructor(
-    private HeaderService: HeaderService,
-    private modalcontroller: ModalController,
-    private router: Router,
-  ) { 
-    addIcons({checkmarkCircle});
-  }
+    const templateParams = {
+      logo: this.link_logo,
+      transaction_id: this.transactionId,
+      full_name: this.fullName,
+      email: this.email,
+      amount: this.amount,
+      currency: this.currency,
+      status: this.status,
+      address_line1: this.addressLine1,
+      address_line2: this.addressLine2 || '',
+      city: this.city,
+      state: this.state,
+      postal_code: this.postalCode,
+      country: this.country,
+    };
+    console.log(templateParams)
+    emailjs.send(environment.ServiceID, environment.TemplateCompra, templateParams, { publicKey: environment.publicKey, })
+      .then(
+        () => {
+          console.log(templateParams)
+          console.log('El correo se envio correctamente!');
+        },
+        (error) => {
+          console.log('Ocurrió un error al enviar el mensaje. Inténtalo nuevamente.', (error as EmailJSResponseStatus).text);
+        },
+      );
 
-  loadHeader() {
-    this.HeaderService.getAll().subscribe({
-      next: (res: any) => {
-        this.link_logo = (res.data.length > 0) ? res.data[0].preview : '';
-      },
-      error: (error: any) => {
-        console.log(error);
-      }
-    });
   }
-
-  closeModal() {
-    this.modalcontroller.dismiss();
-  }
-
-  
-  async navigateTo(url: string) {
-    this.closeModal();
-    this.router.navigate([url]);
-  }
-  
 
 }

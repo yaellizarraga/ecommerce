@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { RouterModule } from '@angular/router';
 import { HeaderModalComponent } from "../shared/header-modal/header-modal.component";
 import { HeaderService } from '../shared/header/services/header.service';
 import { PaymentComponent } from '../payment/payment.component';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-shipping-options',
@@ -24,6 +25,8 @@ export class ShippingOptionsComponent implements OnInit {
   card: any;
   loading = false;
 
+  private readonly destroyRef = inject(DestroyRef);
+
   constructor(
     private HeaderService: HeaderService,
     private modalcontroller: ModalController,
@@ -34,7 +37,7 @@ export class ShippingOptionsComponent implements OnInit {
   }
 
   loadHeader() {
-    this.HeaderService.getAll().subscribe({
+    this.HeaderService.getAll().pipe(takeUntilDestroyed(this.destroyRef)).subscribe({
       next: (res: any) => {
         this.link_logo = (res.data.length > 0) ? res.data[0].preview : '';
       },

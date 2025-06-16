@@ -4,13 +4,14 @@ export const environment = {
   // UrlImages: 'https://legazpi.zamtostech.com/',
   // apiUrl: 'https://api-ecommerce.zamtostech.com/api',
   // UrlImages: 'https://espacios218.zamtostech.com/',
-  // apiUrl: 'https://comercializadoraseaumn.zamtostech.com/api/public/api',
+  apiUrl: 'https://comercializadoraseaumn.zamtostech.com/api/public/api',
   UrlImages: 'https://comercializadoraseaumn.zamtostech.com/',
-  apiUrl: 'http://localhost/api-ecommerce/public/api',
+  // apiUrl: 'http://localhost/api-ecommerce/public/api',
 
   //EmailJS
   ServiceID:'service_q4jzljy',
   Template:'template_pkdvtvn',
+  TemplateCompra:'template_gracias_compra',
   publicKey:'-B3DGpJesDE2DdESE',
 
   //Paypal

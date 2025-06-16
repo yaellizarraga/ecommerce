@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
@@ -10,6 +10,7 @@ import { trashOutline } from 'ionicons/icons';
 import { ToastComponent } from '../shared/components/toast/toast.component';
 import { AlertComponent } from '../shared/components/alert/alert.component';
 import { FormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-shopping-cart',
@@ -33,6 +34,9 @@ export class ShoppingCartPage implements OnInit {
   subtotal: number = 0;
   withoutData = false;
 
+  private readonly destroyRef1 = inject(DestroyRef);
+  private readonly destroyRef2 = inject(DestroyRef);
+  private readonly destroyRef3 = inject(DestroyRef);
 
   constructor(
     private router: Router,
@@ -49,13 +53,13 @@ export class ShoppingCartPage implements OnInit {
   ngOnInit(): void {
     this.loadCart();
 
-    this.cartService.subtotal$.subscribe(total => {
+    this.cartService.subtotal$.pipe(takeUntilDestroyed(this.destroyRef1)).subscribe(total => {
       this.subtotal = total;
     });
   }
 
   loadCart() {
-    this.cartService.cart$.subscribe({
+    this.cartService.cart$.pipe(takeUntilDestroyed(this.destroyRef2)).subscribe({
       next: items => {
         if (items && items.length > 0) {
           this.withoutData = false;
@@ -93,7 +97,7 @@ export class ShoppingCartPage implements OnInit {
       return;
     }
 
-    this.cartService.checkStockAvailability().subscribe({
+    this.cartService.checkStockAvailability().pipe(takeUntilDestroyed(this.destroyRef3)).subscribe({
       next: async (result) => {
 
         const outOfStockItems = result.filter((p: any) => !p.enough_stock);

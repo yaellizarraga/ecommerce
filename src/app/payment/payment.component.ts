@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { IonicModule, ModalController } from "@ionic/angular";
 import { RouterModule } from '@angular/router';
 import { HeaderModalComponent } from "../shared/header-modal/header-modal.component";
@@ -11,6 +11,8 @@ import { CartService } from '../services/cart.service';
 import { SpinnerComponent } from '../shared/components/spinner/spinner.component';
 import { CheckoutData } from './interfaces/payment.interfaces';
 import { PaymentService } from './services/payment.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ICreateOrderRequest, IPayPalConfig, NgxPayPalModule } from 'ngx-paypal';
 
 @Component({
   selector: 'app-payment',
@@ -21,6 +23,7 @@ import { PaymentService } from './services/payment.service';
     RouterModule,
     HeaderModalComponent,
     SpinnerComponent,
+    NgxPayPalModule,
   ],
   templateUrl: './payment.component.html',
   styleUrl: './payment.component.scss',
@@ -37,6 +40,9 @@ export class PaymentComponent implements OnInit {
   loading = false;
   data!: CheckoutData;
 
+  private readonly destroyRef1 = inject(DestroyRef);
+  private readonly destroyRef2 = inject(DestroyRef);
+  public payPalConfig?: IPayPalConfig;
   constructor(
     private HeaderService: HeaderService,
     private modalcontroller: ModalController,
@@ -52,7 +58,7 @@ export class PaymentComponent implements OnInit {
   }
 
   loadHeader() {
-    this.HeaderService.getAll().subscribe({
+    this.HeaderService.getAll().pipe(takeUntilDestroyed(this.destroyRef1)).subscribe({
       next: (res: any) => {
         this.link_logo = (res.data.length > 0) ? res.data[0].preview : '';
       },
@@ -64,7 +70,6 @@ export class PaymentComponent implements OnInit {
 
   async pay() {
     this.loading = true;
-    const paypalClientId = environment.ClientId;
 
     this.cartService.subtotal$.subscribe(async (total) => {
       this.subtotal = total;
@@ -82,80 +87,73 @@ export class PaymentComponent implements OnInit {
         fullName: this.fullName
       };
 
+      await this.initConfig();
       this.loading = false;
 
-      if (!document.querySelector('#paypal-sdk')) {
-        const script = document.createElement('script');
-        script.id = 'paypal-sdk';
-        script.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=MXN`;
-        script.onload = () => this.renderPayPalButton();
-        document.body.appendChild(script);
-      } else {
-        this.renderPayPalButton();
-      }
     });
   }
 
-  renderPayPalButton() {
-    if ((window as any).paypal) {
-      (window as any).paypal.Buttons({
-        createOrder: (data: any, actions: any) => {
-          return actions.order.create({
-            purchase_units: [{
-              amount: {
-                value: `${this.subtotal}` // Monto en MXN
-              }
-            }]
+  private initConfig(): void {
+    this.payPalConfig = {
+      currency: 'MXN',
+      clientId: environment.ClientId,
+      createOrderOnClient: (data) => <ICreateOrderRequest>({
+        intent: 'CAPTURE',
+        purchase_units: [{
+          amount: {
+            currency_code: 'MXN',
+            value: this.subtotal.toString()
+          }
+        }]
+      }),
+      advanced: {
+        commit: 'true'
+      },
+      style: {
+        label: 'paypal',
+        layout: 'vertical'
+      },
+      onApprove: (data, actions) => {
+        actions.order.get().then((details: any) => {
+          console.log('Detalles de la orden aprobada:', details);
+        });
+      },
+      onClientAuthorization: (data) => {
+        console.log('Transacción completada:', data);
+
+        this.loading = true;
+        this.paymentService.create(this.data, this.id)
+          .pipe(takeUntilDestroyed(this.destroyRef1))
+          .subscribe(async () => {
+            this.cartService.clearCart();
+            this.closeModal();
+            const modal = await this.modalcontroller.create({
+              component: ThanksPurchaseTempleteComponent,
+              componentProps: {
+                linkLogo: this.link_logo,
+                data: data,
+              },
+              cssClass: 'custom-modal-class'
+            });
+            await modal.present();
+            this.loading = false;
           });
-        },
-        onApprove: async (data: any, actions: any) => {
-          return actions.order.capture().then(async (details: any) => {
-            if (details.status === "COMPLETED") {
-
-              this.paymentService.create(this.data, this.id).subscribe({
-                next: async (response) => {
-                  this.closeModal();
-                  this.cartService.clearCart();
-
-                  const modal = await this.modalcontroller.create({
-                    component: ThanksPurchaseTempleteComponent,
-                    componentProps: {
-                      linkLogo: this.link_logo,
-                      data: details,
-                    },
-                    cssClass: 'custom-modal-class'
-                  });
-
-                  await modal.present();
-
-                  const { data } = await modal.onWillDismiss();
-                },
-                error: (error) => {
-                  console.error('Error al crear pago:', error);
-                }
-              });
-              
-              console.log(details);
-              console.log('Pago completado por', details.payer.name.given_name);
-              // Puedes llamar a tu backend aquí si deseas registrar la compra
-
-            }
-
-          });
-        },
-        onError: (err: any) => {
-          console.error('Error en el pago:', err);
-          this.toastComponent.showToast(
-            'Error en el pago',
-            'bottom',
-            'danger',
-            5000,
-            true
-          );
-        }
-      }).render('#paypal-button-container'); // Asegúrate de tener este div en tu HTML
-    }
+      },
+      onCancel: (data, actions) => {
+        console.log('onCancel', data, actions);
+        this.toastComponent.showToast('Pago cancelado', 'bottom', 'warning', 5000, true);
+      },
+      onError: err => {
+        console.log('onError', err);
+        this.toastComponent.showToast('Error en el pago', 'bottom', 'danger', 5000, true);
+      },
+      onClick: (data, actions) => {
+        console.log('onClick', data, actions);
+      }
+    };
   }
+
+
 
   closeModal() {
     this.modalcontroller.dismiss();

@@ -11,6 +11,7 @@ export const environment = {
   //EmailJS
   ServiceID:'service_q4jzljy',
   Template:'template_pkdvtvn',
+  TemplateCompra:'template_gracias_compra',
   publicKey:'-B3DGpJesDE2DdESE',
 
   //Paypal
