@@ -1,0 +1,105 @@
+ion-grid{
+  margin-top: 10px;
+}
+ion-card-title{
+  padding: 20px;
+}
+ion-card-content{
+  padding: 20px;
+}
+ion-card{
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+}
+.return{
+  margin-right: 10px;
+  --background: var(--color-red);
+  color: var(--color-white);
+}
+swiper-container{
+  width: 100%;
+  height: 500px;
+  min-width: 388px;
+  min-height: 388px;
+}
+.logo{
+  width: 100px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+.ion-icon{
+  font-size: 30px;
+  color: var(--color-primary);
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 767px) {
+  swiper-container {
+    width: 100%;
+    height: 500px;
+    min-width: 388px;
+    min-height: 388px;
+    padding: 10px;
+  }
+}
+
+img{
+  width: 500px;
+  height: 500px;
+  min-width: 388px;
+  min-height: 388px;
+}
+
+.price{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  color: var(--color-black);
+}
+.price-discount{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-right: 10px;
+  color: var(--color-red);
+}
+.tachado {
+  text-decoration: line-through;
+  font-size: 14px;
+}
+.cotizar{
+  width: 100%;
+  height: 40px;
+  --background: var(--color-primary);
+}
+.carrito{
+  width: 100%;
+  height: 40px;
+  --background: var(--color-secondary);
+}
+
+.container-buttons{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+
+// ion-button{
+//   --background: var(--color-primary);
+// }
+
+ion-item{
+  display: flex;
+  align-items: baseline;
+}
+
+.mr{
+  margin-right: 10px;
+  margin-top: 15px;
+  margin-left: 15px;
+  margin-bottom: 15px;
+}

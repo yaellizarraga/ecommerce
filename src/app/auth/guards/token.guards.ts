@@ -44,7 +44,7 @@ export class TokenGuard implements CanActivate {
   async redirect(){
     this.router.navigate(['/login']); 
     this.toastComponent.showToast(
-      '¡Token Expirado! ', 
+      'Sesión expirada! ', 
       'bottom', 
       'danger', 
       5000,

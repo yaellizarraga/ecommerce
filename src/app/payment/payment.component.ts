@@ -13,6 +13,7 @@ import { CheckoutData } from './interfaces/payment.interfaces';
 import { PaymentService } from './services/payment.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ICreateOrderRequest, IPayPalConfig, NgxPayPalModule } from 'ngx-paypal';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-payment',
@@ -38,6 +39,7 @@ export class PaymentComponent implements OnInit {
   fullName = '';
   id = 0;
   loading = false;
+  loadingButton = false;
   data!: CheckoutData;
 
   private readonly destroyRef1 = inject(DestroyRef);
@@ -68,10 +70,9 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  async pay() {
+  async pay(apartado: boolean = false) {
     this.loading = true;
-
-    this.cartService.subtotal$.subscribe(async (total) => {
+    this.cartService.subtotal$.pipe(take(1), takeUntilDestroyed(this.destroyRef2)).subscribe(async (total) => {
       this.subtotal = total;
       this.address = await localStorage.getItem("address") || "";
       this.typeSend = await Number(localStorage.getItem("type_send")) || 0;
@@ -87,10 +88,18 @@ export class PaymentComponent implements OnInit {
         fullName: this.fullName
       };
 
-      await this.initConfig();
+      if (apartado) {
+        this.apartado();
+      } else {
+        await this.initConfig();
+      }
       this.loading = false;
-
     });
+  }
+
+  apartado(){
+    this.loadingButton = true;
+
   }
 
   private initConfig(): void {

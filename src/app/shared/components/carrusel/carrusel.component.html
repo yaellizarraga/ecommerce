@@ -1,0 +1,10 @@
+
+<app-shared-info [items]="title" />
+<app-shared-spinner *ngIf="loading" [title]="'Cargando Productos...'"></app-shared-spinner>
+<swiper-container #swiperContainer init="false">
+  @for (item of displayedData; track $index) {
+  <swiper-slide>
+    <app-shared-product-card [item]="item" [linkLogo]="link_logo"></app-shared-product-card>
+  </swiper-slide>
+  }
+</swiper-container>

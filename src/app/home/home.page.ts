@@ -10,6 +10,7 @@ import { CategoryCardComponent } from '../shared/components/category-card/catego
 import { CommonModule } from '@angular/common';
 import { HomeService } from './services/home.service';
 import { ServiciosEmpresarialesService } from './services/servicios-empresariales.service';
+import { CarruselComponent } from '../shared/components/carrusel/carrusel.component';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ import { ServiciosEmpresarialesService } from './services/servicios-empresariale
     BannerTitleComponent,
     InfoComponent,
     CategoryCardComponent,
+    CarruselComponent,
   ],
 })
 export class HomePage implements OnInit {
